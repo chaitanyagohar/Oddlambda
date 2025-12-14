@@ -1,165 +1,81 @@
-import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { Quote, Star } from "lucide-react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Quote } from "lucide-react";
 
 const testimonials = [
   {
     id: 1,
-    text: "Oddlambda didn't just build a website; they engineered a digital ecosystem. Our conversion rates doubled within the first month of launch.",
+    quote: "Oddlambda transformed our vague vision into a market-leading digital product. The attention to detail is obsessive.",
     author: "Sarah Jenkins",
-    role: "VP of Product",
-    company: "FinTech Sol.",
-    bg: "bg-[#0a0a0a]", 
-    border: "border-white/10"
+    role: "VP of Product, FinTech Co.",
+    theme: "dark"
   },
   {
     id: 2,
-    text: "The level of technical precision is unmatched. They optimized our WebGL rendering to run smoothly on devices we didn't think possible.",
+    quote: "We've worked with agencies in NY and London. None matched the speed and design fidelity we found here.",
     author: "Marcus Thorne",
-    role: "Founder",
-    company: "Horizon Ventures",
-    bg: "bg-[#0f0f0f]",
-    border: "border-white/10"
+    role: "Founder, Horizon Ventures",
+    theme: "cyan"
   },
   {
     id: 3,
-    text: "A true partnership. They pushed back on our bad ideas and doubled down on the good ones. The result is a brand identity that feels 5 years ahead.",
+    quote: "Technical mastery meets high art. Our site loads instantly and looks like a movie. Conversion rates doubled.",
     author: "Elena Rodriguez",
-    role: "CMO",
-    company: "Luxe Interiors",
-    bg: "bg-[#141414]",
-    border: "border-[#46cef6]/30" // Subtle highlight for the last one
+    role: "CMO, Luxe Interiors",
+    theme: "light"
   }
 ];
 
-const Card = ({ i, data, progress, range, targetScale, setHovered }) => {
-  // Use the parent's scroll progress to drive the scale animation for the stacking effect
-  const scale = useTransform(progress, range, [1, targetScale]);
-
-  return (
-    <div className="h-screen flex items-center justify-center sticky top-0">
-      <motion.div 
-        style={{ scale, top: `calc(-5vh + ${i * 25}px)` }} 
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        className={`relative flex flex-col w-full max-w-2xl h-[50vh] md:h-[60vh] rounded-3xl p-8 md:p-12 origin-top border ${data.border} ${data.bg} shadow-2xl overflow-hidden`}
-      >
-         {/* Background Texture */}
-         <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-         
-         <div className="relative z-10 h-full flex flex-col justify-between">
-            <div className="flex justify-between items-start">
-               <Quote className="text-[#46cef6] w-10 h-10 md:w-14 md:h-14 opacity-80" />
-               <div className="flex gap-1">
-                 {[...Array(5)].map((_, idx) => (
-                   <Star key={idx} size={16} className="fill-[#46cef6] text-[#46cef6]" />
-                 ))}
-               </div>
-            </div>
-
-            <h3 className="text-xl md:text-3xl lg:text-4xl font-medium leading-tight text-white tracking-tight">
-              "{data.text}"
-            </h3>
-
-            <div className="flex items-center gap-4 pt-8 border-t border-white/10">
-               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center font-bold text-white">
-                 {data.author.charAt(0)}
-               </div>
-               <div>
-                  <p className="text-white font-bold uppercase tracking-wider text-sm">{data.author}</p>
-                  <p className="text-neutral-500 font-mono text-xs">{data.role}, {data.company}</p>
-               </div>
-            </div>
-         </div>
-      </motion.div>
-    </div>
-  )
-}
-
 const Testimonials = () => {
-  const container = useRef(null);
+  const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ['start start', 'end end']
+    target: targetRef,
   });
 
-  // Custom Cursor Logic
-  const [isHovered, setIsHovered] = useState(false);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  // Smooth spring physics for the cursor
-  const cursorX = useSpring(mouseX, { stiffness: 150, damping: 15, mass: 0.1 });
-  const cursorY = useSpring(mouseY, { stiffness: 150, damping: 15, mass: 0.1 });
-
-  useEffect(() => {
-    const manageMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      mouseX.set(clientX);
-      mouseY.set(clientY);
-    }
-    window.addEventListener("mousemove", manageMouseMove);
-    return () => window.removeEventListener("mousemove", manageMouseMove);
-  }, [mouseX, mouseY]);
+  // Map vertical scroll to horizontal movement
+  // Shift -200vw to scroll through 3 full-screen sections
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-200vw"]);
 
   return (
-    <section ref={container} className="relative bg-[#030303] w-full">
-      <div className="max-w-[95rem] mx-auto flex flex-col lg:flex-row">
-          
-          {/* Left Column: Sticky Title */}
-          <div className="lg:w-[45%] h-[50vh] lg:h-screen sticky top-0 flex flex-col justify-center px-6 md:px-12 lg:pl-20 z-0">
-             <div className="relative">
-                <span className="text-[#46cef6] font-mono text-xs tracking-[0.3em] uppercase block mb-6">
-                    Social Proof
-                </span>
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[0.9] mb-8">
-                    CLIENT <br/> <span className="text-neutral-600">STORIES.</span>
-                </h2>
-                <p className="text-neutral-400 text-lg max-w-sm leading-relaxed">
-                    Don't take our word for it. Here is what the industry leaders have to say about our impact.
-                </p>
-             </div>
-          </div>
+    <section ref={targetRef} className="relative h-[300vh] bg-[#030303] border-t border-white/5">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <motion.div style={{ x }} className="flex h-full w-[300vw]">
+          {testimonials.map((t, i) => (
+            <div 
+              key={i} 
+              className={`w-screen h-full flex flex-col justify-center px-6 md:px-20 lg:px-32 relative flex-shrink-0
+                ${t.theme === 'cyan' ? 'bg-[#46cef6] text-black' : 
+                  t.theme === 'light' ? 'bg-[#e0e0e0] text-black' : 
+                  'bg-[#0a0a0a] text-white'}`}
+            >
+               {/* Content */}
+               <div className="max-w-5xl relative z-10">
+                 <Quote className={`w-16 h-16 mb-12 opacity-50 ${t.theme === 'dark' ? 'text-[#46cef6]' : 'text-current'}`} />
+                 
+                 <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-16 tracking-tighter">
+                   "{t.quote}"
+                 </h3>
+                 
+                 <div className="flex items-center gap-6">
+                    <div className={`h-px w-16 ${t.theme === 'dark' ? 'bg-[#46cef6]' : 'bg-current opacity-30'}`} />
+                    <div>
+                      <p className="text-xl font-bold tracking-widest uppercase">{t.author}</p>
+                      <p className="text-sm font-mono opacity-60 mt-1">{t.role}</p>
+                    </div>
+                 </div>
+               </div>
+               
+               {/* Decoration / Number */}
+               <div className="absolute bottom-10 right-10 md:bottom-20 md:right-20 text-[15vw] font-black opacity-5 select-none font-mono leading-none">
+                 0{t.id}
+               </div>
 
-          {/* Right Column: Stacked Cards */}
-          <div className="lg:w-[55%] relative z-10 px-4 md:px-0">
-            {testimonials.map((project, i) => {
-              // Calculate scale target: each subsequent card is slightly smaller when it goes "behind"
-              const targetScale = 1 - ( (testimonials.length - i) * 0.05 );
-              return (
-                <Card 
-                  key={i} 
-                  i={i} 
-                  data={project} 
-                  progress={scrollYProgress} 
-                  range={[i * 0.25, 1]} 
-                  targetScale={targetScale}
-                  setHovered={setIsHovered}
-                />
-              )
-            })}
-          </div>
+               {/* Texture Overlay */}
+               <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            </div>
+          ))}
+        </motion.div>
       </div>
-
-      {/* Floating Cursor "This Could Be You" */}
-      <motion.div 
-        className="fixed top-0 left-0 w-32 h-32 bg-[#46cef6] rounded-full flex items-center justify-center pointer-events-none z-[999] text-black font-bold text-center leading-none text-sm font-mono shadow-[0_0_40px_rgba(70,206,246,0.4)]"
-        style={{ 
-            x: cursorX, 
-            y: cursorY, 
-            translateX: "-50%", 
-            translateY: "-50%" 
-        }}
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ 
-          scale: isHovered ? 1 : 0, 
-          opacity: isHovered ? 1 : 0 
-        }}
-        transition={{ duration: 0.2 }}
-      >
-        THIS<br/>COULD BE<br/>YOU
-      </motion.div>
-
     </section>
   );
 };

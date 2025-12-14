@@ -696,7 +696,7 @@ const Footer = () => {
 
 export default function App() {
   return (
-    <div className={`min-h-screen ${theme.bg} text-white font-sans selection:bg-[#46cef6] selection:text-black overflow-x-hidden`}>
+    <div className={`min-h-screen ${theme.bg} text-white font-sans selection:bg-[#46cef6] selection:text-black `}>
       <style>{`
         .snake-head {
           offset-distance: var(--snake-progress);
