@@ -278,13 +278,31 @@ const Navbar = () => {
     </nav>
   );
 };
-
 const Hero = () => {
+  const [sequence, setSequence] = useState(0);
+
+  useEffect(() => {
+    const t = [
+      setTimeout(() => setSequence(1), 200),   // GridScan
+      setTimeout(() => setSequence(2), 500),   // Left label
+      setTimeout(() => setSequence(3), 900),   // Headline
+      setTimeout(() => setSequence(4), 1400),  // Paragraph
+      setTimeout(() => setSequence(5), 1800),  // Right meta
+      setTimeout(() => setSequence(6), 2200),  // Scroll cue
+    ];
+    return () => t.forEach(clearTimeout);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden text-center bg-[#030303]">
-      
-      {/* Real 3D Grid Scan Background */}
-      <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+    <section className="relative min-h-screen bg-[#030303] text-white px-6 flex items-center overflow-hidden">
+
+      {/* GridScan Background (your original) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: sequence >= 1 ? 1 : 0 }}
+        transition={{ duration: 1 }}
+        className="absolute inset-0"
+      >
         <GridScan
           sensitivity={0.55}
           lineThickness={1}
@@ -297,57 +315,94 @@ const Hero = () => {
           chromaticAberration={0.002}
           noiseIntensity={0.01}
         />
-      </div>
+      </motion.div>
 
-      <div className="max-w-6xl mx-auto z-10 flex flex-col items-center pointer-events-none">
-          <div className="pointer-events-auto w-full flex flex-col items-center">
-            <FadeIn delay={0.2} className="flex items-center justify-center gap-4 mb-8">
-              <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-neutral-500" />
-              <span className="text-neutral-400 font-mono text-xs tracking-[0.3em] uppercase">Digital Experience Agency</span>
-              <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-neutral-500" />
-            </FadeIn>
-            
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-10 text-white relative z-20">
-              <MaskedReveal>
-                <span className="block">CRAFTING</span>
-              </MaskedReveal>
-              <MaskedReveal delay={0.1}>
-                {/* React Bits "Decrypted Text" Effect */}
-                <div className="block text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-400 to-gray-700 pb-2 drop-shadow-2xl">
-                  <DecryptedText text="DIGITAL" speed={60} maxIterations={25} revealDelay={800} />
-                </div>
-              </MaskedReveal>
-              <MaskedReveal delay={0.2}>
-                <span className="block">REALITY</span>
-              </MaskedReveal>
-            </h1>
-            
-            <FadeIn delay={0.4} className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed mb-12 font-light">
-              Oddlambda bridges the gap between raw code and human experience. 
-              We build high-performance custom websites that define brands.
-            </FadeIn>
+      <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8">
 
-            <FadeIn delay={0.6} className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <a 
-                href="#contact"
-                className="group relative px-8 py-4 bg-white text-black font-bold text-sm tracking-widest uppercase rounded-full overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(70,206,246,0.3)] transition-all duration-500"
-              >
-                <span className="relative z-10 flex items-center gap-2">Initiate Project <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></span>
-                <div className="absolute inset-0 bg-[#46cef6] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
-              </a>
-              
-              <a 
-                href="#work"
-                className="px-8 py-4 text-white/70 font-bold text-sm tracking-widest uppercase border border-white/10 rounded-full hover:bg-white/5 hover:border-white/30 transition-all flex items-center gap-2"
-              >
-                <Play size={12} fill="currentColor" /> Showreel
-              </a>
-            </FadeIn>
+        {/* LEFT — Editorial Label */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: sequence >= 2 ? 1 : 0, y: sequence >= 2 ? 0 : 20 }}
+          transition={{ duration: 0.6 }}
+          className="md:col-span-3 flex items-start"
+        >
+          <div className="space-y-6">
+            <div className="w-12 h-[2px] bg-white" />
+            <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-400">
+              Digital Studio
+            </p>
+            <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-600">
+              Est. 2025
+            </p>
           </div>
+        </motion.div>
+
+        {/* CENTER — Brutalist Headline */}
+        <div className="md:col-span-7">
+          <motion.h1
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: sequence >= 3 ? 1 : 0, y: sequence >= 3 ? 0 : 60 }}
+            transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
+            className="font-extrabold leading-[0.85] tracking-[-0.04em]
+                       text-[14vw] md:text-[9vw] lg:text-[8vw]"
+          >
+            CRAFTING
+            <br />
+            DIGITAL
+            <br />
+            REALITY
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: sequence >= 4 ? 1 : 0, y: sequence >= 4 ? 0 : 10 }}
+            transition={{ duration: 0.6 }}
+            className="mt-10 max-w-xl text-neutral-400 text-lg font-light leading-relaxed"
+          >
+            We design and build high-performance digital systems where clarity,
+            speed, and intent matter more than decoration.
+          </motion.p>
+        </div>
+
+        {/* RIGHT — Meta / CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: sequence >= 5 ? 1 : 0, y: sequence >= 5 ? 0 : 20 }}
+          transition={{ duration: 0.6 }}
+          className="md:col-span-2 flex flex-col justify-end items-start md:items-end gap-6"
+        >
+          <a
+            href="#contact"
+            className="group flex items-center gap-3 text-sm font-mono uppercase tracking-widest"
+          >
+            <span className="relative">
+              Start Project
+              <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300" />
+            </span>
+            <ArrowUpRight size={14} />
+          </a>
+
+          <div className="text-xs font-mono uppercase tracking-[0.3em] text-neutral-600 text-right">
+            <p>Based Worldwide</p>
+            <p>Remote Studio</p>
+          </div>
+        </motion.div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: sequence >= 6 ? 1 : 0 }}
+        transition={{ duration: 0.6 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-500"
+      >
+        <span className="text-[10px] font-mono tracking-widest">SCROLL</span>
+        <div className="w-[1px] h-10 bg-neutral-600" />
+      </motion.div>
     </section>
   );
 };
+
 
 const TechStack = () => {
   const techs = ["React", "Next.js", "Three.js", "WebGL", "Typescript", "Node.js", "Tailwind", "Framer Motion"];
