@@ -12,6 +12,12 @@ import { GridScan } from './components/GridScan';
 import Manifesto from './components/Manifesto';
 import HorizontalScroll from './components/HorizontalScroll';
 import Description from './components/Description';
+import DigitalGrowth from './components/MarketingSection';
+import MarketingSection from './components/MarketingSection';
+import Services from './components/Services';
+import About from './components/About';
+import Testimonials from './components/Testimonials';
+import CTA from './components/CTA';
 // --------------------------------------------------------------------------
 
 // --- Assets & Utils ---
@@ -407,72 +413,7 @@ const SelectedWorks = () => {
   );
 };
 
-const BentoServices = () => {
-  return (
-    <section id="expertise" className="py-32 px-6 relative z-10 bg-[#030303]">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-20">
-          <span className="text-[#46cef6] font-mono text-xs tracking-widest uppercase mb-4 block">Capabilites</span>
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-white max-w-3xl">
-            PRECISION ENGINEERING MEETS <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-600">AESTHETIC PERFECTION.</span>
-          </h2>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[340px]">
-          <ShineCard className="md:col-span-2 rounded-2xl p-10 flex flex-col justify-between">
-            <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center border border-white/10 mb-6">
-              <Code className="text-white" />
-            </div>
-            <div>
-              <h3 className="text-3xl font-bold text-white mb-3">Custom Web Architecture</h3>
-              <p className="text-neutral-400 max-w-md">Tailor-made solutions using React, Next.js. We don't just use templates; we build scalable digital assets.</p>
-            </div>
-            <div className="absolute top-10 right-10 opacity-20">
-              <Code size={120} strokeWidth={0.5} />
-            </div>
-          </ShineCard>
-
-          <ShineCard className="md:row-span-2 rounded-2xl p-10 flex flex-col justify-between bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
-            <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
-              <Smartphone className="text-white" />
-            </div>
-            <div>
-              <h3 className="text-3xl font-bold text-white mb-4">Mobile-First <br/>Conversion</h3>
-              <p className="text-neutral-400 mb-6">Designed for the thumb-scroll generation. High-ticket lead gen pages that actually convert.</p>
-              <div className="flex flex-wrap gap-2">
-                 {["React", "Framer", "GSAP"].map(t => <span key={t} className="text-[10px] uppercase border border-white/10 px-2 py-1 rounded text-neutral-500">{t}</span>)}
-              </div>
-            </div>
-          </ShineCard>
-
-          <ShineCard className="rounded-2xl p-10 flex flex-col justify-between">
-            <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
-              <Globe className="text-white" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-2">E-Commerce Scale</h3>
-              <p className="text-neutral-400 text-sm">Headless Shopify storefronts.</p>
-            </div>
-          </ShineCard>
-
-          <ShineCard className="md:col-span-2 rounded-2xl p-10 flex flex-col justify-between bg-[#46cef6] relative">
-             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-40 mix-blend-overlay" />
-             <div className="relative z-10 flex justify-between items-start">
-               <div className="w-12 h-12 bg-black/10 rounded-full flex items-center justify-center border border-black/5">
-                 <Zap className="text-black" />
-               </div>
-               <ArrowUpRight className="text-black" size={32} />
-             </div>
-             <div className="relative z-10">
-                <h3 className="text-3xl font-bold text-black mb-2">Performance & SEO</h3>
-                <p className="text-black/70 font-medium max-w-md">We target 99+ Lighthouse scores. Speed equals revenue in the modern web.</p>
-             </div>
-          </ShineCard>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 // --- Refined Snake Process ---
 const TimelineItem = ({ step, scrollProgress }) => {
@@ -771,6 +712,7 @@ export default function App() {
       <Navbar />
       
       <Hero />
+      {/* <About /> */}
       <Description />
       <TechStack />
       <Manifesto />
@@ -793,7 +735,8 @@ export default function App() {
         direction={6}
       />
 
-      <BentoServices />
+      <Services />
+      <MarketingSection />
       <Packages />
       
       {/* --- Quote Section 3: Future Focus --- */}
@@ -805,6 +748,8 @@ export default function App() {
       />
 
       <ProcessSection />
+      <CTA />
+      <Testimonials />
       <Contact />
       <Footer />
     </div>

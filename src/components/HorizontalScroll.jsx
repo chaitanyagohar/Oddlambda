@@ -9,7 +9,7 @@ const projects = [
     category: "Web3 / DeFi Platform",
     year: "2024",
     // Placeholder video: Futuristic/Tech vibe
-    video: "https://v4.cdnpk.net/videvo_files/video/free/video0467/large_watermarked/_import_61515436270542.92318625_FPpreview.mp4" 
+    video: "https://www.pexels.com/download/video/2177901/" 
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const projects = [
     category: "Luxury Real Estate",
     year: "2023",
     // Placeholder video: Architecture/Interior vibe
-    video: "https://v4.cdnpk.net/videvo_files/video/free/video0454/large_watermarked/_import_6064def77732a3.67389307_FPpreview.mp4" 
+    video: "https://cdn.pixabay.com/video/2017/05/07/9010-216403624_large.mp4" 
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ const projects = [
     category: "High-End E-Commerce",
     year: "2024",
     // Placeholder video: Fashion/Dark vibe
-    video: "https://v4.cdnpk.net/videvo_files/video/free/video0456/large_watermarked/_import_609da3206a4b12.98661793_FPpreview.mp4" 
+    video: "https://cdn.pixabay.com/video/2022/09/22/132210-752685101_large.mp4" 
   }
 ];
 
