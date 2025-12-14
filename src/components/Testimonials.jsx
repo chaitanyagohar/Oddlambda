@@ -1,126 +1,199 @@
-import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 import { Quote } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
     id: 1,
-    quote: "Oddlambda transformed our vague vision into a market-leading digital product. The attention to detail is obsessive.",
+    quote:
+      "Oddlambda transformed our vague vision into a market-leading digital product. The attention to detail is obsessive.",
     author: "Yash Raikar",
     role: "Founder",
     company: "Personal Brand",
-    theme: "dark"
+    theme: "dark",
   },
   {
     id: 2,
-    quote: "They perfectly captured the essence of Ashiya. The site is a digital extension of our interior design philosophy—minimal, elegant, and functionally brilliant.",
+    quote:
+      "They perfectly captured the essence of Ashiya. The site is a digital extension of our interior design philosophy—minimal, elegant, and functionally brilliant.",
     author: "Darshan Jade",
     role: "Principal Designer",
     company: "Ashiya Interiors",
-    theme: "cyan"
+    theme: "cyan",
   },
   {
     id: 3,
-    quote: "We needed a high-converting machine, and they delivered. The modern styling combined with their strategic UX approach skyrocketed our client leads.",
+    quote:
+      "We needed a high-converting machine, and they delivered. The modern styling combined with their strategic UX approach skyrocketed our client leads.",
     author: "Sarabjeet Singh",
     role: "CEO",
     company: "Drootle",
-    theme: "light"
-  }
+    theme: "light",
+  },
 ];
 
-const Testimonials = () => {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  // Map vertical scroll to horizontal movement
-  // Shift -200vw to scroll through 3 full-screen sections
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-200vw"]);
-
-  // --- Custom Cursor Logic ---
-  const [isHovered, setIsHovered] = useState(false);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  // Smooth spring physics for the cursor
-  const cursorX = useSpring(mouseX, { stiffness: 150, damping: 15, mass: 0.1 });
-  const cursorY = useSpring(mouseY, { stiffness: 150, damping: 15, mass: 0.1 });
+export default function Testimonials() {
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
+  const cursorRef = useRef(null);
 
   useEffect(() => {
-    const manageMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      mouseX.set(clientX);
-      mouseY.set(clientY);
-    }
-    window.addEventListener("mousemove", manageMouseMove);
-    return () => window.removeEventListener("mousemove", manageMouseMove);
-  }, [mouseX, mouseY]);
+    const ctx = gsap.context(() => {
+      const panels = gsap.utils.toArray(".testimonial-panel");
+      const track = trackRef.current;
+
+      const scrollDistance = track.scrollWidth - window.innerWidth;
+
+      /* ------------------------------
+         Horizontal scroll (CORRECT)
+      -------------------------------- */
+      gsap.to(track, {
+        x: -scrollDistance,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: () => `+=${scrollDistance}`,
+          snap: {
+            snapTo: 1 / (panels.length - 1),
+            duration: { min: 0.2, max: 0.4 },
+            inertia: false,
+          },
+        },
+      });
+
+      /* ------------------------------
+         Velocity-based skew
+      -------------------------------- */
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        onUpdate: (self) => {
+          const skew = gsap.utils.clamp(-4, 4, self.getVelocity() / 350);
+          gsap.to(".skew-text", {
+            skewX: skew,
+            duration: 0.15,
+            ease: "power3.out",
+          });
+        },
+      });
+
+      /* ------------------------------
+         Cursor (SECTION-ONLY)
+      -------------------------------- */
+      const cursor = cursorRef.current;
+
+      const moveCursor = (e) => {
+        gsap.to(cursor, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.25,
+          ease: "power3.out",
+        });
+      };
+
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => {
+          cursor.style.opacity = "1";
+          window.addEventListener("mousemove", moveCursor);
+        },
+        onLeave: () => {
+          cursor.style.opacity = "0";
+          window.removeEventListener("mousemove", moveCursor);
+        },
+        onEnterBack: () => {
+          cursor.style.opacity = "1";
+          window.addEventListener("mousemove", moveCursor);
+        },
+        onLeaveBack: () => {
+          cursor.style.opacity = "0";
+          window.removeEventListener("mousemove", moveCursor);
+        },
+      });
+
+      ScrollTrigger.refresh();
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-[#030303] border-t border-white/5">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div style={{ x }} className="flex h-full w-[300vw]">
-          {testimonials.map((t, i) => (
-            <div 
-              key={i} 
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              className={`w-screen h-full flex flex-col justify-center px-6 md:px-20 lg:px-32 relative flex-shrink-0 cursor-none
-                ${t.theme === 'cyan' ? 'bg-[#46cef6] text-black' : 
-                  t.theme === 'light' ? 'bg-[#e0e0e0] text-black' : 
-                  'bg-[#0a0a0a] text-white'}`}
-            >
-               {/* Content */}
-               <div className="max-w-5xl relative z-10">
-                 <Quote className={`w-16 h-16 mb-12 opacity-50 ${t.theme === 'dark' ? 'text-[#46cef6]' : 'text-current'}`} />
-                 
-                 <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-16 tracking-tighter">
-                   "{t.quote}"
-                 </h3>
-                 
-                 <div className="flex items-center gap-6">
-                    <div className={`h-px w-16 ${t.theme === 'dark' ? 'bg-[#46cef6]' : 'bg-current opacity-30'}`} />
-                    <div>
-                      <p className="text-xl font-bold tracking-widest uppercase">{t.author}</p>
-                      <p className="text-sm font-mono opacity-60 mt-1">{t.role}, {t.company}</p>
-                    </div>
-                 </div>
-               </div>
-               
-               {/* Decoration / Number */}
-               <div className="absolute bottom-10 right-10 md:bottom-20 md:right-20 text-[15vw] font-black opacity-5 select-none font-mono leading-none">
-                 0{t.id}
-               </div>
+    <section
+      ref={sectionRef}
+      className="relative h-screen bg-[#030303] overflow-hidden"
+    >
+      <div
+        ref={trackRef}
+        className="flex h-screen w-[300vw] will-change-transform"
+      >
+        {testimonials.map((t) => (
+          <div
+            key={t.id}
+            className={`testimonial-panel w-screen h-screen flex items-center px-8 md:px-28 relative cursor-none
+              ${
+                t.theme === "cyan"
+                  ? "bg-[#46cef6] text-black"
+                  : t.theme === "light"
+                  ? "bg-[#e5e5e5] text-black"
+                  : "bg-[#0a0a0a] text-white"
+              }`}
+          >
+            <div className="max-w-5xl skew-text">
+              <Quote
+                className={`w-14 h-14 mb-10 opacity-40 ${
+                  t.theme === "dark"
+                    ? "text-[#46cef6]"
+                    : "text-current"
+                }`}
+              />
 
-               {/* Texture Overlay */}
-               <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+              <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-14">
+                “{t.quote}”
+              </h3>
+
+              <div className="flex items-center gap-6">
+                <span className="h-px w-14 bg-current opacity-30" />
+                <div>
+                  <p className="text-lg font-semibold uppercase tracking-wide">
+                    {t.author}
+                  </p>
+                  <p className="text-sm opacity-60 font-mono">
+                    {t.role}, {t.company}
+                  </p>
+                </div>
+              </div>
             </div>
-          ))}
-        </motion.div>
+
+            <div className="absolute bottom-10 right-10 text-[14vw] font-black opacity-[0.04] font-mono select-none">
+              0{t.id}
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Floating Cursor "This Could Be You" */}
-      <motion.div 
-        className="fixed top-0 left-0 w-32 h-32 bg-[#46cef6] rounded-full flex items-center justify-center pointer-events-none z-[999] text-black font-bold text-center leading-none text-sm font-mono shadow-[0_0_40px_rgba(70,206,246,0.4)]"
-        style={{ 
-            x: cursorX, 
-            y: cursorY, 
-            translateX: "-50%", 
-            translateY: "-50%" 
-        }}
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ 
-          scale: isHovered ? 1 : 0, 
-          opacity: isHovered ? 1 : 0 
-        }}
-        transition={{ duration: 0.2 }}
+      {/* Cursor */}
+      <div
+        ref={cursorRef}
+        className="fixed top-0 left-0 w-28 h-28 rounded-full bg-[#46cef6] mix-blend-difference pointer-events-none z-[999] flex items-center justify-center text-black font-mono text-xs text-center leading-tight opacity-0"
+        style={{ transform: "translate(-50%, -50%)" }}
       >
-        THIS<br/>COULD BE<br/>YOU
-      </motion.div>
+        THIS
+        <br />
+        COULD BE
+        <br />
+        YOU
+      </div>
     </section>
   );
-};
-
-export default Testimonials;
+}
