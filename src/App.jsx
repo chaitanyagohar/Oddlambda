@@ -20,6 +20,7 @@ import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import CyberTunnel from './components/CyberTunnel';
 import CookieConsent from './components/CookieConsent';
+import Navbar from './components/Navbar';
 
 
 // --------------------------------------------------------------------------
@@ -231,57 +232,57 @@ const Spotlight = () => {
   );
 };
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+// const Navbar = () => {
+//   const [isOpen, setIsOpen] = useState(false);
   
-  return (
-    <nav className="fixed top-0 left-0 w-full z-50 py-6 px-6 mix-blend-difference text-white">
-      <div className="max-w-7xl mx-auto flex justify-between items-center backdrop-blur-md bg-black/20 rounded-full px-8 py-3 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
-        <a href="#" className="text-lg font-bold tracking-tight flex items-center gap-2 group">
-          <div className="relative flex items-center justify-center w-8 h-8 bg-white text-black rounded-full overflow-hidden">
-            <Terminal size={16} className="relative z-10" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-gray-200 to-white opacity-100" />
-          </div>
-          <span className="tracking-widest text-sm font-mono">ODDLAMBDA</span>
-        </a>
+//   return (
+//     <nav className="fixed top-0 left-0 w-full z-50 py-6 px-6 mix-blend-difference text-white">
+//       <div className="max-w-7xl mx-auto flex justify-between items-center backdrop-blur-md bg-black/20 rounded-full px-8 py-3 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+//         <a href="#" className="text-lg font-bold tracking-tight flex items-center gap-2 group">
+//           <div className="relative flex items-center justify-center w-8 h-8 bg-white text-black rounded-full overflow-hidden">
+//             <Terminal size={16} className="relative z-10" />
+//             <div className="absolute inset-0 bg-gradient-to-tr from-gray-200 to-white opacity-100" />
+//           </div>
+//           <span className="tracking-widest text-sm font-mono">ODDLAMBDA</span>
+//         </a>
 
-        <div className="hidden md:flex items-center gap-10">
-          {["Work", "Expertise", "Pricing", "Process"].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="text-xs font-bold uppercase tracking-[0.2em] hover:text-[#46cef6] transition-colors text-neutral-400">
-              {item}
-            </a>
-          ))}
-          <a href="#contact" className="text-xs font-bold uppercase tracking-[0.2em] bg-white text-black px-6 py-2 rounded-full hover:bg-[#46cef6] transition-colors shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-            Start Project
-          </a>
-        </div>
+//         <div className="hidden md:flex items-center gap-10">
+//           {["Work", "Expertise", "Pricing", "Process"].map((item) => (
+//             <a key={item} href={`#${item.toLowerCase()}`} className="text-xs font-bold uppercase tracking-[0.2em] hover:text-[#46cef6] transition-colors text-neutral-400">
+//               {item}
+//             </a>
+//           ))}
+//           <a href="#contact" className="text-xs font-bold uppercase tracking-[0.2em] bg-white text-black px-6 py-2 rounded-full hover:bg-[#46cef6] transition-colors shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+//             Start Project
+//           </a>
+//         </div>
 
-        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X /> : <Menu />}
-        </button>
-      </div>
+//         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+//           {isOpen ? <X /> : <Menu />}
+//         </button>
+//       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="absolute top-24 left-4 right-4 bg-[#111] border border-white/10 p-6 md:hidden rounded-2xl overflow-hidden"
-          >
-            <div className="flex flex-col gap-6 text-center">
-              {["Work", "Expertise", "Pricing", "Process", "Contact"].map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-xl font-light uppercase text-white/80">
-                  {item}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-};
+//       <AnimatePresence>
+//         {isOpen && (
+//           <motion.div 
+//             initial={{ opacity: 0, height: 0 }}
+//             animate={{ opacity: 1, height: 'auto' }}
+//             exit={{ opacity: 0, height: 0 }}
+//             className="absolute top-24 left-4 right-4 bg-[#111] border border-white/10 p-6 md:hidden rounded-2xl overflow-hidden"
+//           >
+//             <div className="flex flex-col gap-6 text-center">
+//               {["Work", "Expertise", "Pricing", "Process", "Contact"].map((item) => (
+//                 <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-xl font-light uppercase text-white/80">
+//                   {item}
+//                 </a>
+//               ))}
+//             </div>
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </nav>
+//   );
+// };
 const Hero = () => {
   const [sequence, setSequence] = useState(0);
 
