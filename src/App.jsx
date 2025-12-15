@@ -301,7 +301,7 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen bg-[#030303] text-white px-6 flex items-center overflow-hidden">
 
-      {/* GridScan Background (your original)
+      GridScan Background (your original)
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: sequence >= 1 ? 1 : 0 }}
@@ -320,7 +320,7 @@ const Hero = () => {
           chromaticAberration={0.002}
           noiseIntensity={0.01}
         />
-      </motion.div> */}
+      </motion.div>
 
  {/* REPLACE GRIDSCAN WITH THIS: */}
       <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
