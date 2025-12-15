@@ -421,15 +421,26 @@ export const GridScan = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    rendererRef.current = renderer;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.NoToneMapping;
-    renderer.autoClear = false;
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
+    // Check for existing children to prevent duplication on re-render
+    while(container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+
+    let renderer;
+    try {
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "default" });
+        rendererRef.current = renderer;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5)); // Cap pixel ratio for performance
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.NoToneMapping;
+        renderer.autoClear = false;
+        renderer.setClearColor(0x000000, 0);
+        container.appendChild(renderer.domElement);
+    } catch (e) {
+        console.warn("WebGL Renderer creation failed:", e);
+        return;
+    }
 
     const uniforms = {
       iResolution: {
@@ -501,17 +512,23 @@ export const GridScan = ({
     }
 
     const onResize = () => {
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      material.uniforms.iResolution.value.set(container.clientWidth, container.clientHeight, renderer.getPixelRatio());
-      if (composerRef.current) composerRef.current.setSize(container.clientWidth, container.clientHeight);
+        if (!container || !renderer) return;
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        material.uniforms.iResolution.value.set(container.clientWidth, container.clientHeight, renderer.getPixelRatio());
+        if (composerRef.current) composerRef.current.setSize(container.clientWidth, container.clientHeight);
     };
     window.addEventListener('resize', onResize);
 
     let last = performance.now();
+    let animationFrameId;
+
     const tick = () => {
       const now = performance.now();
       const dt = Math.max(0, Math.min(0.1, (now - last) / 1000));
       last = now;
+
+      // Ensure refs are valid before using
+      if (!lookCurrent.current || !tiltCurrent.current) return;
 
       lookCurrent.current.copy(
         smoothDampVec2(lookCurrent.current, lookTarget.current, lookVel.current, smoothTime, maxSpeed, dt)
@@ -545,28 +562,43 @@ export const GridScan = ({
       material.uniforms.uYaw.value = THREE.MathUtils.clamp(yawCurrent.current * yawScale, -0.6, 0.6);
 
       material.uniforms.iTime.value = now / 1000;
+      
+      // Safety check for context loss
+      if(renderer.getContext().isContextLost()) return;
+
       renderer.clear(true, true, true);
       if (composerRef.current) {
         composerRef.current.render(dt);
       } else {
         renderer.render(scene, camera);
       }
-      rafRef.current = requestAnimationFrame(tick);
+      animationFrameId = requestAnimationFrame(tick);
     };
-    rafRef.current = requestAnimationFrame(tick);
+    
+    animationFrameId = requestAnimationFrame(tick);
+    rafRef.current = animationFrameId;
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', onResize);
-      material.dispose();
-      quad.geometry.dispose();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      
+      // Proper cleanup sequence
+      if (material) material.dispose();
+      if (quad && quad.geometry) quad.geometry.dispose();
 
       if (composerRef.current) {
         composerRef.current.dispose();
         composerRef.current = null;
       }
-      renderer.dispose();
-      container.removeChild(renderer.domElement);
+      
+      if (renderer) {
+          renderer.dispose();
+          // Optional: Force context loss to ensure cleanup in dev
+          try {
+             renderer.forceContextLoss();
+          } catch(e) {}
+          renderer.domElement.remove();
+      }
     };
   }, [
     sensitivity,
@@ -597,6 +629,7 @@ export const GridScan = ({
     yawScale
   ]);
 
+  // Uniform updates effect (kept separate for perf)
   useEffect(() => {
     const m = materialRef.current;
     if (m) {
@@ -646,6 +679,7 @@ export const GridScan = ({
     scanDelay
   ]);
 
+  // Gyro effect
   useEffect(() => {
     if (!enableGyro) return;
     const handler = e => {
@@ -663,6 +697,7 @@ export const GridScan = ({
     };
   }, [enableGyro, uiFaceActive]);
 
+  // Face API loading
   useEffect(() => {
     let canceled = false;
     const load = async () => {
@@ -682,6 +717,7 @@ export const GridScan = ({
     };
   }, [modelsPath]);
 
+  // Webcam logic
   useEffect(() => {
     let stop = false;
     let lastDetect = 0;
@@ -805,6 +841,9 @@ export const GridScan = ({
   );
 };
 
+export default GridScan;
+
+// ... Helpers ...
 function srgbColor(hex) {
   const c = new THREE.Color(hex);
   return c.convertSRGBToLinear();
