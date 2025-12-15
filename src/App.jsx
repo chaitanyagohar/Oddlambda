@@ -8,7 +8,7 @@ import {
 // --- Imports from Components ---
 // --------------------------------------------------------------------------
 // FOR LOCAL USE: Uncomment the line below and delete the placeholder GridScan component below
-// import { GridScan } from './components/GridScan';
+import { GridScan } from './components/GridScan';
 import Manifesto from './components/Manifesto';
 import HorizontalScroll from './components/HorizontalScroll';
 import Description from './components/Description';
@@ -18,7 +18,7 @@ import Services from './components/Services';
 import About from './components/About';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
-import CyberTunnel from './components/CyberTunnel';
+// import CyberTunnel from './components/CyberTunnel';
 import CookieConsent from './components/CookieConsent';
 import Navbar from './components/Navbar';
 
@@ -301,7 +301,6 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen bg-[#030303] text-white px-6 flex items-center overflow-hidden">
 
-      GridScan Background (your original)
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: sequence >= 1 ? 1 : 0 }}
@@ -323,14 +322,14 @@ const Hero = () => {
       </motion.div>
 
  {/* REPLACE GRIDSCAN WITH THIS: */}
-      <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+      {/* <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
         <CyberTunnel 
           colors={["#46cef6", "#1a1a1a"]} 
           speed={0.1} 
           size={10} 
           opacity={0.4} 
         />
-      </div>
+      </div> */}
 
 
       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8">
