@@ -21,6 +21,10 @@ import CTA from './components/CTA';
 // import CyberTunnel from './components/CyberTunnel';
 import CookieConsent from './components/CookieConsent';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Hero from './components/Hero';
+import TrustedBy from './components/TrustedBy';
+import Loader from './components/Loader';
 
 
 // --------------------------------------------------------------------------
@@ -232,191 +236,8 @@ const Spotlight = () => {
   );
 };
 
-// const Navbar = () => {
-//   const [isOpen, setIsOpen] = useState(false);
-  
-//   return (
-//     <nav className="fixed top-0 left-0 w-full z-50 py-6 px-6 mix-blend-difference text-white">
-//       <div className="max-w-7xl mx-auto flex justify-between items-center backdrop-blur-md bg-black/20 rounded-full px-8 py-3 border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
-//         <a href="#" className="text-lg font-bold tracking-tight flex items-center gap-2 group">
-//           <div className="relative flex items-center justify-center w-8 h-8 bg-white text-black rounded-full overflow-hidden">
-//             <Terminal size={16} className="relative z-10" />
-//             <div className="absolute inset-0 bg-gradient-to-tr from-gray-200 to-white opacity-100" />
-//           </div>
-//           <span className="tracking-widest text-sm font-mono">ODDLAMBDA</span>
-//         </a>
-
-//         <div className="hidden md:flex items-center gap-10">
-//           {["Work", "Expertise", "Pricing", "Process"].map((item) => (
-//             <a key={item} href={`#${item.toLowerCase()}`} className="text-xs font-bold uppercase tracking-[0.2em] hover:text-[#46cef6] transition-colors text-neutral-400">
-//               {item}
-//             </a>
-//           ))}
-//           <a href="#contact" className="text-xs font-bold uppercase tracking-[0.2em] bg-white text-black px-6 py-2 rounded-full hover:bg-[#46cef6] transition-colors shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-//             Start Project
-//           </a>
-//         </div>
-
-//         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-//           {isOpen ? <X /> : <Menu />}
-//         </button>
-//       </div>
-
-//       <AnimatePresence>
-//         {isOpen && (
-//           <motion.div 
-//             initial={{ opacity: 0, height: 0 }}
-//             animate={{ opacity: 1, height: 'auto' }}
-//             exit={{ opacity: 0, height: 0 }}
-//             className="absolute top-24 left-4 right-4 bg-[#111] border border-white/10 p-6 md:hidden rounded-2xl overflow-hidden"
-//           >
-//             <div className="flex flex-col gap-6 text-center">
-//               {["Work", "Expertise", "Pricing", "Process", "Contact"].map((item) => (
-//                 <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-xl font-light uppercase text-white/80">
-//                   {item}
-//                 </a>
-//               ))}
-//             </div>
-//           </motion.div>
-//         )}
-//       </AnimatePresence>
-//     </nav>
-//   );
-// };
-const Hero = () => {
-  const [sequence, setSequence] = useState(0);
-
-  useEffect(() => {
-    const t = [
-      setTimeout(() => setSequence(1), 200),   // GridScan
-      setTimeout(() => setSequence(2), 500),   // Left label
-      setTimeout(() => setSequence(3), 900),   // Headline
-      setTimeout(() => setSequence(4), 1400),  // Paragraph
-      setTimeout(() => setSequence(5), 1800),  // Right meta
-      setTimeout(() => setSequence(6), 2200),  // Scroll cue
-    ];
-    return () => t.forEach(clearTimeout);
-  }, []);
-
-  return (
-    <section className="relative min-h-screen bg-[#030303] text-white px-6 flex items-center overflow-hidden">
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: sequence >= 1 ? 1 : 0 }}
-        transition={{ duration: 1 }}
-        className="absolute inset-0"
-      >
-        <GridScan
-          sensitivity={0.55}
-          lineThickness={1}
-          linesColor="#392e4e"
-          gridScale={0.1}
-          scanColor="#FF9FFC"
-          scanOpacity={0.4}
-          enablePost
-          bloomIntensity={0.6}
-          chromaticAberration={0.002}
-          noiseIntensity={0.01}
-        />
-      </motion.div>
-
- {/* REPLACE GRIDSCAN WITH THIS: */}
-      {/* <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
-        <CyberTunnel 
-          colors={["#46cef6", "#1a1a1a"]} 
-          speed={0.1} 
-          size={10} 
-          opacity={0.4} 
-        />
-      </div> */}
 
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8">
-
-        {/* LEFT — Editorial Label */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: sequence >= 2 ? 1 : 0, y: sequence >= 2 ? 0 : 20 }}
-          transition={{ duration: 0.6 }}
-          className="md:col-span-3 flex items-start"
-        >
-          <div className="space-y-6">
-            <div className="w-12 h-[2px] bg-white" />
-            <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-400">
-              Digital Studio
-            </p>
-            <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-600">
-              Est. 2025
-            </p>
-          </div>
-        </motion.div>
-
-        {/* CENTER — Brutalist Headline */}
-        <div className="md:col-span-7">
-          <motion.h1
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: sequence >= 3 ? 1 : 0, y: sequence >= 3 ? 0 : 60 }}
-            transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
-            className="font-extrabold leading-[0.85] tracking-[-0.04em]
-                       text-[14vw] md:text-[9vw] lg:text-[8vw]"
-          >
-            CRAFTING
-            <br />
-            DIGITAL
-            <br />
-            REALITY
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: sequence >= 4 ? 1 : 0, y: sequence >= 4 ? 0 : 10 }}
-            transition={{ duration: 0.6 }}
-            className="mt-10 max-w-xl text-neutral-400 text-lg font-light leading-relaxed"
-          >
-            We design and build high-performance digital systems where clarity,
-            speed, and intent matter more than decoration.
-          </motion.p>
-        </div>
-
-        {/* RIGHT — Meta / CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: sequence >= 5 ? 1 : 0, y: sequence >= 5 ? 0 : 20 }}
-          transition={{ duration: 0.6 }}
-          className="md:col-span-2 flex flex-col justify-end items-start md:items-end gap-6"
-        >
-          <a
-            href="#contact"
-            className="group flex items-center gap-3 text-sm font-mono uppercase tracking-widest"
-          >
-            <span className="relative">
-              Start Project
-              <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300" />
-            </span>
-            <ArrowUpRight size={14} />
-          </a>
-
-          <div className="text-xs font-mono uppercase tracking-[0.3em] text-neutral-600 text-right">
-            <p>Based Worldwide</p>
-            <p>Remote Studio</p>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: sequence >= 6 ? 1 : 0 }}
-        transition={{ duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-500"
-      >
-        <span className="text-[10px] font-mono tracking-widest">SCROLL</span>
-        <div className="w-[1px] h-10 bg-neutral-600" />
-      </motion.div>
-    </section>
-  );
-};
 
 
 const TechStack = () => {
@@ -438,6 +259,141 @@ const TechStack = () => {
     </div>
   );
 };
+
+// const Hero = () => {
+//   const [sequence, setSequence] = useState(0);
+
+//   useEffect(() => {
+//     const t = [
+//       setTimeout(() => setSequence(1), 200),
+//       setTimeout(() => setSequence(2), 500),
+//       setTimeout(() => setSequence(3), 900),
+//       setTimeout(() => setSequence(4), 1400),
+//       setTimeout(() => setSequence(5), 1800),
+//       setTimeout(() => setSequence(6), 2200),
+//     ];
+
+//     return () => t.forEach(clearTimeout);
+//   }, []);
+
+//   return (
+//     <section className="relative min-h-screen bg-[#030303] text-white px-6 flex items-center overflow-hidden">
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: sequence >= 1 ? 1 : 0 }}
+//         transition={{ duration: 1 }}
+//         className="absolute inset-0"
+//       >
+//         <GridScan
+//           sensitivity={0.55}
+//           lineThickness={1}
+//           linesColor="#392e4e"
+//           gridScale={0.1}
+//           scanColor="#FF9FFC"
+//           scanOpacity={0.4}
+//           enablePost
+//           bloomIntensity={0.6}
+//           chromaticAberration={0.002}
+//           noiseIntensity={0.01}
+//         />
+//       </motion.div>
+
+//       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8">
+//         <motion.div
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{
+//             opacity: sequence >= 2 ? 1 : 0,
+//             y: sequence >= 2 ? 0 : 20,
+//           }}
+//           transition={{ duration: 0.6 }}
+//           className="md:col-span-3 flex items-start"
+//         >
+//           <div className="space-y-6">
+//             <div className="w-12 h-[2px] bg-white" />
+//             <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-400">
+//               Digital Studio
+//             </p>
+//             <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-600">
+//               Est. 2025
+//             </p>
+//           </div>
+//         </motion.div>
+
+//         <div className="md:col-span-7">
+//           <motion.h1
+//             initial={{ opacity: 0, y: 60 }}
+//             animate={{
+//               opacity: sequence >= 3 ? 1 : 0,
+//               y: sequence >= 3 ? 0 : 60,
+//             }}
+//             transition={{
+//               duration: 1,
+//               ease: [0.25, 1, 0.5, 1],
+//             }}
+//             className="font-extrabold leading-[0.85] tracking-[-0.04em] text-[14vw] md:text-[9vw] lg:text-[8vw]"
+//           >
+//             CRAFTING
+//             <br />
+//             DIGITAL
+//             <br />
+//             REALITY
+//           </motion.h1>
+
+//           <motion.p
+//             initial={{ opacity: 0, y: 10 }}
+//             animate={{
+//               opacity: sequence >= 4 ? 1 : 0,
+//               y: sequence >= 4 ? 0 : 10,
+//             }}
+//             transition={{ duration: 0.6 }}
+//             className="mt-10 max-w-xl text-neutral-400 text-lg font-light leading-relaxed"
+//           >
+//             We design and build high-performance digital systems where clarity,
+//             speed, and intent matter more than decoration.
+//           </motion.p>
+//         </div>
+
+//         <motion.div
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{
+//             opacity: sequence >= 5 ? 1 : 0,
+//             y: sequence >= 5 ? 0 : 20,
+//           }}
+//           transition={{ duration: 0.6 }}
+//           className="md:col-span-2 flex flex-col justify-end items-start md:items-end gap-6"
+//         >
+//           <a
+//             href="#contact"
+//             className="group flex items-center gap-3 text-sm font-mono uppercase tracking-widest"
+//           >
+//             <span className="relative">
+//               Start Project
+//               <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300" />
+//             </span>
+//             <ArrowUpRight size={14} />
+//           </a>
+
+//           <div className="text-xs font-mono uppercase tracking-[0.3em] text-neutral-600 text-right">
+//             <p>Based Worldwide</p>
+//             <p>Remote Studio</p>
+//           </div>
+//         </motion.div>
+//       </div>
+
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: sequence >= 6 ? 1 : 0 }}
+//         transition={{ duration: 0.6 }}
+//         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-500"
+//       >
+//         <span className="text-[10px] font-mono tracking-widest">SCROLL</span>
+//         <div className="w-[1px] h-10 bg-neutral-600" />
+//       </motion.div>
+//     </section>
+//   );
+// };
+
+
 
 const SelectedWorks = () => {
   const projects = [
@@ -467,7 +423,7 @@ const SelectedWorks = () => {
                 {/* Image Placeholder Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#050505]" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="px-6 py-3 border border-white/20 bg-black/50 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-widest text-white">View Project</span>
+                    <span className="px-6 py-3 border border-white/20  kdrop-blur-md rounded-full text-xs font-bold uppercase tracking-widest text-white">View Project</span>
                 </div>
               </div>
               <div className="p-8 absolute bottom-0 left-0 w-full">
@@ -746,23 +702,7 @@ const Contact = () => {
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="py-12 border-t border-white/5 bg-black text-center relative z-10">
-      <div className="text-white font-bold text-[10vw] opacity-[0.03] select-none pointer-events-none overflow-hidden whitespace-nowrap leading-none">
-        ODDLAMBDA
-      </div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
-        <div className="flex gap-8 text-neutral-500 text-sm font-mono uppercase tracking-widest">
-          <a href="#" className="hover:text-white transition-colors">Instagram</a>
-          <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-          <a href="#" className="hover:text-white transition-colors">Twitter</a>
-        </div>
-        <p className="text-neutral-600 text-xs">© {new Date().getFullYear()} Oddlambda Agency. All Rights Reserved.</p>
-      </div>
-    </footer>
-  );
-};
+
 
 export default function App() {
   return (
@@ -777,15 +717,17 @@ export default function App() {
           }
         }
       `}</style>
+      <Loader onLoadingComplete={() => setLoading(false)} />
       <NoiseOverlay />
       <Spotlight />
       <Navbar />
       
       <Hero />
-      {/* <About /> */}
+      <TrustedBy />
       <Description />
       <TechStack />
       <Manifesto />
+      {/* <About /> */}
       
       {/* --- Quote Section 1: Design Focus --- */}
       <QuoteSection 
@@ -821,7 +763,7 @@ export default function App() {
       <CTA />
       <Testimonials />
       <Contact />
-      <Footer />
+      <Footer/>
       <CookieConsent />
     </div>
   );
