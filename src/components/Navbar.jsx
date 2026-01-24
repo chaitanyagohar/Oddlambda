@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Terminal } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const navLinks = [
   { title: "Home", href: "#" },
@@ -21,7 +23,6 @@ const socials = [
    Animated Hamburger Icon
 ========================= */
 const Hamburger = ({ isOpen }) => {
-
   const line = "absolute h-[2px] w-5 bg-black rounded-full";
 
   return (
@@ -73,19 +74,18 @@ const Navbar = () => {
       transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
     }
   };
-const linkVariants = {
-  closed: { y: 100, opacity: 0 },
-  open: (i) => ({
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      delay: 0.4 + i * 0.1,
-      ease: [0.76, 0, 0.24, 1]
-    }
-  })
-};
-
+  const linkVariants = {
+    closed: { y: 100, opacity: 0 },
+    open: (i) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        delay: 0.4 + i * 0.1,
+        ease: [0.76, 0, 0.24, 1]
+      }
+    })
+  };
 
   const sidebarVariants = {
     closed: { opacity: 0, x: 20 },
@@ -99,21 +99,24 @@ const linkVariants = {
   return (
     <>
       {/* =========================
-         Top Navigation Bar
+          Top Navigation Bar
       ========================= */}
       <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-6 md:px-12 flex justify-between items-center mix-blend-difference text-white">
         
-        {/* Logo */}
+        {/* Logo - Updated to Image */}
         <motion.a
           href="#"
           style={{ scale: logoScale, originX: 0 }}
-          className="text-lg font-bold tracking-tight flex items-center gap-2 z-[101]"
+          className="z-[101] block"
         >
-          <div className="relative flex items-center justify-center w-8 h-8 bg-white text-black rounded-full overflow-hidden">
-            <Terminal size={16} className="relative z-10" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-gray-200 to-white" />
-          </div>
-          <span className="tracking-widest text-sm font-mono">ODDLAMBDA</span>
+          {/* REPLACE src="/your-logo.png" with your actual logo path.
+             Ensure your logo is white with transparent bg for the mix-blend to work best.
+          */}
+          <img 
+            src="/oddlambdalogo.png" 
+            alt="ODDLAMBDA" 
+            className="h-6 md:h-6 w-auto object-contain" 
+          />
         </motion.a>
 
         {/* Menu Button */}
@@ -145,7 +148,7 @@ const linkVariants = {
       </nav>
 
       {/* =========================
-         Fullscreen Menu
+          Fullscreen Menu
       ========================= */}
       <AnimatePresence>
         {isOpen && (

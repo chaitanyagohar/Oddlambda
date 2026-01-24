@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const Loader = ({ onLoadingComplete }) => {
@@ -8,10 +8,12 @@ const Loader = ({ onLoadingComplete }) => {
   const text = "OddLambda";
 
   useEffect(() => {
+    // Reduced to 2500ms (2.5s) for a snappier feel.
+    // Logic: Typing finishes @ ~1.6s -> 0.9s pause -> Slide up.
     const timer = setTimeout(() => {
       setComplete(true);
       if (onLoadingComplete) onLoadingComplete();
-    }, 3500);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);
@@ -20,19 +22,18 @@ const Loader = ({ onLoadingComplete }) => {
     <AnimatePresence>
       {!complete && (
         <motion.div
-          // CHANGED: z-50 -> z-[9999] to ensure it covers the Navbar
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#030303] text-white overflow-hidden"
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ y: 0 }}
+          exit={{ y: "-100%" }} // The "Screen goes up" animation
+          transition={{
+            duration: 0.8,
+            ease: [0.76, 0, 0.24, 1], // Custom bezier for that premium "smooth" feel
+          }}
         >
           {/* ---------------- TYPING CONTAINER ---------------- */}
           <motion.div
-            initial={{ scale: 1 }}
-            animate={{ scale: 100, opacity: 0 }}
-            transition={{
-              scale: { delay: 2.2, duration: 1, ease: [0.76, 0, 0.24, 1] },
-              opacity: { delay: 2.4, duration: 0.5 },
-            }}
+            // Removed the scale: 100 animation.
+            // The text now stays stable and moves up with the background.
             className="relative flex items-start gap-2"
           >
             {/* TEXT */}
@@ -68,9 +69,6 @@ const Loader = ({ onLoadingComplete }) => {
               R
             </motion.span>
           </motion.div>
-
-          {/* ---------------- DARK CURTAIN WIPE ---------------- */}
-          
         </motion.div>
       )}
     </AnimatePresence>
