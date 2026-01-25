@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 
 const logos = [
-  "/logos/client1.svg",
-  "/logos/client2.svg",
-  "/logos/client3.svg",
+  "/public/logos/logo2bg.png",
+  "/public/logos/drootle.png",
+  "/public/logos/image-removebg-preview.png",
   "/logos/client4.svg",
   "/logos/client5.svg",
   "/logos/client6.svg",
@@ -33,12 +33,13 @@ export default function TrustedBy() {
             {[...logos, ...logos].map((logo, i) => (
               <div
                 key={i}
-                className="flex items-center justify-center min-w-[140px] opacity-70 hover:opacity-100 transition"
+                className="flex items-center justify-center min-w-[140px] opacity-100 transition"
               >
+                
                 <img
                   src={logo}
                   alt="Client logo"
-                  className="h-8 w-auto object-contain grayscale"
+                  className="h-16 w-auto object-contain opacity-100 transition-opacity duration-300"
                 />
               </div>
             ))}

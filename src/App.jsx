@@ -14,7 +14,6 @@ import HorizontalScroll from './components/HorizontalScroll';
 import Description from './components/Description';
 import DigitalGrowth from './components/MarketingSection';
 import MarketingSection from './components/MarketingSection';
-import Services from './components/Services';
 import About from './components/About';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
@@ -25,6 +24,7 @@ import Footer from './components/Footer';
 import Hero from './components/Hero';
 import TrustedBy from './components/TrustedBy';
 import Loader from './components/Loader';
+import WhatWeOffer from './components/WhatWeOffer';
 
 
 // --------------------------------------------------------------------------
@@ -723,10 +723,11 @@ export default function App() {
       <Navbar />
       
       <Hero />
-      <TrustedBy />
       <Description />
+      {/* <TrustedBy /> */}
+      <WhatWeOffer />
       <TechStack />
-      <Manifesto />
+      {/* <Manifesto /> */}
       {/* <About /> */}
       
       {/* --- Quote Section 1: Design Focus --- */}
@@ -747,7 +748,6 @@ export default function App() {
         direction={6}
       />
 
-      <Services />
       <MarketingSection />
       <Packages />
       
@@ -760,8 +760,8 @@ export default function App() {
       />
 
       <ProcessSection />
-      <CTA />
       <Testimonials />
+      <CTA />
       <Contact />
       <Footer/>
       <CookieConsent />

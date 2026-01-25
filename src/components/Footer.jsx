@@ -1,20 +1,121 @@
-import React from "react"
-const Footer = () => {
+import React from "react";
+
+export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <footer className="py-12 border-t border-white/5 bg-black text-center relative z-10">
-      <div className="text-white font-bold text-[10vw] opacity-[0.03] select-none pointer-events-none overflow-hidden whitespace-nowrap leading-none">
-        ODDLAMBDA
+    <footer className="relative min-h-[60vh] bg-[#FFFEF7] border-t border-stone-200 overflow-hidden flex items-center">
+
+      {/* Background Wordmark */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <span className="text-[22vw] font-bold tracking-tight text-stone-900/5 leading-none">
+          ODDLAMBDA
+        </span>
       </div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
-        <div className="flex gap-8 text-neutral-500 text-sm font-mono uppercase tracking-widest">
-          <a href="#" className="hover:text-white transition-colors">Instagram</a>
-          <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-          <a href="#" className="hover:text-white transition-colors">Twitter</a>
+
+      {/* Ambient Glow */}
+      <div className="absolute top-1/3 left-[-10%] w-[500px] h-[500px] bg-amber-200/30 rounded-full blur-[140px]" />
+      <div className="absolute bottom-1/3 right-[-10%] w-[400px] h-[400px] bg-rose-200/25 rounded-full blur-[140px]" />
+
+      <div className="relative max-w-7xl mx-auto px-6 md:px-24 w-full">
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+          {/* LEFT: Brand / Quote */}
+          <div className="space-y-8 text-center lg:text-left">
+
+            <h2 className="text-4xl md:text-5xl xl:text-6xl font-semibold text-stone-900 leading-tight">
+              Building digital products <br />
+              that stand the test of time.
+            </h2>
+
+            <p className="text-lg md:text-xl text-stone-600 max-w-xl mx-auto lg:mx-0">
+              “Great software is not defined by trends, but by clarity,
+              discipline, and relentless attention to detail.”
+            </p>
+
+            <p className="text-sm font-mono uppercase tracking-widest text-amber-700">
+              — Oddlambda Philosophy
+            </p>
+          </div>
+
+          {/* RIGHT: Navigation / Meta */}
+          <div className="flex flex-col items-center lg:items-end space-y-12">
+
+            {/* Navigation */}
+            <nav className="flex flex-wrap justify-center lg:justify-end gap-x-10 gap-y-4 text-sm font-mono uppercase tracking-widest text-stone-600">
+
+              <a href="/" className="hover:text-stone-900 transition-colors">
+                Home
+              </a>
+
+              <a href="/about" className="hover:text-stone-900 transition-colors">
+                About
+              </a>
+
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-stone-900 transition-colors"
+              >
+                Instagram
+              </a>
+
+              <a href="/contact" className="hover:text-stone-900 transition-colors">
+                Contact
+              </a>
+
+              <button
+                onClick={scrollToTop}
+                className="hover:text-stone-900 transition-colors"
+              >
+                Back to Top
+              </button>
+            </nav>
+
+            {/* Tagline Block */}
+            <div className="text-center lg:text-right space-y-3">
+
+              <p className="text-stone-700 text-lg font-medium">
+                Design. Engineering. Growth.
+              </p>
+
+              <p className="text-stone-500 max-w-sm">
+                We collaborate with founders and teams to transform complex
+                ideas into scalable, resilient digital platforms.
+              </p>
+            </div>
+
+            {/* Legal */}
+            <div className="flex items-center gap-4 text-xs text-stone-500">
+
+              <p>
+                © {new Date().getFullYear()} Oddlambda
+              </p>
+
+              <span className="text-stone-400">•</span>
+
+              <a href="/privacy" className="hover:text-stone-900 transition-colors">
+                Privacy
+              </a>
+
+              <span className="text-stone-400">/</span>
+
+              <a href="/terms" className="hover:text-stone-900 transition-colors">
+                Terms
+              </a>
+
+            </div>
+
+          </div>
         </div>
-        <p className="text-neutral-600 text-xs">© {new Date().getFullYear()} Oddlambda Agency. All Rights Reserved.</p>
       </div>
     </footer>
   );
-};
- 
-export default Footer; 
+}
