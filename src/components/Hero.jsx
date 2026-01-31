@@ -20,7 +20,6 @@ const Hero = () => {
   const [serviceIndex, setServiceIndex] = useState(0);
   const [time, setTime] = useState("");
   
-  // Parallax Logic
   const springConfig = { damping: 25, stiffness: 120 };
   const mouseX = useSpring(0, springConfig);
   const mouseY = useSpring(0, springConfig);
@@ -29,20 +28,18 @@ const Hero = () => {
   const xTo = useTransform(mouseX, [-0.5, 0.5], [20, -20]);
   const xPerform = useTransform(mouseX, [-0.5, 0.5], [-30, 30]);
 
-  // Animation Sequence
   useEffect(() => {
     const baseDelay = 2400; 
     const timers = [
-      setTimeout(() => setSequence(1), baseDelay + 200), // Grid
-      setTimeout(() => setSequence(2), baseDelay + 500), // Services Corner
-      setTimeout(() => setSequence(3), baseDelay + 900), // Main Text
-      setTimeout(() => setSequence(5), baseDelay + 1400), // Paragraph
-      setTimeout(() => setSequence(6), baseDelay + 1800), // CTA & Status
+      setTimeout(() => setSequence(1), baseDelay + 200),
+      setTimeout(() => setSequence(2), baseDelay + 500),
+      setTimeout(() => setSequence(3), baseDelay + 900),
+      setTimeout(() => setSequence(5), baseDelay + 1400),
+      setTimeout(() => setSequence(6), baseDelay + 1800),
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  // Mouse Move Listener for Parallax
   useEffect(() => {
     const move = (e) => {
       const x = e.clientX / window.innerWidth - 0.5;
@@ -54,24 +51,16 @@ const Hero = () => {
     return () => window.removeEventListener("mousemove", move);
   }, [mouseX, mouseY]);
 
-  // Service Rotation Timer
   useEffect(() => {
-    const i = setInterval(
-      () => setServiceIndex((v) => (v + 1) % services.length),
-      3500
-    );
+    const i = setInterval(() => setServiceIndex((v) => (v + 1) % services.length), 3500);
     return () => clearInterval(i);
   }, []);
 
-  // Live Clock
   useEffect(() => {
     const updateTime = () => {
         const now = new Date();
         setTime(now.toLocaleTimeString('en-US', { 
-            hour12: false, 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit' 
+            hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' 
         }));
     };
     updateTime();
@@ -81,7 +70,6 @@ const Hero = () => {
 
   return (
     <section className="relative h-screen bg-[#030303] text-white flex flex-col justify-center overflow-hidden selection:bg-amber-400/30"> 
-      
       {/* Noise Texture */}
       <div className="absolute inset-0 z-[5] pointer-events-none opacity-[0.05] mix-blend-overlay overflow-hidden">
         <div className="w-[200%] h-[200%] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] animate-noise" />
@@ -143,10 +131,7 @@ const Hero = () => {
          </div>
       </motion.div>
 
-      {/* Center Stage */}
       <div className="relative z-10 w-full max-w-[90rem] mx-auto px-4 sm:px-6 flex flex-col justify-center h-full pb-10 pointer-events-none">
-        
-        {/* DESIGNED */}
         <motion.h1
            initial={{ opacity: 0, y: 40 }}
            animate={{ opacity: sequence >= 3 ? 1 : 0, y: sequence >= 3 ? 0 : 40 }}
@@ -157,7 +142,6 @@ const Hero = () => {
           DESIGNED
         </motion.h1>
 
-        {/* to */}
         <motion.div
            initial={{ opacity: 0, scale: 0.9 }}
            animate={{ opacity: sequence >= 3 ? 1 : 0, scale: sequence >= 3 ? 1 : 0.9 }}
@@ -170,85 +154,37 @@ const Hero = () => {
            <span className="h-px w-12 sm:w-24 bg-stone-700" />
         </motion.div>
 
-        {/* PERFORM */}
         <motion.div
            className="w-full relative self-center pointer-events-auto"
            style={{ x: xPerform }}
         >
-             <svg
-                viewBox="0 0 1300 280" 
-                width="100%"
-                className="w-full h-auto max-h-[25vh] sm:max-h-[35vh]"
-              >
+             <svg viewBox="0 0 1300 280" width="100%" className="w-full h-auto max-h-[25vh] sm:max-h-[35vh]">
                 <defs>
                   <mask id="perform-mask">
                     <rect width="100%" height="100%" fill="black" />
-                    <text
-                      x="50%"
-                      y="75%"
-                      textAnchor="middle"
-                      fontSize="260"
-                      fontWeight="900"
-                      fill="white"
-                      letterSpacing="-12"
-                      fontFamily="system-ui, -apple-system, sans-serif"
-                    >
+                    <text x="50%" y="75%" textAnchor="middle" fontSize="260" fontWeight="900" fill="white" letterSpacing="-12" fontFamily="system-ui, -apple-system, sans-serif">
                       PERFORM
                     </text>
                   </mask>
                 </defs>
-
-                <foreignObject
-                  width="100%"
-                  height="100%"
-                  mask="url(#perform-mask)"
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-full object-cover opacity-90 grayscale-[0.2] contrast-125"
-                  >
-                    <source
-                      src="https://www.pexels.com/download/video/5935837/"
-                      type="video/mp4"
-                    />
+                <foreignObject width="100%" height="100%" mask="url(#perform-mask)">
+                  <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-90 grayscale-[0.2] contrast-125">
+                    <source src="https://www.pexels.com/download/video/5935837/" type="video/mp4" />
                   </video>
                 </foreignObject>
               </svg>
         </motion.div>
 
-        {/* PARAGRAPH */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: sequence >= 5 ? 1 : 0 }}
           transition={{ duration: 1 }}
-          className="
-            relative z-10 pointer-events-auto
-            mt-10 md:mt-16           
-            ml-2 md:ml-[20%]         
-            max-w-[90%] md:max-w-xl
-            text-xs sm:text-sm md:text-base
-            text-stone-300 font-light leading-relaxed
-            border-l border-stone-800 pl-4
-          "
+          className="relative z-10 pointer-events-auto mt-10 md:mt-16 ml-2 md:ml-[20%] max-w-[90%] md:max-w-xl text-xs sm:text-sm md:text-base text-stone-300 font-light leading-relaxed border-l border-stone-800 pl-4"
         >
-           We don't just build websites; we engineer{" "}
-           <span className="border-b border-amber-400/40 text-stone-200">high-performance digital ecosystems</span>
-           {" "}tailored for ambitious brands. By merging{" "}
-           <span className="border-b border-amber-400/40 text-stone-200">cutting-edge design</span>
-           {" "}with data-driven{" "}
-           <span className="border-b border-amber-400/40 text-stone-200">marketing strategies</span>
-           , we transform passive visitors into loyal customers. Our mission is to forge{" "}
-           <span className="border-b border-amber-400/40 text-stone-200">scalable revenue engines</span>
-           {" "}that capture attention and drive{" "}
-           <span className="border-b border-amber-400/40 text-stone-200">measurable growth</span>.
+            We don't just build websites; we engineer <span className="border-b border-amber-400/40 text-stone-200">high-performance digital ecosystems</span> tailored for ambitious brands.
         </motion.p>
-
       </div>
 
-      {/* Bottom Right CTA */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: sequence >= 6 ? 1 : 0, y: sequence >= 6 ? 0 : 20 }}
@@ -267,36 +203,14 @@ const Hero = () => {
             </div>
         </div>
         
-        <a
-          href="#contact"
-          className="
-            pointer-events-auto
-            group flex items-center gap-2 sm:gap-3
-            text-xs sm:text-sm font-bold uppercase tracking-widest
-            text-amber-300
-            backdrop-blur-sm bg-amber-950/10 
-            border border-amber-500/20 rounded-sm
-            px-4 py-2 sm:px-6 sm:py-3 
-            hover:bg-amber-400 hover:text-black hover:border-amber-400
-            hover:shadow-[0_0_30px_-5px_rgba(251,191,36,0.4)]
-            transition-all duration-300
-          "
-        >
+        <a href="#contact" className="pointer-events-auto group flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-bold uppercase tracking-widest text-amber-300 backdrop-blur-sm bg-amber-950/10 border border-amber-500/20 rounded-sm px-4 py-2 sm:px-6 sm:py-3 hover:bg-amber-400 hover:text-black transition-all duration-300">
           <span>Start Project</span>
           <ArrowUpRight size={14} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
         </a>
       </motion.div>
 
-      {/* Scroll Line */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: sequence >= 6 ? 1 : 0 }}
-        transition={{ duration: 0.6 }}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-16 sm:h-24 w-px bg-gradient-to-b from-transparent via-stone-700 to-transparent"
-      />
-      
-      {/* Global CSS */}
-      <style jsx global>{`
+      {/* FIXED STYLE TAGS */}
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes noise {
             0% { transform: translate(0,0) }
             10% { transform: translate(-5%,-5%) }
@@ -313,7 +227,7 @@ const Hero = () => {
         .animate-noise {
             animation: noise 0.2s steps(3) infinite;
         }
-      `}</style>
+      `}} />
     </section>
   );
 };

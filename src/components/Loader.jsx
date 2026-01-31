@@ -8,11 +8,12 @@ const Loader = ({ onLoadingComplete }) => {
   const text = "OddLambda";
 
   useEffect(() => {
-    // Reduced to 2500ms (2.5s) for a snappier feel.
-    // Logic: Typing finishes @ ~1.6s -> 0.9s pause -> Slide up.
     const timer = setTimeout(() => {
       setComplete(true);
-      if (onLoadingComplete) onLoadingComplete();
+      // Safeguard against missing prop or undefined function
+      if (typeof onLoadingComplete === 'function') {
+        onLoadingComplete();
+      }
     }, 2500);
 
     return () => clearTimeout(timer);
@@ -24,19 +25,13 @@ const Loader = ({ onLoadingComplete }) => {
         <motion.div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#030303] text-white overflow-hidden"
           initial={{ y: 0 }}
-          exit={{ y: "-100%" }} // The "Screen goes up" animation
+          exit={{ y: "-100%" }}
           transition={{
             duration: 0.8,
-            ease: [0.76, 0, 0.24, 1], // Custom bezier for that premium "smooth" feel
+            ease: [0.76, 0, 0.24, 1],
           }}
         >
-          {/* ---------------- TYPING CONTAINER ---------------- */}
-          <motion.div
-            // Removed the scale: 100 animation.
-            // The text now stays stable and moves up with the background.
-            className="relative flex items-start gap-2"
-          >
-            {/* TEXT */}
+          <motion.div className="relative flex items-start gap-2">
             <div className="flex overflow-hidden">
               {text.split("").map((char, i) => (
                 <motion.span
@@ -55,7 +50,6 @@ const Loader = ({ onLoadingComplete }) => {
               ))}
             </div>
 
-            {/* SYMBOL (®) */}
             <motion.span
               initial={{ opacity: 0, scale: 0, rotate: -45 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}

@@ -1,19 +1,31 @@
-import { useRef, useEffect, useState } from 'react';
-import { gsap } from 'gsap';
+import { useRef, useEffect, useState } from "react";
+import { gsap } from "gsap";
 
-import './FlowingMenu.css';
+import "./FlowingMenu.css";
+
+/* -------------------------------------------------------------------------- */
+/*                                MAIN MENU                                    */
+/* -------------------------------------------------------------------------- */
 
 function FlowingMenu({
   items = [],
   speed = 15,
-  textColor = '#fff',
-  bgColor = '#060010',
-  marqueeBgColor = '#fff',
-  marqueeTextColor = '#060010',
-  borderColor = '#fff'
+  textColor = "#fff",
+
+  bgColor = "transparent",
+
+  marqueeBgColor = "rgba(0,0,0,0.6)",
+  marqueeTextColor = "#fff",
+  borderColor = "rgba(255,255,255,0.2)",
 }) {
   return (
-    <div className="menu-wrap" style={{ backgroundColor: bgColor }}>
+    <div
+      className="menu-wrap"
+      style={{
+        backgroundColor: bgColor,
+        backdropFilter: "blur(2px)",
+      }}
+    >
       <nav className="menu">
         {items.map((item, idx) => (
           <MenuItem
@@ -31,128 +43,220 @@ function FlowingMenu({
   );
 }
 
-function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor }) {
+/* -------------------------------------------------------------------------- */
+/*                                MENU ITEM                                    */
+/* -------------------------------------------------------------------------- */
+
+function MenuItem({
+  link,
+  text,
+  image,
+  speed,
+  textColor,
+  marqueeBgColor,
+  marqueeTextColor,
+  borderColor,
+}) {
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
+  const linkRef = useRef(null); // 👈 static text ref
   const animationRef = useRef(null);
+
   const [repetitions, setRepetitions] = useState(4);
 
-  const animationDefaults = { duration: 0.6, ease: 'expo' };
+  const animationDefaults = { duration: 0.6, ease: "expo" };
+
+  /* ---------------- EDGE DETECTION ---------------- */
 
   const findClosestEdge = (mouseX, mouseY, width, height) => {
-    const topEdgeDist = distMetric(mouseX, mouseY, width / 2, 0);
-    const bottomEdgeDist = distMetric(mouseX, mouseY, width / 2, height);
-    return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
+    const top = dist(mouseX, mouseY, width / 2, 0);
+    const bottom = dist(mouseX, mouseY, width / 2, height);
+    return top < bottom ? "top" : "bottom";
   };
 
-  const distMetric = (x, y, x2, y2) => {
-    const xDiff = x - x2;
-    const yDiff = y - y2;
-    return xDiff * xDiff + yDiff * yDiff;
+  const dist = (x, y, x2, y2) => {
+    const dx = x - x2;
+    const dy = y - y2;
+    return dx * dx + dy * dy;
   };
+
+  /* ---------------- CALC REPEATS ---------------- */
 
   useEffect(() => {
-    const calculateRepetitions = () => {
+    const calculate = () => {
       if (!marqueeInnerRef.current) return;
 
-      // Get the first marquee part to measure content width
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee__part');
-      if (!marqueeContent) return;
+      const part =
+        marqueeInnerRef.current.querySelector(".marquee__part");
 
-      const contentWidth = marqueeContent.offsetWidth;
-      const viewportWidth = window.innerWidth;
+      if (!part) return;
 
-      // Calculate how many copies we need to fill viewport + extra for seamless loop
-      // We need at least 2, but calculate based on content vs viewport
-      const needed = Math.ceil(viewportWidth / contentWidth) + 2;
+      const contentWidth = part.offsetWidth;
+      const vw = window.innerWidth;
+
+      const needed = Math.ceil(vw / contentWidth) + 2;
+
       setRepetitions(Math.max(4, needed));
     };
 
-    calculateRepetitions();
-    window.addEventListener('resize', calculateRepetitions);
-    return () => window.removeEventListener('resize', calculateRepetitions);
+    calculate();
+    window.addEventListener("resize", calculate);
+
+    return () => window.removeEventListener("resize", calculate);
   }, [text, image]);
 
+  /* ---------------- GSAP LOOP ---------------- */
+
   useEffect(() => {
-    const setupMarquee = () => {
+    const setup = () => {
       if (!marqueeInnerRef.current) return;
 
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee__part');
-      if (!marqueeContent) return;
+      const part =
+        marqueeInnerRef.current.querySelector(".marquee__part");
 
-      const contentWidth = marqueeContent.offsetWidth;
-      if (contentWidth === 0) return;
+      if (!part) return;
 
-      if (animationRef.current) {
-        animationRef.current.kill();
-      }
+      const width = part.offsetWidth;
 
-      // Animate exactly one content width for seamless loop
+      if (!width) return;
+
+      if (animationRef.current) animationRef.current.kill();
+
       animationRef.current = gsap.to(marqueeInnerRef.current, {
-        x: -contentWidth,
+        x: -width,
         duration: speed,
-        ease: 'none',
-        repeat: -1
+        ease: "none",
+        repeat: -1,
       });
     };
 
-    // Small delay to ensure DOM is ready after repetitions update
-    const timer = setTimeout(setupMarquee, 50);
+    const timer = setTimeout(setup, 50);
 
     return () => {
       clearTimeout(timer);
+
       if (animationRef.current) {
         animationRef.current.kill();
       }
     };
   }, [text, image, repetitions, speed]);
 
-  const handleMouseEnter = ev => {
-    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
-    const rect = itemRef.current.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
-    const y = ev.clientY - rect.top;
-    const edge = findClosestEdge(x, y, rect.width, rect.height);
+  /* ---------------- HOVER ---------------- */
 
+  const handleEnter = (e) => {
+    if (!itemRef.current) return;
+
+    const r = itemRef.current.getBoundingClientRect();
+
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+
+    const edge = findClosestEdge(x, y, r.width, r.height);
+
+    /* Show marquee */
     gsap
       .timeline({ defaults: animationDefaults })
-      .set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
-      .set(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0)
-      .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
+      .set(marqueeRef.current, {
+        y: edge === "top" ? "-101%" : "101%",
+      })
+      .set(marqueeInnerRef.current, {
+        y: edge === "top" ? "101%" : "-101%",
+      })
+      .to([marqueeRef.current, marqueeInnerRef.current], {
+        y: "0%",
+      });
+
+    /* Hide static text */
+    gsap.to(linkRef.current, {
+      opacity: 0,
+      filter: "blur(4px)",
+      duration: 0.3,
+      ease: "power2.out",
+    });
   };
 
-  const handleMouseLeave = ev => {
-    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
-    const rect = itemRef.current.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
-    const y = ev.clientY - rect.top;
-    const edge = findClosestEdge(x, y, rect.width, rect.height);
+  const handleLeave = (e) => {
+    if (!itemRef.current) return;
 
+    const r = itemRef.current.getBoundingClientRect();
+
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+
+    const edge = findClosestEdge(x, y, r.width, r.height);
+
+    /* Hide marquee */
     gsap
       .timeline({ defaults: animationDefaults })
-      .to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
-      .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0);
+      .to(marqueeRef.current, {
+        y: edge === "top" ? "-101%" : "101%",
+      })
+      .to(marqueeInnerRef.current, {
+        y: edge === "top" ? "101%" : "-101%",
+      });
+
+    /* Show static text */
+    gsap.to(linkRef.current, {
+      opacity: 1,
+      filter: "blur(0px)",
+      duration: 0.3,
+      ease: "power2.out",
+    });
   };
+
+  /* ---------------- RENDER ---------------- */
 
   return (
-    <div className="menu__item" ref={itemRef} style={{ borderColor }}>
+    <div
+      className="menu__item"
+      ref={itemRef}
+      style={{
+        borderColor,
+        background: "transparent",
+      }}
+    >
+      {/* Static Text */}
       <a
+        ref={linkRef} // 👈 important
         className="menu__item-link"
         href={link}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={handleEnter}
+        onMouseLeave={handleLeave}
         style={{ color: textColor }}
       >
         {text}
       </a>
-      <div className="marquee" ref={marqueeRef} style={{ backgroundColor: marqueeBgColor }}>
+
+      {/* Marquee */}
+      <div
+        className="marquee"
+        ref={marqueeRef}
+        style={{
+          background: marqueeBgColor,
+          backdropFilter: "blur(6px)",
+        }}
+      >
         <div className="marquee__inner-wrap">
-          <div className="marquee__inner" ref={marqueeInnerRef} aria-hidden="true">
-            {[...Array(repetitions)].map((_, idx) => (
-              <div className="marquee__part" key={idx} style={{ color: marqueeTextColor }}>
+          <div
+            className="marquee__inner"
+            ref={marqueeInnerRef}
+            aria-hidden="true"
+          >
+            {[...Array(repetitions)].map((_, i) => (
+              <div
+                className="marquee__part"
+                key={i}
+                style={{ color: marqueeTextColor }}
+              >
                 <span>{text}</span>
-                <div className="marquee__img" style={{ backgroundImage: `url(${image})` }} />
+
+                <div
+                  className="marquee__img"
+                  style={{
+                    backgroundImage: `url(${image})`,
+                  }}
+                />
               </div>
             ))}
           </div>

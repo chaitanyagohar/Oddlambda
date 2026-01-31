@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring, useTransform, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
 import { 
   Search, Users, Settings, BarChart, Rocket, CheckCircle, 
-  Code, Layout, Zap, Smartphone, Globe, Mail, ArrowRight, Menu, X, ArrowUpRight, Terminal, Star, Package, Clock, Play, Quote
+  Code, Layout, Zap, Smartphone, Globe, Mail, ArrowRight, Menu, X, ArrowUpRight, Terminal, Star, Package, Clock, Play, Quote,
+  Contact
 } from 'lucide-react';
 
 // --- Imports from Components ---
 // --------------------------------------------------------------------------
 // FOR LOCAL USE: Uncomment the line below and delete the placeholder GridScan component below
-import { GridScan } from './components/GridScan';
 import Manifesto from './components/Manifesto';
 import HorizontalScroll from './components/HorizontalScroll';
 import Description from './components/Description';
@@ -17,7 +17,6 @@ import MarketingSection from './components/MarketingSection';
 import About from './components/About';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
-// import CyberTunnel from './components/CyberTunnel';
 import CookieConsent from './components/CookieConsent';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -25,7 +24,9 @@ import Hero from './components/Hero';
 import TrustedBy from './components/TrustedBy';
 import Loader from './components/Loader';
 import WhatWeOffer from './components/WhatWeOffer';
-
+import TechStack from './components/Techstack';
+import Contactform from './components/Contactform';
+import TrustSection from './components/TrustSection';
 
 // --------------------------------------------------------------------------
 
@@ -36,10 +37,6 @@ const NoiseOverlay = () => (
   />
 );
 
-const theme = {
-  bg: "bg-[#030303]", 
-  cyan: "#46cef6",
-};
 
 // --- Animations ---
 const transition = { duration: 0.8, ease: [0.25, 1, 0.5, 1] };
@@ -240,25 +237,7 @@ const Spotlight = () => {
 
 
 
-const TechStack = () => {
-  const techs = ["React", "Next.js", "Three.js", "WebGL", "Typescript", "Node.js", "Tailwind", "Framer Motion"];
-  return (
-    <div className="py-10 border-y border-white/5 bg-[#080808] overflow-hidden relative z-10">
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10" />
-      <motion.div 
-        animate={{ x: [0, -1000] }}
-        transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-        className="flex whitespace-nowrap gap-24 font-mono text-sm tracking-[0.2em] text-neutral-500"
-      >
-        {[...techs, ...techs, ...techs, ...techs].map((tech, i) => (
-          <div key={i} className="flex items-center gap-4">
-             <span className="w-1 h-1 bg-[#46cef6] rounded-full" /> {tech.toUpperCase()}
-          </div>
-        ))}
-      </motion.div>
-    </div>
-  );
-};
+
 
 // const Hero = () => {
 //   const [sequence, setSequence] = useState(0);
@@ -651,120 +630,61 @@ const Packages = () => {
   );
 };
 
-const Contact = () => {
-  return (
-    <section id="contact" className="py-32 px-6 relative z-10 bg-[#080808]">
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
-        <div>
-          <MaskedReveal>
-            <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-8 text-white">LET'S <br/> TALK.</h2>
-          </MaskedReveal>
-          <div className="space-y-8 text-lg text-neutral-400 font-light">
-            <p>Ready to outpace your competition? We are currently accepting new projects for Q1.</p>
-            <div className="flex flex-col gap-4">
-               <a href="mailto:hello@oddlambda.com" className="flex items-center gap-4 text-white hover:text-[#46cef6] transition-colors group">
-                 <div className="p-3 border border-white/10 rounded-full group-hover:border-[#46cef6] transition-colors"><Mail size={20} /></div>
-                 hello@oddlambda.com
-               </a>
-               <div className="flex items-center gap-4 text-white">
-                 <div className="p-3 border border-white/10 rounded-full"><Smartphone size={20} /></div>
-                 +1 (555) 123-4567
-               </div>
-            </div>
-          </div>
-        </div>
-
-        <form className="space-y-8 mt-4">
-          <div className="group relative">
-            <input type="text" placeholder="Your Name" className="w-full bg-transparent border-b border-white/20 py-4 text-xl text-white focus:outline-none focus:border-[#46cef6] transition-colors placeholder:text-white/20" />
-          </div>
-          <div className="group relative">
-            <input type="email" placeholder="Email Address" className="w-full bg-transparent border-b border-white/20 py-4 text-xl text-white focus:outline-none focus:border-[#46cef6] transition-colors placeholder:text-white/20" />
-          </div>
-          <div className="group relative">
-            <select className="w-full bg-transparent border-b border-white/20 py-4 text-xl text-neutral-400 focus:outline-none focus:border-[#46cef6] transition-colors appearance-none bg-[#080808]">
-              <option>Select Project Type</option>
-              <option>Custom Development</option>
-              <option>E-Commerce</option>
-              <option>Landing Page</option>
-            </select>
-          </div>
-          <div className="group relative">
-            <textarea placeholder="Tell us about your project" rows={4} className="w-full bg-transparent border-b border-white/20 py-4 text-xl text-white focus:outline-none focus:border-[#46cef6] transition-colors resize-none placeholder:text-white/20" />
-          </div>
-          
-          <button className="w-full bg-white text-black font-bold text-xl py-6 rounded hover:bg-[#46cef6] transition-colors tracking-wide flex justify-center items-center gap-2 group shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-            SEND PROPOSAL <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </button>
-        </form>
-      </div>
-    </section>
-  );
-};
 
 
 
 export default function App() {
+  // Loader State
+  const [loading, setLoading] = useState(true);
+
   return (
-    <div className={`min-h-screen ${theme.bg} text-white font-sans selection:bg-[#46cef6] selection:text-black `}>
+    <div className="min-h-screen bg-[#030303] text-white font-sans">
+
+      {/* Global Styles */}
       <style>{`
         .snake-head {
           offset-distance: var(--snake-progress);
         }
+
         @keyframes shimmer {
           100% {
             transform: translateX(100%);
           }
         }
       `}</style>
-      <Loader onLoadingComplete={() => setLoading(false)} />
-      <NoiseOverlay />
-      <Spotlight />
-      <Navbar />
-      
-      <Hero />
-      <Description />
-      {/* <TrustedBy /> */}
-      <WhatWeOffer />
-      <TechStack />
-      {/* <Manifesto /> */}
-      {/* <About /> */}
-      
-      {/* --- Quote Section 1: Design Focus --- */}
-      <QuoteSection 
-        quote="Good design is obvious. Great design is transparent." 
-        author="Joe Sparano"
-        backgroundText="VISION"
-        direction={1}
-      />
 
-     <HorizontalScroll />
-      
-      {/* --- Quote Section 2: Performance Focus --- */}
-      <QuoteSection 
-        quote="Speed is a feature. Performance is our promise." 
-        author="Oddlambda Philosophy"
-        backgroundText="SPEED"
-        direction={6}
-      />
+      {/* Loader OR App (Never Both Together) */}
+      {loading ? (
+        <Loader onLoadingComplete={() => setLoading(false)} />
+      ) : (
+        <>
+          {/* Effects */}
 
-      <MarketingSection />
-      <Packages />
-      
-      {/* --- Quote Section 3: Future Focus --- */}
-      <QuoteSection 
-        quote="The best way to predict the future is to create it." 
-        author="Alan Kay"
-        backgroundText="FUTURE"
-        direction={1}
-      />
+          <Spotlight />
 
-      <ProcessSection />
-      <Testimonials />
-      <CTA />
-      <Contact />
-      <Footer/>
-      <CookieConsent />
+          {/* Layout */}
+          <Navbar />
+
+          {/* Sections */}
+          <Hero />
+          <Description />
+          <WhatWeOffer />
+          <TechStack />
+
+          <HorizontalScroll />
+
+          <MarketingSection />
+          <TrustSection />
+
+          <Testimonials />
+          <CTA />
+          <Contactform />
+
+          <Footer />
+          <CookieConsent />
+        </>
+      )}
+
     </div>
   );
 }

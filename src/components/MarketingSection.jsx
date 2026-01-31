@@ -1,126 +1,267 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Target, TrendingUp, MousePointerClick, Search, Zap } from 'lucide-react';
+"use client";
 
-const ShineCard = ({ children, className = "" }) => {
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Target,
+  TrendingUp,
+  MousePointerClick,
+  Search,
+  Zap,
+} from "lucide-react";
+
+/* -------------------------------------------------------------------------- */
+/*                                Floating Orb                                 */
+/* -------------------------------------------------------------------------- */
+
+const FloatingOrb = ({ color, size, x, y, delay }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{
+      opacity: 0.6,
+      scale: [1, 1.1, 1],
+      y: [0, -20, 0],
+    }}
+    transition={{
+      duration: 6,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    className="absolute rounded-full blur-3xl"
+    style={{
+      width: size,
+      height: size,
+      left: x,
+      top: y,
+      background: color,
+    }}
+  />
+);
+
+/* -------------------------------------------------------------------------- */
+/*                              System Card                                    */
+/* -------------------------------------------------------------------------- */
+
+const SystemCard = ({ icon: Icon, title, desc, accent, delay }) => {
   return (
-    <motion.div 
-      className={`group relative overflow-hidden bg-[#0a0a0a] border border-white/5 ${className}`}
-      whileHover={{ scale: 0.995 }}
-      transition={{ duration: 0.4 }}
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay }}
+      className="relative p-6 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-xl overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none z-20" />
-      <div className="absolute inset-0 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] pointer-events-none z-10 rounded-inherit" />
-      {children}
+      {/* Scan Line */}
+      <motion.div
+        animate={{ x: ["-100%", "100%"] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+        className="absolute top-0 left-0 w-full h-[1px]"
+        style={{
+          background: `linear-gradient(to right, transparent, ${accent}, transparent)`,
+        }}
+      />
+
+      <div className="flex gap-4 relative z-10">
+        <div
+          className="p-3 rounded-xl border"
+          style={{
+            background: `${accent}20`,
+            borderColor: `${accent}40`,
+            color: accent,
+          }}
+        >
+          <Icon size={24} />
+        </div>
+
+        <div>
+          <h3 className="text-lg font-bold text-white mb-1">{title}</h3>
+          <p className="text-neutral-400 text-sm leading-relaxed">{desc}</p>
+        </div>
+      </div>
     </motion.div>
   );
 };
 
+/* -------------------------------------------------------------------------- */
+/*                              Main Section                                   */
+/* -------------------------------------------------------------------------- */
+
 const MarketingSection = () => {
-  const container = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-
   return (
-    <section ref={container} className="py-32 px-6 relative z-10 bg-[#030303] overflow-hidden border-t border-white/5">
-      {/* Background Decor: Radar Pulse */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-10 pointer-events-none">
-         <div className="absolute inset-0 border border-[#46cef6] rounded-full animate-[ping_3s_linear_infinite]" />
-         <div className="absolute inset-[200px] border border-[#46cef6] rounded-full animate-[ping_3s_linear_infinite_1s]" />
-      </div>
+    <section className="relative py-48 px-6 bg-[#020202] overflow-hidden border-t border-white/5">
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Background Video Texture */}
+      {/* ------------------------------------------------------------------ */}
+
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.08]"
+        src="https://cdn.pixabay.com/video/2020/08/08/46841-448150023_large.mp4"
+      />
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/70" />
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Floating Orbs */}
+      {/* ------------------------------------------------------------------ */}
+
+      <FloatingOrb
+        color="rgba(70,206,246,0.6)"
+        size={400}
+        x="10%"
+        y="20%"
+        delay={0}
+      />
+
+      <FloatingOrb
+        color="rgba(168,85,247,0.5)"
+        size={350}
+        x="70%"
+        y="60%"
+        delay={1}
+      />
+
+      <FloatingOrb
+        color="rgba(34,197,94,0.4)"
+        size={300}
+        x="40%"
+        y="80%"
+        delay={2}
+      />
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Grid HUD */}
+      {/* ------------------------------------------------------------------ */}
+
+      <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(to_right,#fff1_1px,transparent_1px),linear-gradient(to_bottom,#fff1_1px,transparent_1px)] bg-[size:50px_50px]" />
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Content */}
+      {/* ------------------------------------------------------------------ */}
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
-          
-          {/* Left: Copy */}
-          <div className="lg:w-1/2">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-6 flex items-center gap-3 text-[#46cef6] font-mono text-xs tracking-widest uppercase"
-            >
-              <Target size={16} />
-              Growth Engine
-            </motion.div>
-            
-            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6 leading-[0.9]">
-              WE DON'T JUST <br/> BUILD THE CAR. <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#46cef6] to-white/50">
-                WE POUR THE FUEL.
-              </span>
-            </h2>
-            
-            <p className="text-neutral-400 text-lg leading-relaxed max-w-md mb-8">
-              Beautiful code creates potential. Marketing converts it into revenue. 
-              We run precision campaigns on Google and Meta to ensure your product gets seen by the people who matter.
-            </p>
 
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-1">
-                <span className="text-3xl font-bold text-white">3.5x</span>
-                <span className="text-xs text-neutral-500 font-mono uppercase">Avg. ROAS</span>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="max-w-3xl mb-32"
+        >
+          <div className="flex items-center gap-3 text-[#46cef6] font-mono text-xs tracking-widest uppercase mb-6">
+            <Target size={16} />
+            Growth Engine
+          </div>
+
+          <h2 className="text-5xl md:text-7xl font-black leading-[0.9] tracking-tight text-white mb-6">
+            LIVE
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#46cef6] to-purple-400">
+              ACQUISITION SYSTEM
+            </span>
+          </h2>
+
+          <p className="text-neutral-400 text-lg leading-relaxed">
+            A continuously running digital engine that captures, converts,
+            and compounds attention into revenue.
+          </p>
+        </motion.div>
+
+        {/* ------------------------------------------------------------------ */}
+        {/* System Layout */}
+        {/* ------------------------------------------------------------------ */}
+
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+
+          {/* Left: Live Feed */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative rounded-3xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-xl"
+          >
+            {/* Fake Dashboard Video */}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full h-[420px] object-cover opacity-80"
+              src="https://cdn.pixabay.com/video/2023/01/11/146007-788614305_large.mp4"
+            />
+
+            {/* HUD Overlay */}
+            <div className="absolute inset-0 p-6 flex flex-col justify-between">
+
+              <div className="flex justify-between text-xs font-mono text-neutral-400">
+                <span>LIVE DASHBOARD</span>
+                <span className="text-green-400">● ACTIVE</span>
               </div>
-              <div className="w-px h-12 bg-white/10" />
-              <div className="flex flex-col gap-1">
-                <span className="text-3xl font-bold text-white">$2M+</span>
-                <span className="text-xs text-neutral-500 font-mono uppercase">Ad Spend Managed</span>
+
+              <div className="grid grid-cols-3 gap-4 text-center">
+                {[
+                  ["CTR", "6.4%"],
+                  ["ROAS", "3.5x"],
+                  ["CPL", "$2.1"],
+                ].map(([k, v]) => (
+                  <div
+                    key={k}
+                    className="p-3 rounded-lg bg-black/60 border border-white/10"
+                  >
+                    <div className="text-xs text-neutral-500">{k}</div>
+                    <div className="text-lg font-bold text-white">{v}</div>
+                  </div>
+                ))}
               </div>
             </div>
+          </motion.div>
+
+          {/* Right: System Modules */}
+          <div className="space-y-6">
+
+            <SystemCard
+              icon={Search}
+              title="Search Intelligence"
+              desc="Intent-driven acquisition pipelines."
+              accent="#46cef6"
+              delay={0}
+            />
+
+            <SystemCard
+              icon={MousePointerClick}
+              title="Social Amplification"
+              desc="High-conversion creative loops."
+              accent="#a855f7"
+              delay={0.1}
+            />
+
+            <SystemCard
+              icon={TrendingUp}
+              title="Behavior Analytics"
+              desc="Continuous funnel optimization."
+              accent="#22c55e"
+              delay={0.2}
+            />
+
+            <SystemCard
+              icon={Zap}
+              title="Automation Layer"
+              desc="AI-powered bid & budget control."
+              accent="#facc15"
+              delay={0.3}
+            />
+
           </div>
-
-          {/* Right: Cards */}
-          <div className="lg:w-1/2 grid gap-4 w-full">
-            <motion.div style={{ y }} className="grid gap-4">
-              
-              {/* Google Ads Card */}
-              <ShineCard className="rounded-2xl p-8 flex items-start gap-6 group">
-                <div className="p-4 rounded-xl bg-[#46cef6]/10 text-[#46cef6] border border-[#46cef6]/20 group-hover:bg-[#46cef6] group-hover:text-black transition-colors">
-                  <Search size={32} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Google Ads (PPC)</h3>
-                  <p className="text-neutral-400 text-sm mb-4">Capture high-intent traffic. We target users specifically looking for your solution right now.</p>
-                  <div className="flex gap-2">
-                    <span className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded text-neutral-500">Search</span>
-                    <span className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded text-neutral-500">Shopping</span>
-                    <span className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded text-neutral-500">Youtube</span>
-                  </div>
-                </div>
-              </ShineCard>
-
-              {/* Meta Ads Card */}
-              <ShineCard className="rounded-2xl p-8 flex items-start gap-6 group">
-                <div className="p-4 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:bg-purple-500 group-hover:text-white transition-colors">
-                  <MousePointerClick size={32} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Meta Ads</h3>
-                  <p className="text-neutral-400 text-sm mb-4">Generate demand. We use advanced visual storytelling to stop the scroll on Instagram & Facebook.</p>
-                  <div className="flex gap-2">
-                    <span className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded text-neutral-500">Retargeting</span>
-                    <span className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded text-neutral-500">Lookalike</span>
-                    <span className="text-[10px] font-mono border border-white/10 px-2 py-1 rounded text-neutral-500">Reels</span>
-                  </div>
-                </div>
-              </ShineCard>
-
-              {/* Analytics Card */}
-              <ShineCard className="rounded-2xl p-6 flex items-center justify-between">
-                 <div className="flex items-center gap-4">
-                    <div className="p-2 bg-green-500/10 text-green-400 rounded-lg"><TrendingUp size={20} /></div>
-                    <span className="font-bold text-white">Conversion Tracking Setup</span>
-                 </div>
-                 <Zap size={16} className="text-[#46cef6] animate-pulse" />
-              </ShineCard>
-
-            </motion.div>
-          </div>
-
         </div>
       </div>
     </section>

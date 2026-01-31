@@ -14,10 +14,10 @@ const img1 =
   "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop";
 
 const img2 =
-  "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop";
+  "https://images.pexels.com/photos/33090742/pexels-photo-33090742.jpeg";
 
 const img3 =
-  "https://static.vecteezy.com/system/resources/thumbnails/001/838/299/small_2x/abstract-silver-metallic-join-lines-on-white-background-geometric-triangle-gradient-shape-pattern-luxury-style-vector.jpg";
+  "https://images.pexels.com/photos/13001570/pexels-photo-13001570.jpeg";
 
 /* --- PHRASE COMPONENT --- */
 
@@ -31,7 +31,7 @@ const Phrase = ({ children, progress, range, highlight }) => {
       className={`mr-2 md:mr-3 inline-block will-change-transform ${
         highlight
           ? "text-amber-700 font-semibold"
-          : "text-stone-700"
+          : "text-white"
       }`}
     >
       {children}
@@ -92,7 +92,9 @@ export default function Description() {
   return (
     <section
       ref={container}
-      className="relative min-h-[120vh] flex flex-col justify-center bg-[#FFFEF7] overflow-hidden"
+      // Explicitly adding style to satisfy Framer Motion requirements
+      style={{ position: "relative" }}
+      className="relative min-h-[120vh] flex flex-col justify-center bg-transparent overflow-hidden"
     >
       {/* ---------------- BACKGROUND ---------------- */}
 
