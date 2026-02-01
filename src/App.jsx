@@ -24,7 +24,6 @@ import Hero from './components/Hero';
 import TrustedBy from './components/TrustedBy';
 import Loader from './components/Loader';
 import WhatWeOffer from './components/WhatWeOffer';
-import TechStack from './components/Techstack';
 import Contactform from './components/Contactform';
 import TrustSection from './components/TrustSection';
 
