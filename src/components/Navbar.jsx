@@ -1,27 +1,32 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useSpring, // 1. Import useSpring
+} from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+
+/* ... (Keep navLinks, socials, and Hamburger component exactly as they are) ... */
 
 const navLinks = [
   { title: "Home", href: "#" },
   { title: "Work", href: "#work" },
   { title: "Expertise", href: "#expertise" },
   { title: "Process", href: "#process" },
-  { title: "Contact", href: "#contact" }
+  { title: "Contact", href: "#contact" },
 ];
 
 const socials = [
   { name: "Instagram", href: "#" },
   { name: "LinkedIn", href: "#" },
   { name: "Twitter", href: "#" },
-  { name: "Behance", href: "#" }
+  { name: "Behance", href: "#" },
 ];
 
-/* =========================
-   Animated Hamburger Icon
-========================= */
 const Hamburger = ({ isOpen }) => {
   const line = "absolute h-[2px] w-5 bg-black rounded-full";
 
@@ -31,7 +36,7 @@ const Hamburger = ({ isOpen }) => {
         className={line}
         animate={{
           rotate: isOpen ? 45 : 0,
-          y: isOpen ? 0 : -6
+          y: isOpen ? 0 : -6,
         }}
         transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
       />
@@ -40,7 +45,7 @@ const Hamburger = ({ isOpen }) => {
         className={line}
         animate={{
           opacity: isOpen ? 0 : 1,
-          x: isOpen ? 10 : 0
+          x: isOpen ? 10 : 0,
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       />
@@ -49,7 +54,7 @@ const Hamburger = ({ isOpen }) => {
         className={line}
         animate={{
           rotate: isOpen ? -45 : 0,
-          y: isOpen ? 0 : 6
+          y: isOpen ? 0 : 6,
         }}
         transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
       />
@@ -61,18 +66,31 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
 
-  /* Logo scale on scroll */
-  const logoScale = useTransform(scrollY, [0, 100], [1.5, 1]);
+  /* 2. Create a "Smooth" version of the scrollY value 
+     mass: inertia, stiffness: responsiveness, damping: resistance
+  */
+  const smoothScrollY = useSpring(scrollY, {
+    mass: 0.1,
+    stiffness: 100,
+    damping: 20,
+    restDelta: 0.001,
+  });
+
+  /* 3. Use the smooth value for the transform */
+  const logoScale = useTransform(smoothScrollY, [0, 100], [1.5, 1]);
+  
+  // Optional: Add opacity fade for extra smoothness
+  const logoOpacity = useTransform(smoothScrollY, [0, 20], [1, 0.8]);
 
   const menuVariants = {
     closed: {
       y: "-100%",
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
     },
     open: {
       y: "0%",
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
-    }
+      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+    },
   };
   const linkVariants = {
     closed: { y: 100, opacity: 0 },
@@ -82,9 +100,9 @@ const Navbar = () => {
       transition: {
         duration: 0.5,
         delay: 0.4 + i * 0.1,
-        ease: [0.76, 0, 0.24, 1]
-      }
-    })
+        ease: [0.76, 0, 0.24, 1],
+      },
+    }),
   };
 
   const sidebarVariants = {
@@ -92,30 +110,28 @@ const Navbar = () => {
     open: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.5, delay: 0.6, ease: "easeOut" }
-    }
+      transition: { duration: 0.5, delay: 0.6, ease: "easeOut" },
+    },
   };
 
   return (
     <>
-      {/* =========================
-          Top Navigation Bar
-      ========================= */}
       <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-6 md:px-12 flex justify-between items-center mix-blend-difference text-white">
         
-        {/* Logo - Updated to Image */}
+        {/* Logo - Updated with smooth scaling */}
         <motion.a
           href="#"
-          style={{ scale: logoScale, originX: 0 }}
+          style={{ 
+            scale: logoScale, 
+            originX: 0,
+            // opacity: logoOpacity // Optional: uncomment if you want it to fade slightly
+          }}
           className="z-[101] block"
         >
-          {/* REPLACE src="/your-logo.png" with your actual logo path.
-             Ensure your logo is white with transparent bg for the mix-blend to work best.
-          */}
-          <img 
-            src="/oddlambdalogo.png" 
-            alt="ODDLAMBDA" 
-            className="h-6 md:h-6 w-auto object-contain" 
+          <img
+            src="/oddlambdalogo.png"
+            alt="ODDLAMBDA"
+            className="h-6 md:h-6 w-auto object-contain"
           />
         </motion.a>
 
@@ -124,7 +140,6 @@ const Navbar = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-3 text-sm font-mono uppercase tracking-widest z-[101] group"
         >
-          {/* Animated Text */}
           <span className="hidden md:block overflow-hidden h-[1em]">
             <AnimatePresence mode="wait">
               <motion.span
@@ -140,16 +155,12 @@ const Navbar = () => {
             </AnimatePresence>
           </span>
 
-          {/* Hamburger */}
           <div className="w-8 h-8 flex items-center justify-center bg-white text-black rounded-full group-hover:bg-[#46cef6] transition-colors">
             <Hamburger isOpen={isOpen} />
           </div>
         </button>
       </nav>
 
-      {/* =========================
-          Fullscreen Menu
-      ========================= */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -162,8 +173,6 @@ const Navbar = () => {
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
             <div className="relative z-10 w-full max-w-[95rem] mx-auto h-full flex flex-col md:flex-row pt-32 pb-12 px-6 md:px-12">
-
-              {/* Navigation Links */}
               <div className="flex-1 flex flex-col justify-center">
                 {navLinks.map((link, i) => (
                   <div key={i} className="overflow-hidden">
@@ -183,7 +192,6 @@ const Navbar = () => {
                 ))}
               </div>
 
-              {/* Sidebar */}
               <motion.div
                 variants={sidebarVariants}
                 className="md:w-[350px] lg:w-[450px] flex flex-col justify-end mt-16 md:mt-0 md:pl-12 md:border-l border-white/10"
@@ -200,7 +208,10 @@ const Navbar = () => {
                         className="flex justify-between items-center text-neutral-400 hover:text-white border-b border-white/5 pb-2"
                       >
                         {social.name}
-                        <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 text-[#46cef6]" />
+                        <ArrowUpRight
+                          size={16}
+                          className="opacity-0 group-hover:opacity-100 text-[#46cef6]"
+                        />
                       </a>
                     ))}
                   </div>
@@ -216,7 +227,9 @@ const Navbar = () => {
                       hello@oddlambda.com
                     </a>
                     <p className="text-neutral-500 text-sm mt-4">
-                      Lisbon, Portugal<br />Working Worldwide
+                      Lisbon, Portugal
+                      <br />
+                      Working Worldwide
                     </p>
                   </div>
                 </div>

@@ -14,7 +14,7 @@ function FlowingMenu({
 
   bgColor = "transparent",
 
-  marqueeBgColor = "rgba(0,0,0,0.6)",
+  marqueeBgColor = "rgba(0, 0, 0, 0)",
   marqueeTextColor = "#fff",
   borderColor = "rgba(255,255,255,0.2)",
 }) {

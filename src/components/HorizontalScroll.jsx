@@ -72,11 +72,16 @@ const HorizontalScroll = () => {
   /* ------------------------------------------------------------------------ */
 
   return (
-    <section className="py-32 bg-[#030303] overflow-hidden border-t border-white/5">
-      {/* Header */}
+    <section className="relative py-32 z-100 overflow-hidden border-t border-white/5
+  bg-gradient-to-br
+  from-[#ffffff]
+  via-[#f8f6ef]
+  to-[#ffdd99] "
+>
+  {/* Header */}
       <div className="px-6 md:px-12 mb-16 flex flex-col md:flex-row items-end justify-between gap-8">
         <div>
-          <span className="text-[#46cef6] font-mono text-xs tracking-widest uppercase mb-4 block">
+          <span className="text-[#ffdd99] font-mono text-xs tracking-widest uppercase mb-4 block">
             Portfolio
           </span>
 
@@ -132,7 +137,7 @@ const HorizontalScroll = () => {
                   playsInline
                   preload="metadata"
                   loading="lazy"
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 grayscale group-hover:grayscale-0"
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                 />
 
                 {/* Overlay */}

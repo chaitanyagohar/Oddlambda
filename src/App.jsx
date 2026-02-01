@@ -669,7 +669,7 @@ export default function App() {
           <Hero />
           <Description />
           <WhatWeOffer />
-          <TechStack />
+          {/* <TechStack /> */}
 
           <HorizontalScroll />
 

@@ -11,14 +11,14 @@ import {
 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
-/*                                Floating Orb                                 */
+/* Floating Orb                                */
 /* -------------------------------------------------------------------------- */
 
 const FloatingOrb = ({ color, size, x, y, delay }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.5 }}
     animate={{
-      opacity: 0.6,
+      opacity: 0.4,
       scale: [1, 1.1, 1],
       y: [0, -20, 0],
     }}
@@ -28,7 +28,7 @@ const FloatingOrb = ({ color, size, x, y, delay }) => (
       repeat: Infinity,
       ease: "easeInOut",
     }}
-    className="absolute rounded-full blur-3xl"
+    className="absolute rounded-full blur-[80px]"
     style={{
       width: size,
       height: size,
@@ -40,7 +40,7 @@ const FloatingOrb = ({ color, size, x, y, delay }) => (
 );
 
 /* -------------------------------------------------------------------------- */
-/*                              System Card                                    */
+/* System Card                                 */
 /* -------------------------------------------------------------------------- */
 
 const SystemCard = ({ icon: Icon, title, desc, accent, delay }) => {
@@ -50,9 +50,9 @@ const SystemCard = ({ icon: Icon, title, desc, accent, delay }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay }}
-      className="relative p-6 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-xl overflow-hidden"
+      className="relative p-6 rounded-2xl bg-[#1c1917]/60 border border-[#44403c]/30 backdrop-blur-xl overflow-hidden group hover:border-[#B45309]/50 transition-colors duration-500"
     >
-      {/* Scan Line */}
+      {/* Scan Line - Updated to new color */}
       <motion.div
         animate={{ x: ["-100%", "100%"] }}
         transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -64,10 +64,10 @@ const SystemCard = ({ icon: Icon, title, desc, accent, delay }) => {
 
       <div className="flex gap-4 relative z-10">
         <div
-          className="p-3 rounded-xl border"
+          className="p-3 rounded-xl border transition-colors duration-300"
           style={{
-            background: `${accent}20`,
-            borderColor: `${accent}40`,
+            background: `${accent}15`,
+            borderColor: `${accent}30`,
             color: accent,
           }}
         >
@@ -75,8 +75,10 @@ const SystemCard = ({ icon: Icon, title, desc, accent, delay }) => {
         </div>
 
         <div>
-          <h3 className="text-lg font-bold text-white mb-1">{title}</h3>
-          <p className="text-neutral-400 text-sm leading-relaxed">{desc}</p>
+          <h3 className="text-lg font-bold text-[#f5f5f4] mb-1 group-hover:text-[#FCD34D] transition-colors">
+            {title}
+          </h3>
+          <p className="text-[#a8a29e] text-sm leading-relaxed">{desc}</p>
         </div>
       </div>
     </motion.div>
@@ -84,13 +86,13 @@ const SystemCard = ({ icon: Icon, title, desc, accent, delay }) => {
 };
 
 /* -------------------------------------------------------------------------- */
-/*                              Main Section                                   */
+/* Main Section                                */
 /* -------------------------------------------------------------------------- */
 
 const MarketingSection = () => {
   return (
-    <section className="relative py-48 px-6 bg-[#020202] overflow-hidden border-t border-white/5">
-
+    <section className="relative z-10 py-48 px-6 bg-[#0c0a09] overflow-hidden border-t border-[#44403c]/20">
+      
       {/* ------------------------------------------------------------------ */}
       {/* Background Video Texture */}
       {/* ------------------------------------------------------------------ */}
@@ -101,19 +103,19 @@ const MarketingSection = () => {
         muted
         playsInline
         preload="metadata"
-        className="absolute inset-0 w-full h-full object-cover opacity-[0.08]"
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.06] sepia-[0.8] hue-rotate-[340deg] saturate-150"
         src="https://cdn.pixabay.com/video/2020/08/08/46841-448150023_large.mp4"
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/70" />
+      <div className="absolute inset-0 bg-[#0c0a09]/80" />
 
       {/* ------------------------------------------------------------------ */}
-      {/* Floating Orbs */}
+      {/* Floating Orbs - Adjusted to #B45309 Variations */}
       {/* ------------------------------------------------------------------ */}
 
       <FloatingOrb
-        color="rgba(70,206,246,0.6)"
+        color="rgba(180, 83, 9, 0.5)" // #B45309 (Base)
         size={400}
         x="10%"
         y="20%"
@@ -121,7 +123,7 @@ const MarketingSection = () => {
       />
 
       <FloatingOrb
-        color="rgba(168,85,247,0.5)"
+        color="rgba(217, 119, 6, 0.4)" // Lighter Amber
         size={350}
         x="70%"
         y="60%"
@@ -129,7 +131,7 @@ const MarketingSection = () => {
       />
 
       <FloatingOrb
-        color="rgba(34,197,94,0.4)"
+        color="rgba(120, 53, 15, 0.3)" // Darker Amber/Brown
         size={300}
         x="40%"
         y="80%"
@@ -140,14 +142,14 @@ const MarketingSection = () => {
       {/* Grid HUD */}
       {/* ------------------------------------------------------------------ */}
 
-      <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(to_right,#fff1_1px,transparent_1px),linear-gradient(to_bottom,#fff1_1px,transparent_1px)] bg-[size:50px_50px]" />
+      <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,#d6d3d1_1px,transparent_1px),linear-gradient(to_bottom,#d6d3d1_1px,transparent_1px)] bg-[size:50px_50px]" />
 
       {/* ------------------------------------------------------------------ */}
       {/* Content */}
       {/* ------------------------------------------------------------------ */}
 
       <div className="max-w-7xl mx-auto relative z-10">
-
+        
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -156,20 +158,20 @@ const MarketingSection = () => {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mb-32"
         >
-          <div className="flex items-center gap-3 text-[#46cef6] font-mono text-xs tracking-widest uppercase mb-6">
+          <div className="flex items-center gap-3 text-[#B45309] font-mono text-xs tracking-widest uppercase mb-6">
             <Target size={16} />
             Growth Engine
           </div>
 
-          <h2 className="text-5xl md:text-7xl font-black leading-[0.9] tracking-tight text-white mb-6">
+          <h2 className="text-5xl md:text-7xl font-black leading-[0.9] tracking-tight text-[#f5f5f4] mb-6">
             LIVE
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#46cef6] to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#B45309]">
               ACQUISITION SYSTEM
             </span>
           </h2>
 
-          <p className="text-neutral-400 text-lg leading-relaxed">
+          <p className="text-[#a8a29e] text-lg leading-relaxed">
             A continuously running digital engine that captures, converts,
             and compounds attention into revenue.
           </p>
@@ -180,14 +182,14 @@ const MarketingSection = () => {
         {/* ------------------------------------------------------------------ */}
 
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-
+          
           {/* Left: Live Feed */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-xl"
+            className="relative rounded-3xl overflow-hidden border border-[#44403c]/40 bg-[#1c1917]/50 backdrop-blur-xl shadow-2xl"
           >
             {/* Fake Dashboard Video */}
             <video
@@ -196,16 +198,15 @@ const MarketingSection = () => {
               muted
               playsInline
               preload="metadata"
-              className="w-full h-[420px] object-cover opacity-80"
+              className="w-full h-[420px] object-cover opacity-70 sepia-[0.6] hue-rotate-[340deg]"
               src="https://cdn.pixabay.com/video/2023/01/11/146007-788614305_large.mp4"
             />
 
             {/* HUD Overlay */}
             <div className="absolute inset-0 p-6 flex flex-col justify-between">
-
-              <div className="flex justify-between text-xs font-mono text-neutral-400">
+              <div className="flex justify-between text-xs font-mono text-[#d6d3d1]">
                 <span>LIVE DASHBOARD</span>
-                <span className="text-green-400">● ACTIVE</span>
+                <span className="text-[#B45309]">● ACTIVE</span>
               </div>
 
               <div className="grid grid-cols-3 gap-4 text-center">
@@ -216,10 +217,10 @@ const MarketingSection = () => {
                 ].map(([k, v]) => (
                   <div
                     key={k}
-                    className="p-3 rounded-lg bg-black/60 border border-white/10"
+                    className="p-3 rounded-lg bg-[#292524]/80 border border-[#57534e]/40"
                   >
-                    <div className="text-xs text-neutral-500">{k}</div>
-                    <div className="text-lg font-bold text-white">{v}</div>
+                    <div className="text-xs text-[#a8a29e]">{k}</div>
+                    <div className="text-lg font-bold text-[#F59E0B]">{v}</div>
                   </div>
                 ))}
               </div>
@@ -228,12 +229,11 @@ const MarketingSection = () => {
 
           {/* Right: System Modules */}
           <div className="space-y-6">
-
             <SystemCard
               icon={Search}
               title="Search Intelligence"
               desc="Intent-driven acquisition pipelines."
-              accent="#46cef6"
+              accent="#B45309" // Main Requested Color
               delay={0}
             />
 
@@ -241,7 +241,7 @@ const MarketingSection = () => {
               icon={MousePointerClick}
               title="Social Amplification"
               desc="High-conversion creative loops."
-              accent="#a855f7"
+              accent="#D97706" // Slightly Lighter Amber
               delay={0.1}
             />
 
@@ -249,7 +249,7 @@ const MarketingSection = () => {
               icon={TrendingUp}
               title="Behavior Analytics"
               desc="Continuous funnel optimization."
-              accent="#22c55e"
+              accent="#92400E" // Darker Amber
               delay={0.2}
             />
 
@@ -257,10 +257,9 @@ const MarketingSection = () => {
               icon={Zap}
               title="Automation Layer"
               desc="AI-powered bid & budget control."
-              accent="#facc15"
+              accent="#F59E0B" // Brightest Amber
               delay={0.3}
             />
-
           </div>
         </div>
       </div>
