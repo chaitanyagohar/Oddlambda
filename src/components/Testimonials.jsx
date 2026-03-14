@@ -182,18 +182,6 @@ export default function Testimonials() {
         ))}
       </div>
 
-      {/* Cursor */}
-      <div
-        ref={cursorRef}
-        className="fixed top-0 left-0 w-28 h-28 rounded-full bg-[#46cef6] mix-blend-difference pointer-events-none z-[999] flex items-center justify-center text-black font-mono text-xs text-center leading-tight opacity-0"
-        style={{ transform: "translate(-50%, -50%)" }}
-      >
-        THIS
-        <br />
-        COULD BE
-        <br />
-        YOU
-      </div>
     </section>
   );
 }

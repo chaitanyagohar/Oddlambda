@@ -7,3 +7,15 @@
     transition: none !important;
   }
 }
+/* index.css */
+
+/* 1. Hide the default cursor on the body */
+body {
+  cursor: none;
+  background-color: #0c0a09; /* Ensure background matches your dark theme */
+}
+
+/* 2. Hide the default hand cursor on interactive elements */
+a, link, button, input, select, textarea, [role="button"] {
+  cursor: none; 
+}

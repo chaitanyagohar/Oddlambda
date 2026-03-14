@@ -1,29 +1,54 @@
-import React from "react";
+"use client";
 
-// --- CUSTOM CURSOR ---
+import React, { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const [hovered, setHovered] = useState(false);
-  
+  const [isDesktop, setIsDesktop] = useState(false);
+
   useEffect(() => {
+    const checkScreen = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+
     const moveCursor = (e) => {
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
+
       const target = e.target;
-      const isClickable = window.getComputedStyle(target).cursor === 'pointer' || target.tagName === 'A' || target.tagName === 'BUTTON';
+      const isClickable =
+        window.getComputedStyle(target).cursor === "pointer" ||
+        target.tagName === "A" ||
+        target.tagName === "BUTTON";
+
       setHovered(isClickable);
     };
+
     window.addEventListener("mousemove", moveCursor);
+
     return () => window.removeEventListener("mousemove", moveCursor);
-  }, []);
+  }, [isDesktop]);
+
+  if (!isDesktop) return null;
 
   return (
-    <div 
+    <div
       ref={cursorRef}
-      className="fixed top-0 left-0 z-[100] pointer-events-none mix-blend-difference -translate-x-1/2 -translate-y-1/2 hidden md:block"
+      className="fixed top-0 left-0 z-[100] pointer-events-none mix-blend-difference -translate-x-1/2 -translate-y-1/2"
     >
-      <motion.div 
+      <motion.div
         animate={{ scale: hovered ? 1.5 : 1 }}
         transition={{ duration: 0.2 }}
         className="relative flex items-center justify-center"

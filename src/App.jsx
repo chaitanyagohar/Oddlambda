@@ -12,8 +12,8 @@ import {
 import Manifesto from './components/Manifesto';
 import HorizontalScroll from './components/HorizontalScroll';
 import Description from './components/Description';
-import DigitalGrowth from './components/MarketingSection';
-import MarketingSection from './components/MarketingSection';
+import DigitalGrowth from './components/GrowthPipline';
+import MarketingSection from './components/GrowthPipline';
 import About from './components/About';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
@@ -26,6 +26,8 @@ import Loader from './components/Loader';
 import WhatWeOffer from './components/WhatWeOffer';
 import Contactform from './components/Contactform';
 import TrustSection from './components/TrustSection';
+import CustomCursor from './components/ui/CustomCursor';
+import GrowthPipeline from './components/GrowthPipline';
 
 // --------------------------------------------------------------------------
 
@@ -658,6 +660,7 @@ export default function App() {
       ) : (
         <>
           {/* Effects */}
+          <CustomCursor />
 
           <Spotlight />
 
@@ -672,7 +675,7 @@ export default function App() {
 
           <HorizontalScroll />
 
-          <MarketingSection />
+          <GrowthPipeline />
           <TrustSection />
 
           <Testimonials />

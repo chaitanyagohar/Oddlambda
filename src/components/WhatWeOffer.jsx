@@ -9,47 +9,42 @@ const WhatWeOffer = () => {
   /* ---------------- DATA ---------------- */
 
   const oddLambdaServices = [
-    { 
-      text: "Corporate Website", 
-      link: "#corporate", 
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
-    },
-    { 
-      text: "Landing Pages", 
-      link: "#landing", 
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop"
-    },
-    { 
-      text: "Web Applications", 
-      link: "#apps", 
-      image: "https://images.unsplash.com/photo-1590971862391-06cac0657603?q=80&w=1170&auto=format&fit=crop"
-    },
-    { 
-      text: "E-commerce", 
-      link: "#ecommerce", 
-      image: "https://images.pexels.com/photos/6214472/pexels-photo-6214472.jpeg"
-    },
-    { 
-      text: "Brand Identity", 
-      link: "#brand", 
-      image: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?q=80&w=2068&auto=format&fit=crop"
-    },
-    { 
-      text: "Personal Portfolio", 
-      link: "#portfolio", 
-      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=2055&auto=format&fit=crop"
-    },
-    { 
-      text: "Digital Presence", 
-      link: "#presence", 
-      image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2076&auto=format&fit=crop"
-    },
-    { 
-      text: "Digital Marketing", 
-      link: "#marketing", 
-      image: "https://images.unsplash.com/photo-1636114673156-052a83459fc1?q=80&w=1170&auto=format&fit=crop"
-    }
-  ];
+  { 
+    text: "Custom Websites", 
+    link: "#websites", 
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+  },
+
+  { 
+    text: "Landing Pages", 
+    link: "#funnels", 
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop"
+  },
+
+  { 
+    text: "Web Applications", 
+    link: "#webapps", 
+    image: "https://images.unsplash.com/photo-1590971862391-06cac0657603?q=80&w=1170&auto=format&fit=crop"
+  },
+
+  { 
+    text: "E-Commerce", 
+    link: "#ecommerce", 
+    image: "https://images.pexels.com/photos/6214472/pexels-photo-6214472.jpeg"
+  },
+
+  { 
+    text: "Brand Identity", 
+    link: "#branding", 
+    image: "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?q=80&w=2068&auto=format&fit=crop"
+  },
+
+  { 
+    text: "SEO & Growth", 
+    link: "#seo", 
+    image: "https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=2069&auto=format&fit=crop"
+  }
+];
 
   return (
     <section className="relative bg-black text-white py-24 md:py-32 overflow-hidden min-h-screen">
