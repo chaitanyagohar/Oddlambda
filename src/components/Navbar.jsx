@@ -10,11 +10,7 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [previousScroll, setPreviousScroll] = useState(0);
 
-  // Active route detection
   const isAboutPage = location.pathname === "/about";
-  const isHomePage = location.pathname === "/" || location.pathname === "";
-
-  // Hover state (null means it stays anchored to the active route)
   const [hoveredNav, setHoveredNav] = useState(null);
 
   useEffect(() => {
@@ -45,33 +41,34 @@ const Navbar = () => {
     { name: "About", path: "/about", isHash: false },
   ];
 
-  // If hovering an item, show on hovered. Otherwise snap to active page link.
   const activePill = hoveredNav !== null 
     ? hoveredNav 
     : (isAboutPage ? "About" : null);
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-10 lg:px-14 py-6 md:py-8 flex items-center justify-between pointer-events-none overflow-hidden md:overflow-visible">
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-10 lg:px-14 py-4 md:py-5 flex items-center justify-between pointer-events-none overflow-hidden md:overflow-visible">
         
         {/* ========================================================
-            LEFT: LOGO
+            LEFT: LOGO (Desktop Staggered Entrance)
         ======================================================== */}
         <motion.div
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           variants={{
             visible: { x: 0, opacity: 1 },
             hidden: { x: -100, opacity: 0 },
           }}
-          animate={isNavHidden ? "hidden" : "visible"}
-          transition={splitTransition}
+          style={{ x: 0 }}
           className="pointer-events-auto"
         >
           <Link
             to="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="group relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-[#0a0a0a] text-[#EAE6CD] rounded-tl-xl rounded-br-xl overflow-hidden transition-all duration-300"
+            className="group relative flex items-center justify-center w-11 h-11 md:w-12 md:h-12 bg-[#0a0a0a] text-[#EAE6CD] rounded-tl-lg rounded-br-lg overflow-hidden transition-all duration-300"
           >
-            <span className="relative z-10 font-corp font-bold text-2xl md:text-3xl mt-1 group-hover:text-[#0a0a0a] transition-colors duration-300">
+            <span className="relative z-10 font-corp font-bold text-xl md:text-2xl mt-0.5 group-hover:text-[#0a0a0a] transition-colors duration-300">
               O
             </span>
             <div className="absolute inset-0 bg-[#EAE6CD] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
@@ -79,17 +76,18 @@ const Navbar = () => {
         </motion.div>
 
         {/* ========================================================
-            CENTER: SLIDING HOVER & ACTIVE PILL NAV
+            CENTER: SLIDING HOVER & ACTIVE PILL NAV (Desktop Staggered Entrance)
         ======================================================== */}
         <motion.div
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           variants={{
             visible: { y: 0, opacity: 1 },
             hidden: { y: -100, opacity: 0 },
           }}
-          animate={isNavHidden ? "hidden" : "visible"}
-          transition={splitTransition}
           onMouseLeave={() => setHoveredNav(null)}
-          className="hidden md:flex items-center bg-[#0a0a0a] p-1.5 rounded-full border border-[#0a0a0a] shadow-[0px_8px_32px_rgba(0,0,0,0.15)] pointer-events-auto relative"
+          className="hidden md:flex items-center bg-[#0a0a0a] p-1 rounded-full border border-[#0a0a0a] shadow-[0px_8px_32px_rgba(0,0,0,0.15)] pointer-events-auto relative"
         >
           {navLinks.map((link) => {
             const isPillActive = activePill === link.name;
@@ -97,11 +95,11 @@ const Navbar = () => {
 
             const content = (
               <>
-                <span className="relative z-20 font-bold text-[14px] uppercase tracking-wider flex items-center gap-1.5 transition-colors duration-200">
+                <span className="relative z-20 font-bold text-[13px] uppercase tracking-wider flex items-center gap-1 transition-colors duration-200">
                   {link.name}
                   {link.name === "Services" && (
                     <ChevronDown
-                      size={16}
+                      size={14}
                       strokeWidth={2.5}
                       className={`transition-transform duration-300 ${
                         isHovered ? "rotate-180" : ""
@@ -110,7 +108,6 @@ const Navbar = () => {
                   )}
                 </span>
 
-                {/* Shared Persistent Sliding Capsule */}
                 {isPillActive && (
                   <motion.div
                     layoutId="navPillHover"
@@ -125,7 +122,7 @@ const Navbar = () => {
               </>
             );
 
-            const itemClasses = `relative px-6 py-2.5 rounded-full select-none cursor-pointer transition-colors duration-200 ${
+            const itemClasses = `relative px-5 py-2 rounded-full select-none cursor-pointer transition-colors duration-200 ${
               isPillActive ? "text-[#0a0a0a]" : "text-[#EAE6CD]"
             }`;
 
@@ -152,37 +149,38 @@ const Navbar = () => {
         </motion.div>
 
         {/* ========================================================
-            RIGHT: CONTACT BUTTON / BURGER
+            RIGHT: CONTACT BUTTON / BURGER (Desktop Staggered Entrance)
         ======================================================== */}
         <motion.div
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           variants={{
             visible: { x: 0, opacity: 1 },
             hidden: { x: 100, opacity: 0 },
           }}
-          animate={isNavHidden ? "hidden" : "visible"}
-          transition={splitTransition}
-          className="pointer-events-auto flex items-center gap-4"
+          className="pointer-events-auto flex items-center gap-3"
         >
-          {/* Desktop Magnetic / Sliding Contact Button */}
+          {/* Desktop Contact Button */}
           <a
             href="/#contact"
-            className="group relative hidden md:flex items-center gap-4 bg-[#0a0a0a] text-[#EAE6CD] border border-[#0a0a0a] shadow-[0px_8px_32px_rgba(0,0,0,0.12)] rounded-full pr-7 pl-2 py-2 overflow-hidden transition-all duration-300"
+            className="group relative hidden md:flex items-center gap-3 bg-[#0a0a0a] text-[#EAE6CD] border border-[#0a0a0a] shadow-[0px_8px_32px_rgba(0,0,0,0.12)] rounded-full pr-5 pl-1.5 py-1.5 overflow-hidden transition-all duration-300"
           >
             <div className="absolute inset-0 bg-[#EAE6CD] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
 
-            <div className="relative z-10 w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#EAE6CD]/10 border border-[#EAE6CD]/20">
+            <div className="relative z-10 w-9 h-9 rounded-full overflow-hidden shrink-0 bg-[#EAE6CD]/10 border border-[#EAE6CD]/20">
               <img 
                 src="/me.jpeg" 
                 alt="Oddlambda" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
-            <span className="relative z-10 font-bold text-[14px] uppercase tracking-wider text-[#EAE6CD] group-hover:text-[#0a0a0a] transition-colors duration-300 mt-0.5">
+            <span className="relative z-10 font-bold text-[13px] uppercase tracking-wider text-[#EAE6CD] group-hover:text-[#0a0a0a] transition-colors duration-300 mt-0.5">
               Contact
             </span>
           </a>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Hamburger Toggle (Untouched layout & logic) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden flex flex-col items-center justify-center gap-[6px] w-14 h-14 bg-[#0a0a0a] border border-[#0a0a0a] rounded-full shadow-[0px_4px_24px_rgba(0,0,0,0.1)] overflow-hidden"
@@ -202,7 +200,7 @@ const Navbar = () => {
       </nav>
 
       {/* ========================================================
-          MOBILE DRAWER
+          MOBILE DRAWER (Completely untouched structure)
       ======================================================== */}
       <AnimatePresence>
         {mobileMenuOpen && (

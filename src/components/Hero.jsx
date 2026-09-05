@@ -209,45 +209,40 @@ const Hero = () => {
             flex-col
             justify-between
             px-4
-            pt-24
-            pb-4
+            pt-20
+            pb-3
             md:px-8
-            md:pb-0
+            md:pb-4
             lg:px-10
           "
         >
           <div className="flex h-full flex-col justify-between">
             {/* ==================================================
-                HEADLINE
+                HEADLINE (Adjusted Font Size for 100% Fit)
             ================================================== */}
 
             <motion.div
               variants={containerVars}
               initial="hidden"
               animate="show"
-              className="mt-6 lg:mt-10"
+              className="mt-2 lg:mt-4"
             >
               <h1
                 className="
-    m-0
-    p-0
-    font-corp
-    w-[96%]
-    font-bold
-    uppercase
-    leading-[0.85]
-    tracking-[-0.055em]
-    text-[#0a0a0a]
-
-    text-[9.2vw]
-    sm:text-[8.5vw]
-
-    md:w-full
-    md:text-[9vw]
-
-    lg:text-[7.5vw]
-    xl:text-[7.2vw]
-  "
+                  m-0
+                  p-0
+                  font-corp
+                  text-[11vw]
+                  font-bold
+                  uppercase
+                  leading-[0.85]
+                  tracking-[-0.04em]
+                  text-[#0a0a0a]
+                  sm:text-[9.5vw]
+                  md:text-[8vw]
+                  lg:text-[6.8vw]
+                  xl:text-[6.5vw]
+                "
               >
                 <span className="block overflow-hidden pb-1">
                   <motion.span variants={textVars} className="block">
@@ -280,8 +275,8 @@ const Hero = () => {
                 grid-cols-12
                 items-end
                 gap-6
-                pt-6
-                pb-8
+                pt-2
+                pb-4
                 lg:grid
                 lg:gap-8
               "
@@ -301,12 +296,12 @@ const Hero = () => {
               >
                 <p
                   className="
-                    mb-6
-                    text-[16px]
+                    mb-4
+                    text-[15px]
                     font-medium
                     leading-[1.35]
                     text-[#0a0a0a]/80
-                    xl:text-[17px]
+                    xl:text-[16px]
                   "
                 >
                   As an independent digital agency, we build high-performance
@@ -329,7 +324,7 @@ const Hero = () => {
                       group
                       relative
                       inline-flex
-                      h-16
+                      h-14
                       items-center
                       gap-2.5
                       overflow-hidden
@@ -379,8 +374,8 @@ const Hero = () => {
                       <span
                         className="
                           flex
-                          h-7
-                          w-7
+                          h-6
+                          w-6
                           items-center
                           justify-center
                           overflow-hidden
@@ -389,7 +384,7 @@ const Hero = () => {
                           transition-transform
                           duration-500
                           ease-out
-                          group-hover:rotate-[-1deg]
+                          group-hover:rotate-[-6deg]
                           group-hover:scale-110
                         "
                       >
@@ -399,12 +394,13 @@ const Hero = () => {
                             h-full
                             w-full
                             object-cover
+                            
                           "
                           alt="Profile"
                         />
                       </span>
 
-                      <span className="font-corp text-[13px] font-bold uppercase tracking-widest sm:text-[14px]">
+                      <span className="font-corp text-[12px] font-bold uppercase tracking-widest sm:text-[13px]">
                         Book a Call
                       </span>
 
@@ -433,7 +429,7 @@ const Hero = () => {
                       group
                       relative
                       inline-flex
-                      h-16
+                      h-14
                       items-center
                       gap-2
                       overflow-hidden
@@ -482,7 +478,7 @@ const Hero = () => {
                         group-hover:text-[#EAE6CD]
                       "
                     >
-                      <span className="flex h-7 items-center font-corp text-[13px] font-bold uppercase leading-none tracking-widest xl:text-[14px]">
+                      <span className="flex h-6 items-center font-corp text-[12px] font-bold uppercase leading-none tracking-widest xl:text-[13px]">
                         See Projects
                       </span>
 
@@ -503,7 +499,7 @@ const Hero = () => {
               </motion.div>
 
               {/* ==================================================
-                  RIGHT: PROJECT SLIDER (1:1 Reference Size)
+                  RIGHT: PROJECT SLIDER
               ================================================== */}
 
               <motion.div
@@ -534,17 +530,17 @@ const Hero = () => {
                   onMouseUp={() => setIsDragging(false)}
                   className="
                     relative
-                    h-[220px]
-                    lg:h-[280px]
-                    xl:h-[340px]
-                    w-[70%]
-                    xl:w-[65%]
+                    h-[210px]
+                    w-[75%]
                     cursor-none
                     overflow-hidden
-                    rounded-[8px]
-                    border-[3px]
-                    border-[#0a0a0a]
+                    rounded-xl
+                    border-[4px]
+                    border-[#0a0a0a]/20
                     bg-[#0a0a0a]
+                    shadow-xl
+                    xl:h-[260px]
+                    xl:w-[58%]
                   "
                 >
                   {/* Outer Drag Wrapper */}
@@ -563,14 +559,15 @@ const Hero = () => {
                       items-center
                     "
                   >
-                    {/* Infinite Auto Scroll with 1.5px Grid Line Gaps */}
+                    {/* Infinite Auto Scroll */}
 
                     <motion.div
                       className="
                         flex
                         h-full
                         items-center
-                        gap-[1.5px]
+                        gap-1
+                        px-4
                       "
                       animate={{
                         x: ["-25%", "-50%"],
@@ -586,18 +583,24 @@ const Hero = () => {
                           key={idx}
                           className="
                             h-full
-                            object-fit
+                            w-[250px]
                             flex-shrink-0
+                            overflow-hidden
+                            rounded-[6px]
                             pointer-events-none
+                            md:w-[550px]
                           "
                         >
                           <img
                             src={src}
                             alt={`Project ${idx}`}
                             className="
-                              h-full
-                              w-full
+                              h-[100%]
+                              w-[100%]
                               object-cover
+                              opacity-90
+                              transition-opacity
+                              duration-300
                             "
                           />
                         </div>
@@ -606,45 +609,44 @@ const Hero = () => {
                   </motion.div>
                 </div>
 
-
                 {/* ==================================================
-    DESKTOP ATTRIBUTION
-================================================== */}
+                    DESKTOP ATTRIBUTION
+                ================================================== */}
 
-<div
-  className="
-    mt-3
-    flex
-    w-[70%]
-    xl:w-[65%]
-    items-center
-    gap-4
-  "
->
-  <span
-    className="
-      shrink-0
-      whitespace-nowrap
-      font-corp
-      text-[11px]
-      lg:text-[12px]
-      font-bold
-      uppercase
-      tracking-widest
-      text-[#0a0a0a]
-    "
-  >
-    By Oddlambda
-  </span>
+                <div
+                  className="
+                    mt-2
+                    flex
+                    w-[75%]
+                    items-center
+                    gap-4
+                    xl:w-[58%]
+                  "
+                >
+                  <span
+                    className="
+                      shrink-0
+                      whitespace-nowrap
+                      font-corp
+                      text-[13px]
+                      font-bold
+                      uppercase
+                      tracking-[-0.02em]
+                      text-[#0a0a0a]
+                      xl:text-[14px]
+                    "
+                  >
+                    By Oddlambda
+                  </span>
 
-  <span
-    className="
-      h-[1.5px]
-      flex-1
-      bg-[#0a0a0a]
-    "
-  />
-</div>
+                  <span
+                    className="
+                      h-px
+                      flex-1
+                      bg-[#0a0a0a]
+                    "
+                  />
+                </div>
               </motion.div>
             </div>
 
@@ -658,12 +660,12 @@ const Hero = () => {
                 h-full
                 flex-col
                 justify-end
-                pb-4
+                pb-2
                 lg:hidden
               "
             >
               {/* ==================================================
-                  MOBILE PROJECT (LOOPING SLIDER)
+                  MOBILE PROJECT
               ================================================== */}
 
               <motion.div
@@ -672,74 +674,47 @@ const Hero = () => {
                 animate="show"
                 className="
                   mt-auto
-                  mb-8
-                  pt-6
+                  mb-4
+                  pt-4
                 "
               >
                 <div
                   className="
-                    relative
-                    h-[180px]
-                    sm:h-[240px]
-                    w-[95%]
-                    sm:w-[85%]
+                    aspect-[1.47/1]
+                    w-[62%]
+                    max-w-[260px]
                     overflow-hidden
-                    rounded-[4px]
-                    border-[2.5px]
-                    border-[#0a0a0a]
+                    rounded-[8px]
+                    border
+                    border-[#0a0a0a]/20
                     bg-[#0a0a0a]
+                    shadow-xl
+                    sm:w-[60%]
                   "
                 >
-                  <motion.div
+                  <img
+                    src={projects[0]}
+                    alt="Project 1"
                     className="
-                      flex
                       h-full
-                      w-max
-                      items-center
+                      w-full
+                      object-cover
+                      opacity-90
                     "
-                    animate={{ x: ["-25%", "-50%"] }}
-                    transition={{
-                      ease: "linear",
-                      duration: 18,
-                      repeat: Infinity,
-                    }}
-                  >
-                    <div className="flex h-full items-center gap-[1.5px]">
-                      {marqueeImages.map((src, idx) => (
-                        <div
-                          key={idx}
-                          className="
-                            h-full
-                            object-cover
-                            flex-shrink-0
-                            pointer-events-none
-                          "
-                        >
-                          <img
-                            src={src}
-                            alt={`Project ${idx}`}
-                            className="
-                              h-full
-                              w-full
-                              object-cover
-                            "
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
+                  />
                 </div>
 
                 {/* Mobile Attribution */}
 
                 <div
                   className="
-                    mt-3
+                    mt-2
                     flex
-                    w-[95%]
-                    sm:w-[85%]
+                    w-[62%]
+                    max-w-[260px]
                     items-center
                     gap-3
+                    sm:w-[60%]
                   "
                 >
                   <span
@@ -749,8 +724,8 @@ const Hero = () => {
                       text-[11px]
                       font-bold
                       uppercase
-                      tracking-widest
                       text-[#0a0a0a]
+                      sm:text-[12px]
                     "
                   >
                     By Oddlambda
@@ -758,7 +733,7 @@ const Hero = () => {
 
                   <span
                     className="
-                      h-[1.5px]
+                      h-[2px]
                       flex-1
                       bg-[#0a0a0a]
                     "
@@ -773,13 +748,13 @@ const Hero = () => {
               <motion.div variants={fadeVars} initial="hidden" animate="show">
                 <p
                   className="
-                    mb-5
+                    mb-3
                     max-w-[380px]
-                    text-[15px]
+                    text-[14px]
                     font-medium
                     leading-[1.35]
                     text-[#0a0a0a]/80
-                    sm:text-[16px]
+                    sm:text-[15px]
                   "
                 >
                   As an independent digital agency, we build high-performance
@@ -802,7 +777,7 @@ const Hero = () => {
                       group
                       relative
                       inline-flex
-                      h-11
+                      h-10
                       items-center
                       gap-2.5
                       overflow-hidden
@@ -819,7 +794,7 @@ const Hero = () => {
                       ease-out
                       hover:-translate-y-1
                       active:translate-y-0
-                      sm:h-12
+                      sm:h-11
                       sm:px-4
                       sm:text-[11px]
                     "
@@ -855,8 +830,8 @@ const Hero = () => {
                       <span
                         className="
                           flex
-                          h-6
-                          w-6
+                          h-5
+                          w-5
                           items-center
                           justify-center
                           overflow-hidden
@@ -864,10 +839,10 @@ const Hero = () => {
                           bg-[#EAE6CD]
                           transition-transform
                           duration-500
-                          group-hover:rotate-[-1deg]
+                          group-hover:rotate-[-6deg]
                           group-hover:scale-110
-                          sm:h-7
-                          sm:w-7
+                          sm:h-6
+                          sm:w-6
                         "
                       >
                         <img
@@ -876,12 +851,13 @@ const Hero = () => {
                             h-full
                             w-full
                             object-cover
+                            
                           "
                           alt="Profile"
                         />
                       </span>
 
-                      <span className="flex h-6 items-center font-corp text-[11px] font-bold uppercase leading-none tracking-widest sm:h-7 sm:text-[12px]">
+                      <span className="flex h-5 items-center font-corp text-[11px] font-bold uppercase leading-none tracking-widest sm:h-6 sm:text-[12px]">
                         Book a Call
                       </span>
 
@@ -907,14 +883,14 @@ const Hero = () => {
                       group
                       relative
                       inline-flex
-                      h-11
+                      h-10
                       items-center
                       overflow-hidden
                       rounded-[2px]
                       border-[1.5px]
                       border-[#0a0a0a]
                       bg-transparent
-                      px-4
+                      px-3
                       text-[10px]
                       font-bold
                       uppercase
@@ -925,8 +901,8 @@ const Hero = () => {
                       ease-out
                       hover:-translate-y-1
                       active:translate-y-0
-                      sm:h-12
-                      sm:px-5
+                      sm:h-11
+                      sm:px-4
                       sm:text-[11px]
                     "
                   >
@@ -958,7 +934,7 @@ const Hero = () => {
                         group-hover:text-[#EAE6CD]
                       "
                     >
-                      <span className="flex h-6 items-center font-corp text-[11px] font-bold uppercase leading-none tracking-widest sm:h-7 sm:text-[12px]">
+                      <span className="flex h-5 items-center font-corp text-[11px] font-bold uppercase leading-none tracking-widest sm:h-6 sm:text-[12px]">
                         See Projects
                       </span>
 

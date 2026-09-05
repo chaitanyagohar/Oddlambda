@@ -134,7 +134,7 @@ export default function Description() {
       {/* Image 2 */}
       <motion.div
         style={{ y: yImg2 }}
-        className="absolute bottom-[5%] left-[2%] md:left-[5%] w-64 md:w-96 aspect-video z-0 opacity-70 grayscale"
+        className="absolute bottom-[5%] left-[2%] md:left-[5%] w-64 md:w-96 aspect-video z-0 opacity-70 "
       >
         <img
           src={img3}
