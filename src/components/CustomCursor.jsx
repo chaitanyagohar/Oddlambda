@@ -6,21 +6,17 @@ import { motion } from "framer-motion";
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const [hovered, setHovered] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    const checkScreen = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
+    const touch =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-
-    return () => window.removeEventListener("resize", checkScreen);
+    setIsTouchDevice(touch);
   }, []);
 
   useEffect(() => {
-    if (!isDesktop) return;
+    if (isTouchDevice) return;
 
     const moveCursor = (e) => {
       if (cursorRef.current) {
@@ -28,6 +24,7 @@ const CustomCursor = () => {
       }
 
       const target = e.target;
+
       const isClickable =
         window.getComputedStyle(target).cursor === "pointer" ||
         target.tagName === "A" ||
@@ -39,9 +36,9 @@ const CustomCursor = () => {
     window.addEventListener("mousemove", moveCursor);
 
     return () => window.removeEventListener("mousemove", moveCursor);
-  }, [isDesktop]);
+  }, [isTouchDevice]);
 
-  if (!isDesktop) return null;
+  if (isTouchDevice) return null;
 
   return (
     <div

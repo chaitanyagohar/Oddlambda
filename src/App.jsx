@@ -1,692 +1,99 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useSpring, useTransform, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
-import { 
-  Search, Users, Settings, BarChart, Rocket, CheckCircle, 
-  Code, Layout, Zap, Smartphone, Globe, Mail, ArrowRight, Menu, X, ArrowUpRight, Terminal, Star, Package, Clock, Play, Quote,
-  Contact
-} from 'lucide-react';
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Services from "./components/Services";
+import Projects from "./components/Projects";
+import About from "./components/About";
+import FAQ from "./components/Faq";
+import CTA from "./components/CTA";
+import Footer from "./components/Footer";
+import CookieConsent from "./components/CookieConsent";
 
-// --- Imports from Components ---
-// --------------------------------------------------------------------------
-// FOR LOCAL USE: Uncomment the line below and delete the placeholder GridScan component below
-import Manifesto from './components/Manifesto';
-import HorizontalScroll from './components/HorizontalScroll';
-import Description from './components/Description';
-import DigitalGrowth from './components/GrowthPipline';
-import MarketingSection from './components/GrowthPipline';
-import About from './components/About';
-import Testimonials from './components/Testimonials';
-import CTA from './components/CTA';
-import CookieConsent from './components/CookieConsent';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Hero from './components/Hero';
-import TrustedBy from './components/TrustedBy';
-import Loader from './components/Loader';
-import WhatWeOffer from './components/WhatWeOffer';
-import Contactform from './components/Contactform';
-import TrustSection from './components/TrustSection';
-import CustomCursor from './components/ui/CustomCursor';
-import GrowthPipeline from './components/GrowthPipline';
+// Standalone Pages
+import AboutPage from "./app/about/page";
+import ProjectsPage from "./app/projects/page"; 
+import SmoothScroll from "./components/SmoothScroll";
+// import ServicesPage from "./app/services/page"; 
+// import ContactPage from "./app/contact/page";   
 
-// --------------------------------------------------------------------------
-
-// --- Assets & Utils ---
-const NoiseOverlay = () => (
-  <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-overlay" 
-       style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} 
-  />
-);
-
-
-// --- Animations ---
-const transition = { duration: 0.8, ease: [0.25, 1, 0.5, 1] };
-
-const MaskedReveal = ({ children, delay = 0, className = "" }) => {
-  return (
-    <div className={`overflow-hidden ${className}`}>
-      <motion.div
-        initial={{ y: "100%" }}
-        whileInView={{ y: 0 }}
-        viewport={{ once: true, margin: "-10%" }}
-        transition={{ ...transition, delay }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-};
-
-const FadeIn = ({ children, delay = 0, className = "" }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-10%" }}
-    transition={{ ...transition, delay }}
-    className={className}
-  >
-    {children}
-  </motion.div>
-);
-
-const ShineCard = ({ children, className = "" }) => {
-  return (
-    <motion.div 
-      className={`group relative overflow-hidden bg-[#0a0a0a] border border-white/5 ${className}`}
-      whileHover={{ scale: 0.995 }}
-      transition={{ duration: 0.4 }}
-    >
-      {/* Metallic Sheen Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none z-20" />
-      
-      {/* Inner Bevel Shadow */}
-      <div className="absolute inset-0 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] pointer-events-none z-10 rounded-inherit" />
-      
-      {children}
-    </motion.div>
-  );
-};
-
-// --- React Bits Components ---
-
-const DecryptedText = ({ text, speed = 50, maxIterations = 20, className, revealDelay = 0 }) => {
-  const [displayText, setDisplayText] = useState(text);
-  const [isScrambling, setIsScrambling] = useState(false);
-  const [hasRevealed, setHasRevealed] = useState(false);
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
+// Helper to reset scroll position on route changes
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsScrambling(true);
-      setHasRevealed(true);
-    }, revealDelay);
-    return () => clearTimeout(timeout);
-  }, [revealDelay]);
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-  useEffect(() => {
-    let interval;
-    let iteration = 0;
+  return null;
+}
 
-    if (isScrambling) {
-      interval = setInterval(() => {
-        setDisplayText(
-          text
-            .split("")
-            .map((letter, index) => {
-              if (index < iteration) {
-                return text[index];
-              }
-              return letters[Math.floor(Math.random() * letters.length)];
-            })
-            .join("")
-        );
-
-        if (iteration >= text.length) {
-          setIsScrambling(false);
-          clearInterval(interval);
-        }
-
-        iteration += 1 / (maxIterations / text.length);
-      }, speed);
-    } else {
-      setDisplayText(text);
-    }
-
-    return () => clearInterval(interval);
-  }, [isScrambling, text, speed, maxIterations]);
-
+// Full Landing Page Composition
+function HomePage() {
   return (
-    <motion.span 
-      className={`inline-block whitespace-pre ${className}`}
-      onMouseEnter={() => {
-        if (!isScrambling) setIsScrambling(true);
-      }}
-    >
-      {displayText}
-    </motion.span>
+    <>
+      <Hero />
+      <Services />
+      <Projects />
+      <About />
+      <FAQ />
+      <CTA />
+      <Footer />
+    </>
   );
-};
-
-// --------------------------------------------------------------------------
-// PLACEHOLDER GRID SCAN (Delete this block when using locally)
-// --------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------
-
-// --- New Component: Full Screen Quote Section ---
-const QuoteSection = ({ quote, author, backgroundText, direction = 1 }) => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-
-  // Parallax effect for the background text
-  const x = useTransform(scrollYProgress, [0, 1], ["-20%", direction === 1 ? "20%" : "-60%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 0.1, 0.1, 0]);
-
-  return (
-    <section ref={ref} className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#030303] border-y border-white/5">
-      {/* Background Moving Text */}
-      <motion.div 
-        style={{ x, opacity }}
-        className="absolute whitespace-nowrap text-[20vw] font-black leading-none text-white pointer-events-none select-none"
-      >
-        {backgroundText}
-      </motion.div>
-
-      {/* Foreground Content */}
-      <div className="relative z-10 max-w-4xl px-6 text-center">
-        <div className="mb-8 flex justify-center">
-          <Quote className="text-[#46cef6] w-12 h-12 opacity-50" />
-        </div>
-        <MaskedReveal>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-tight mb-8">
-            "{quote}"
-          </h2>
-        </MaskedReveal>
-        
-        {author && (
-          <FadeIn delay={0.3}>
-            <div className="flex items-center justify-center gap-4">
-              <div className="h-[1px] w-12 bg-[#46cef6]" />
-              <span className="text-neutral-400 font-mono tracking-widest uppercase text-sm">{author}</span>
-              <div className="h-[1px] w-12 bg-[#46cef6]" />
-            </div>
-          </FadeIn>
-        )}
-      </div>
-      
-      {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030303_100%)] pointer-events-none" />
-    </section>
-  );
-};
-
-// --- Components ---
-
-const Spotlight = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  useEffect(() => {
-    const handleMouseMove = ({ clientX, clientY }) => {
-      mouseX.set(clientX);
-      mouseY.set(clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  return (
-    <motion.div
-      className="pointer-events-none fixed inset-0 z-0 opacity-40 transition-opacity duration-300"
-      style={{
-        background: useMotionTemplate`
-          radial-gradient(
-            500px circle at ${mouseX}px ${mouseY}px,
-            rgba(255, 255, 255, 0.05),
-            transparent 80%
-          )
-        `,
-      }}
-    />
-  );
-};
-
-
-
-
-
-
-
-// const Hero = () => {
-//   const [sequence, setSequence] = useState(0);
-
-//   useEffect(() => {
-//     const t = [
-//       setTimeout(() => setSequence(1), 200),
-//       setTimeout(() => setSequence(2), 500),
-//       setTimeout(() => setSequence(3), 900),
-//       setTimeout(() => setSequence(4), 1400),
-//       setTimeout(() => setSequence(5), 1800),
-//       setTimeout(() => setSequence(6), 2200),
-//     ];
-
-//     return () => t.forEach(clearTimeout);
-//   }, []);
-
-//   return (
-//     <section className="relative min-h-screen bg-[#030303] text-white px-6 flex items-center overflow-hidden">
-//       <motion.div
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: sequence >= 1 ? 1 : 0 }}
-//         transition={{ duration: 1 }}
-//         className="absolute inset-0"
-//       >
-//         <GridScan
-//           sensitivity={0.55}
-//           lineThickness={1}
-//           linesColor="#392e4e"
-//           gridScale={0.1}
-//           scanColor="#FF9FFC"
-//           scanOpacity={0.4}
-//           enablePost
-//           bloomIntensity={0.6}
-//           chromaticAberration={0.002}
-//           noiseIntensity={0.01}
-//         />
-//       </motion.div>
-
-//       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8">
-//         <motion.div
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{
-//             opacity: sequence >= 2 ? 1 : 0,
-//             y: sequence >= 2 ? 0 : 20,
-//           }}
-//           transition={{ duration: 0.6 }}
-//           className="md:col-span-3 flex items-start"
-//         >
-//           <div className="space-y-6">
-//             <div className="w-12 h-[2px] bg-white" />
-//             <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-400">
-//               Digital Studio
-//             </p>
-//             <p className="text-xs font-mono uppercase tracking-[0.35em] text-neutral-600">
-//               Est. 2025
-//             </p>
-//           </div>
-//         </motion.div>
-
-//         <div className="md:col-span-7">
-//           <motion.h1
-//             initial={{ opacity: 0, y: 60 }}
-//             animate={{
-//               opacity: sequence >= 3 ? 1 : 0,
-//               y: sequence >= 3 ? 0 : 60,
-//             }}
-//             transition={{
-//               duration: 1,
-//               ease: [0.25, 1, 0.5, 1],
-//             }}
-//             className="font-extrabold leading-[0.85] tracking-[-0.04em] text-[14vw] md:text-[9vw] lg:text-[8vw]"
-//           >
-//             CRAFTING
-//             <br />
-//             DIGITAL
-//             <br />
-//             REALITY
-//           </motion.h1>
-
-//           <motion.p
-//             initial={{ opacity: 0, y: 10 }}
-//             animate={{
-//               opacity: sequence >= 4 ? 1 : 0,
-//               y: sequence >= 4 ? 0 : 10,
-//             }}
-//             transition={{ duration: 0.6 }}
-//             className="mt-10 max-w-xl text-neutral-400 text-lg font-light leading-relaxed"
-//           >
-//             We design and build high-performance digital systems where clarity,
-//             speed, and intent matter more than decoration.
-//           </motion.p>
-//         </div>
-
-//         <motion.div
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{
-//             opacity: sequence >= 5 ? 1 : 0,
-//             y: sequence >= 5 ? 0 : 20,
-//           }}
-//           transition={{ duration: 0.6 }}
-//           className="md:col-span-2 flex flex-col justify-end items-start md:items-end gap-6"
-//         >
-//           <a
-//             href="#contact"
-//             className="group flex items-center gap-3 text-sm font-mono uppercase tracking-widest"
-//           >
-//             <span className="relative">
-//               Start Project
-//               <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300" />
-//             </span>
-//             <ArrowUpRight size={14} />
-//           </a>
-
-//           <div className="text-xs font-mono uppercase tracking-[0.3em] text-neutral-600 text-right">
-//             <p>Based Worldwide</p>
-//             <p>Remote Studio</p>
-//           </div>
-//         </motion.div>
-//       </div>
-
-//       <motion.div
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: sequence >= 6 ? 1 : 0 }}
-//         transition={{ duration: 0.6 }}
-//         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-500"
-//       >
-//         <span className="text-[10px] font-mono tracking-widest">SCROLL</span>
-//         <div className="w-[1px] h-10 bg-neutral-600" />
-//       </motion.div>
-//     </section>
-//   );
-// };
-
-
-
-const SelectedWorks = () => {
-  const projects = [
-    { title: "Lumina Real Estate", cat: "Lead Gen Landing Page", stat: "40% Conversion Lift" },
-    { title: "Vanguard E-Com", cat: "Shopify Custom Theme", stat: "0.8s Load Time" },
-    { title: "Nexus Finance", cat: "Web Application", stat: "Series A Funded" },
-  ];
-
-  return (
-    <section id="work" className="py-32 px-6 relative z-10 bg-[#050505]">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8">
-          <MaskedReveal>
-            <h2 className="text-4xl md:text-7xl font-bold tracking-tighter text-white">SELECTED <span className="text-neutral-600">WORKS</span></h2>
-          </MaskedReveal>
-          <FadeIn delay={0.2} className="hidden md:block">
-            <a href="#contact" className="text-sm font-mono text-[#46cef6] hover:text-white transition-colors flex items-center gap-2">
-              VIEW ALL CASE STUDIES <ArrowRight size={14} />
-            </a>
-          </FadeIn>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {projects.map((project, i) => (
-            <ShineCard key={i} className="rounded-xl">
-              <div className="aspect-[3/4] bg-[#111] relative group-hover:opacity-90 transition-opacity">
-                {/* Image Placeholder Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#050505]" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="px-6 py-3 border border-white/20  kdrop-blur-md rounded-full text-xs font-bold uppercase tracking-widest text-white">View Project</span>
-                </div>
-              </div>
-              <div className="p-8 absolute bottom-0 left-0 w-full">
-                <span className="text-[#46cef6] font-mono text-xs uppercase tracking-wider mb-2 block">{project.cat}</span>
-                <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                <p className="text-neutral-500 text-sm border-l border-[#46cef6] pl-3">{project.stat}</p>
-              </div>
-            </ShineCard>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-
-
-// --- Refined Snake Process ---
-const TimelineItem = ({ step, scrollProgress }) => {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = scrollProgress.on("change", (latest) => {
-      const stepThreshold = (step.id - 0.5) / 6.5; 
-      setIsActive(latest > stepThreshold);
-    });
-    return () => unsubscribe();
-  }, [scrollProgress, step.id]);
-
-  return (
-    <div className={`relative flex flex-col items-center justify-center p-6 transition-all duration-700 ${isActive ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-[2px]'}`}>
-      <div className={`relative z-10 p-5 rounded-2xl border mb-6 transition-all duration-500 backdrop-blur-md
-          ${isActive 
-              ? 'bg-[#46cef6]/10 border-[#46cef6] text-[#46cef6] shadow-[0_0_30px_rgba(70,206,246,0.3)]' 
-              : 'bg-[#111] border-white/10 text-neutral-600 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]'}`}>
-        <step.icon size={28} strokeWidth={1.5} />
-      </div>
-      <h3 className={`text-xl font-bold mb-2 font-mono uppercase tracking-wider transition-colors duration-500 ${isActive ? 'text-white' : 'text-neutral-600'}`}>
-        {step.title}
-      </h3>
-      <p className="text-sm text-neutral-500 max-w-[220px] text-center leading-relaxed font-medium">
-        {step.desc}
-      </p>
-    </div>
-  );
-};
-
-const MobileTimelineItem = ({ step, index, scrollProgress }) => {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = scrollProgress.on("change", (latest) => {
-      const stepThreshold = (index + 0.1) / 6.5; 
-      setIsActive(latest > stepThreshold);
-    });
-    return () => unsubscribe();
-  }, [scrollProgress, index]);
-
-  return (
-    <div className={`relative pl-16 transition-all duration-700 ${isActive ? 'opacity-100 translate-x-0' : 'opacity-30 translate-x-4'}`}>
-      {/* Icon Bubble */}
-      <div className={`absolute left-4 -translate-x-1/2 top-0 p-3 rounded-full border-2 transition-all duration-500 z-10 bg-[#050505]
-          ${isActive 
-              ? 'border-[#46cef6] text-[#46cef6] shadow-[0_0_20px_rgba(70,206,246,0.4)]' 
-              : 'border-white/10 text-neutral-600'}`}>
-        <step.icon size={20} />
-      </div>
-      
-      <h3 className={`text-xl font-bold mb-2 font-mono uppercase tracking-wider transition-colors duration-500 ${isActive ? 'text-white' : 'text-neutral-600'}`}>
-        {step.title}
-      </h3>
-      <p className="text-sm text-neutral-500 leading-relaxed font-medium">
-        {step.desc}
-      </p>
-    </div>
-  );
-};
-
-const ProcessSection = () => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start center", "end end"]
-  });
-
-  const pathLength = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
-  const pathData = "M 50 150 H 850 Q 950 150 950 300 Q 950 450 850 450 H 50";
-
-  const processSteps = [
-    { id: 1, title: "Discovery", desc: "Brand goals & strategy.", icon: Search },
-    { id: 2, title: "Architecture", desc: "User journey mapping.", icon: Layout },
-    { id: 3, title: "Development", desc: "Clean, semantic code.", icon: Code },
-    { id: 4, title: "Quality Check", desc: "Rigorous testing.", icon: CheckCircle },
-    { id: 5, title: "Deployment", desc: "Launch with SEO.", icon: Rocket },
-    { id: 6, title: "Evolution", desc: "Growth & analytics.", icon: BarChart }
-  ];
-
-  return (
-    <section id="process" ref={containerRef} className="py-32 bg-[#050505] relative overflow-hidden">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:40px_40px] opacity-20" />
-      
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-24">
-          <span className="text-[#46cef6] font-mono text-xs tracking-[0.3em] uppercase block mb-4">The Methodology</span>
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white">FROM CONCEPT TO <br/> <span className="text-neutral-600">EXECUTION</span></h2>
-        </div>
-
-        {/* Desktop Snake View */}
-        <div className="hidden md:block relative w-full max-w-6xl mx-auto h-[600px] select-none">
-          <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 1000 600">
-            <path d={pathData} fill="none" stroke="#1a1a1a" strokeWidth="4" strokeLinecap="round" />
-          </svg>
-          <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 1000 600">
-            <motion.path 
-              d={pathData} fill="none" stroke="#46cef6" strokeWidth="4" strokeLinecap="round" 
-              style={{ pathLength }} filter="drop-shadow(0 0 8px rgba(70,206,246,0.6))"
-            />
-          </svg>
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-visible" style={{ zIndex: 20 }}>
-            <svg className="w-full h-full overflow-visible" viewBox="0 0 1000 600">
-              <motion.circle 
-                r="8" fill="#000" stroke="#46cef6" strokeWidth="4"
-                style={{ 
-                  offsetPath: `path("${pathData}")`, 
-                  "--snake-progress": useTransform(pathLength, [0, 1], ["0%", "100%"]) 
-                }}
-                className="snake-head shadow-[0_0_20px_#46cef6]"
-              />
-            </svg>
-          </div>
-          <div className="absolute inset-0 grid grid-cols-3 grid-rows-2">
-            {[0, 1, 2].map(i => <div key={i} className="flex items-center justify-center"><TimelineItem step={processSteps[i]} scrollProgress={scrollYProgress} /></div>)}
-            {[5, 4, 3].map(i => <div key={i} className="flex items-center justify-center"><TimelineItem step={processSteps[i]} scrollProgress={scrollYProgress} /></div>)}
-          </div>
-        </div>
-
-        {/* Mobile View */}
-        <div className="md:hidden relative ml-4 py-8">
-          {/* Vertical Track */}
-          <div className="absolute left-4 top-0 bottom-0 w-[2px] bg-white/10" />
-          
-          {/* Vertical Progress Line */}
-          <motion.div 
-            style={{ height: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
-            className="absolute left-4 top-0 w-[2px] bg-[#46cef6] origin-top"
-          >
-             <div className="absolute -bottom-1 -left-[5px] w-3 h-3 rounded-full bg-[#46cef6] shadow-[0_0_15px_#46cef6]" />
-          </motion.div>
-
-          <div className="flex flex-col gap-16">
-            {processSteps.map((step, index) => (
-               <MobileTimelineItem key={index} step={step} index={index} scrollProgress={scrollYProgress} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Packages = () => {
-  const plans = [
-    {
-      name: "Speed Launch",
-      icon: Clock,
-      desc: "For urgent landing pages.",
-      features: ["3-Day Delivery", "One-Page Design", "Basic SEO", "Mobile Ready"],
-      highlight: false
-    },
-    {
-      name: "Custom Brand",
-      icon: Star,
-      desc: "Full corporate website.",
-      features: ["React/Next.js Code", "5-7 Pages", "High-End Animation", "CMS Integration"],
-      highlight: true
-    },
-    {
-      name: "E-Com Scale",
-      icon: Package,
-      desc: "High-performance store.",
-      features: ["Shopify/Headless", "Payments Setup", "Inventory System", "Sales Funnel"],
-      highlight: false
-    }
-  ];
-
-  return (
-    <section id="pricing" className="py-24 px-6 relative z-10 bg-[#050505]">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 text-white">PACKAGES</h2>
-          <p className="text-neutral-400">Transparent pricing for every stage of growth.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, i) => (
-            <ShineCard key={i} className={`rounded-2xl p-8 flex flex-col transition-all duration-300 ${plan.highlight ? 'border-[#46cef6]/50 shadow-[0_0_40px_-10px_rgba(70,206,246,0.15)]' : ''}`}>
-              {plan.highlight && (
-                <div className="absolute top-4 right-4 bg-[#46cef6] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
-                  Recommended
-                </div>
-              )}
-              <div className={`p-4 rounded-xl w-fit mb-6 border ${plan.highlight ? 'bg-[#46cef6] text-black border-[#46cef6]' : 'bg-white/5 text-white border-white/5'}`}>
-                <plan.icon size={24} />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-              <p className="text-neutral-400 text-sm mb-8">{plan.desc}</p>
-              
-              <ul className="space-y-4 mb-8 flex-grow">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-sm text-neutral-300">
-                    <CheckCircle size={14} className="text-[#46cef6]" /> {feature}
-                  </li>
-                ))}
-              </ul>
-              
-              <a href="#contact" className={`w-full py-4 rounded-lg font-bold text-center transition-all text-sm uppercase tracking-widest ${plan.highlight ? 'bg-[#46cef6] text-black hover:bg-white hover:shadow-lg' : 'bg-white/5 text-white hover:bg-white hover:text-black border border-white/5'}`}>
-                Get Quote
-              </a>
-            </ShineCard>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-
-
+}
 
 export default function App() {
-  // Loader State
-  const [loading, setLoading] = useState(true);
-
   return (
-    <div className="min-h-screen bg-[#030303] text-white font-sans">
-
-      {/* Global Styles */}
-      <style>{`
-        .snake-head {
-          offset-distance: var(--snake-progress);
-        }
-
-        @keyframes shimmer {
-          100% {
-            transform: translateX(100%);
+    <div className="bg-odd-light text-odd-dark font-sans selection:bg-odd-khaki selection:text-odd-dark min-h-screen">
+      <ScrollToTop />
+      <Navbar />
+    <SmoothScroll>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        
+        <Route
+          path="/about"
+          element={
+            <>
+              <AboutPage />
+              <Footer />
+            </>
           }
-        }
-      `}</style>
+        />
 
-      {/* Loader OR App (Never Both Together) */}
-      {loading ? (
-        <Loader onLoadingComplete={() => setLoading(false)} />
-      ) : (
-        <>
-          {/* Effects */}
-          <CustomCursor />
+        <Route
+          path="/projects"
+          element={
+            <>
+              <ProjectsPage />
+              <Footer />
+            </>
+          }
+        />
 
-          <Spotlight />
+        {/* <Route
+          path="/services"
+          element={
+            <>
+              <ServicesPage />
+              <Footer />
+            </>
+          }
+        />
 
-          {/* Layout */}
-          <Navbar />
-
-          {/* Sections */}
-          <Hero />
-          <Description />
-          <WhatWeOffer />
-          {/* <TechStack /> */}
-
-          <HorizontalScroll />
-
-          <GrowthPipeline />
-          <TrustSection />
-
-          <Testimonials />
-          <CTA />
-          <Contactform />
-
-          <Footer />
-          <CookieConsent />
-        </>
-      )}
-
+        <Route
+          path="/contact"
+          element={
+            <>
+              <ContactPage />
+              <Footer />
+            </>
+          }
+        /> */}
+      </Routes>
+      <CookieConsent />
+      </SmoothScroll>
     </div>
   );
 }

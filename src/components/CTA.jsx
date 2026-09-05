@@ -2,27 +2,27 @@
 
 import React, { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, MessageSquareQuote } from "lucide-react";
 
 const ctaProjects = [
   {
-    img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
+    img: "/mount1.avif",
     name: "Neon Verse",
   },
   {
-    img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop",
+    img: "/uni.avif",
     name: "Tech Lab",
   },
   {
-    img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop",
+    img: "/leaf.avif",
     name: "Ski Lodge",
   },
   {
-    img: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop",
+    img: "/mount2.avif",
     name: "Urban Loft",
   },
   {
-    img: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2564&auto=format&fit=crop",
+    img: "/tree.jpg",
     name: "Modernist",
   },
 ];
@@ -48,11 +48,11 @@ const CTA = () => {
 
   return (
     <section
+      id="contact"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative h-screen w-full overflow-hidden cursor-none border-t border-white/5"
+      className="relative h-screen w-full overflow-hidden cursor-none bg-[#0a0a0a]"
     >
-      {/* 0. Background Video (Bottom Layer) */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <video
           autoPlay
@@ -60,11 +60,10 @@ const CTA = () => {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-95"
+          className="w-full h-full object-cover opacity-60"
         >
-          <source src="/5561385-uhd_3840_2160_25fps.mp4" type="video/mp4" />
+          <source src="/3968072-hd_1920_1080_24fps - Trim.mp4" type="video/mp4" />
         </video>
-
       </div>
 
       {/* 1. Columns Grid */}
@@ -74,67 +73,75 @@ const CTA = () => {
             key={index}
             onMouseEnter={() => setHoveredCol(index)}
             onMouseLeave={() => setHoveredCol(null)}
-            className="relative w-full h-full border-r border-white/5 transition-all duration-500 group"
+            className="relative w-full h-full border-[#EAE6CD]/10 transition-all duration-500 group last:border-r-0"
           >
             {/* Hover Image */}
             <div
-              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-500
+              className={`absolute inset-0 bg-cover bg-center transition-all duration-500 
                 ${hoveredCol === index ? "opacity-100" : "opacity-0"}`}
               style={{ backgroundImage: `url(${project.img})` }}
             >
-              <div className="absolute inset-0 bg-black/20" />
+              <div className="absolute inset-0 bg-[#0a0a0a]/30" />
             </div>
 
             {/* Darken Others */}
-            <div
-              className={`absolute inset-0 bg-transparent transition-opacity duration-500
+            {/* <div
+              className={`absolute inset-0 bg-[#0a0a0a] transition-opacity duration-500
                 ${
                   hoveredCol !== null && hoveredCol !== index
-                    ? "opacity-80"
+                    ? "opacity-70"
                     : "opacity-0"
                 }`}
-            />
+            /> */}
           </div>
         ))}
       </div>
 
-      {/* 2. Center Text */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 mix-blend-difference">
-        <span className="text-[#46cef6] font-mono text-xs tracking-[0.3em] uppercase mb-6 animate-pulse">
+      {/* 2. Center Text (Transparent Outline) */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 ">
+        <span className="text-[#EAE6CD] font-mono text-[10px] tracking-[0.2em] uppercase mb-6 md:mb-8 opacity-80">
           Get Started
         </span>
 
-        <h2 className="text-8xl md:text-[10vw] font-black tracking-tighter text-white leading-[0.8] text-center">
-          LET&apos;S MAKE <br />
+        {/* 
+          Using text-transparent and -webkit-text-stroke to create the 
+          hollow outline effect so the video plays INSIDE the text 
+        */}
+        <h2 className="m-0 text-[14vw] md:text-[10vw] lg:text-[9vw] font-corp font-bold uppercase tracking-[-0.04em] text-[#EAE6CD] [-webkit-text-stroke:1px_#EAE6CD] md:[-webkit-text-stroke:2px_#EAE6CD] leading-[0.88] text-center">
+          LET'S MAKE <br />
           THINGS HAPPEN.
         </h2>
       </div>
 
-      {/* 3. Cursor */}
+      {/* 3. Custom Cursor */}
       <motion.div
         style={{ left: smoothX, top: smoothY }}
-        className="absolute top-0 left-0 w-32 h-32 -ml-16 -mt-16 bg-[#46cef6] rounded-full flex items-center justify-center pointer-events-none z-30 mix-blend-normal shadow-[0_0_30px_#46cef6]"
+        className="absolute top-0 left-0 w-28 h-28 -ml-14 -mt-14 bg-[#EAE6CD] rounded-full flex items-center justify-center pointer-events-none z-30 mix-blend-normal"
         initial={{ scale: 0 }}
         animate={{ scale: hoveredCol !== null ? 1 : 0 }}
         transition={{ duration: 0.25 }}
       >
-        <div className="text-black font-bold font-mono text-xs uppercase tracking-widest flex flex-col items-center gap-1">
-          <span>View</span>
-          <span>Project</span>
+        <div className="text-[#0a0a0a] font-bold font-mono text-[9px] uppercase tracking-widest flex flex-col items-center gap-1">
+          <span>let's</span>
+          <span>Talk</span>
         </div>
       </motion.div>
 
-      {/* 4. Button */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-40">
+      <div className="absolute bottom-10 md:bottom-16 left-1/2 -translate-x-1/2 z-40 flex flex-col sm:flex-row items-center gap-4">
+        
+        
+
+        {/* Secondary Button: Start Your Project */}
         <a
-          href="#contact"
-          className="group relative flex items-center gap-3 px-8 py-4 bg-black/50 backdrop-blur-md border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-300"
+          href="#contactform"
+          className="group relative flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-transparent border border-[#EAE6CD]/30 backdrop-blur-md text-[#EAE6CD] rounded-full hover:bg-[#EAE6CD]/10 transition-all duration-300"
         >
-          <span className="font-mono text-xs uppercase tracking-widest">
+          <span className="font-bold text-[11px] md:text-[13px] uppercase tracking-widest mt-0.5">
             Start Your Project
           </span>
-          <ArrowUpRight size={16} />
+          <ArrowUpRight size={16} strokeWidth={2} className="mt-0.5" />
         </a>
+
       </div>
     </section>
   );

@@ -1,12 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+
   build: {
     // Increase the warning limit slightly (3D sites are naturally heavier)
-    chunkSizeWarningLimit: 1600, 
+    chunkSizeWarningLimit: 1600,
+
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -16,14 +25,17 @@ export default defineConfig({
             if (id.includes('three')) {
               return 'three_vendor';
             }
+
             // Put Framer Motion in its own file
             if (id.includes('framer-motion')) {
               return 'motion_vendor';
             }
+
             // Put Face-API (if you still have it) in its own file
             if (id.includes('face-api')) {
               return 'face_api_vendor';
             }
+
             // Put React and other small libs in a vendor file
             return 'vendor';
           }
