@@ -32,8 +32,6 @@ const Navbar = () => {
     setPreviousScroll(latest);
   });
 
-  const splitTransition = { duration: 0.4, ease: [0.16, 1, 0.3, 1] };
-  const isNavHidden = hidden && !mobileMenuOpen;
 
   const navLinks = [
     { name: "Services", path: "/#services", isHash: true },
