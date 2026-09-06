@@ -9,7 +9,7 @@ import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 import CookieConsent from "./components/CookieConsent";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 // Standalone Pages
 import AboutPage from "./app/about/page";
