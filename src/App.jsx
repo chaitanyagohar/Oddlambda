@@ -10,6 +10,7 @@ import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 import CookieConsent from "./components/CookieConsent";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 // Standalone Pages
 import AboutPage from "./app/about/page";
@@ -48,6 +49,7 @@ export default function App() {
   return (
     <div className="bg-odd-light text-odd-dark font-sans selection:bg-odd-khaki selection:text-odd-dark min-h-screen">
       <Analytics />
+      <SpeedInsights />
       <ScrollToTop />
       <Navbar />
     <SmoothScroll>
