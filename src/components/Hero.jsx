@@ -397,6 +397,7 @@ const Hero = () => {
                             
                           "
                           alt="Profile"
+                          fetchpriority="high"
                         />
                       </span>
 
@@ -602,6 +603,7 @@ const Hero = () => {
                               transition-opacity
                               duration-300
                             "
+                            fetchpriority="high"
                           />
                         </div>
                       ))}
@@ -701,6 +703,8 @@ const Hero = () => {
                       object-cover
                       opacity-90
                     "
+
+                    fetchpriority="high"
                   />
                 </div>
 
@@ -854,6 +858,7 @@ const Hero = () => {
                             
                           "
                           alt="Profile"
+                          fetchpriority="high"
                         />
                       </span>
 

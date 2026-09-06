@@ -35,11 +35,11 @@ function HomePage() {
   return (
     <>
       <Hero />
-      <Services />
-      <Projects />
-      <About />
-      <FAQ />
-      <CTA />
+      <Services loading="lazy"/>
+      <Projects loading="lazy"/>
+      <About loading="lazy"/>
+      <FAQ loading="lazy"/>
+      <CTA loading="lazy"/>
       <Footer />
     </>
   );

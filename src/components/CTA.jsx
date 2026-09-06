@@ -62,7 +62,7 @@ const CTA = () => {
           preload="auto"
           className="w-full h-full object-cover opacity-60"
         >
-          <source src="/3968072-hd_1920_1080_24fps - Trim.mp4" type="video/mp4" />
+          <source src="/3968072-hd_1920_1080_24fps - Trim.webm" type="video/webm" />
         </video>
       </div>
 
