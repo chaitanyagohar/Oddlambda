@@ -34,7 +34,7 @@ const Navbar = () => {
 
 
   const navLinks = [
-    { name: "Services", path: "/#services", isHash: true },
+    { name: "Services", path: "/services", isHash: true },
     { name: "Projects", path: "/projects", isHash: true },
     { name: "About", path: "/about", isHash: false },
   ];
@@ -161,7 +161,7 @@ const Navbar = () => {
         >
           {/* Desktop Contact Button */}
           <a
-            href="/#contact"
+            href="/contact"
             className="group relative hidden md:flex items-center gap-3 bg-[#0a0a0a] text-[#EAE6CD] border border-[#0a0a0a] shadow-[0px_8px_32px_rgba(0,0,0,0.12)] rounded-full pr-5 pl-1.5 py-1.5 overflow-hidden transition-all duration-300"
           >
             <div className="absolute inset-0 bg-[#EAE6CD] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />

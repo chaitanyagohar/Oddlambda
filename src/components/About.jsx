@@ -480,6 +480,7 @@ const About = () => {
               overflow-hidden
               bg-[#0a0a0a]
               will-change-[width,height,border-radius]
+              rounded-[3px]
             "
           >
             {/* ==================================================

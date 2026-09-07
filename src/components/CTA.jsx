@@ -133,7 +133,7 @@ const CTA = () => {
 
         {/* Secondary Button: Start Your Project */}
         <a
-          href="#contactform"
+          href="/contact"
           className="group relative flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-transparent border border-[#EAE6CD]/30 backdrop-blur-md text-[#EAE6CD] rounded-full hover:bg-[#EAE6CD]/10 transition-all duration-300"
         >
           <span className="font-bold text-[11px] md:text-[13px] uppercase tracking-widest mt-0.5">

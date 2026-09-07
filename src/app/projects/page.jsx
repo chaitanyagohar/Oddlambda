@@ -396,7 +396,7 @@ export default function ProjectsPage() {
             className="mt-12 md:mt-16"
           >
             <a
-              href="/#contact"
+              href="/contact"
               className="
                 group
                 inline-flex

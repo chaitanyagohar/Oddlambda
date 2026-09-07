@@ -76,7 +76,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="hover:text-[#0a0a0a] transition-colors"
                 >
                   Contact

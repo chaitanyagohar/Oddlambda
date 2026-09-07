@@ -274,7 +274,7 @@ export default function AboutPage() {
           </div>
 
           <a 
-            href="/#contact"
+            href="/contact"
             className="inline-flex items-center gap-3 px-6 py-3 bg-[#0a0a0a] text-[#EAE6CD] rounded-full hover:scale-105 transition-transform duration-300"
           >
             <span className="font-bold text-[12px] md:text-[13px] uppercase tracking-widest mt-0.5">

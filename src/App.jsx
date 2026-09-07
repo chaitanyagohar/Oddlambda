@@ -16,8 +16,8 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 import AboutPage from "./app/about/page";
 import ProjectsPage from "./app/projects/page"; 
 import SmoothScroll from "./components/SmoothScroll";
-// import ServicesPage from "./app/services/page"; 
-// import ContactPage from "./app/contact/page";   
+import ServicesPage from "./app/services/page"; 
+import ContactPage from "./app/contact/page";   
 
 // Helper to reset scroll position on route changes
 function ScrollToTop() {
@@ -76,7 +76,7 @@ export default function App() {
           }
         />
 
-        {/* <Route
+        <Route
           path="/services"
           element={
             <>
@@ -94,7 +94,7 @@ export default function App() {
               <Footer />
             </>
           }
-        /> */}
+        />
       </Routes>
       <CookieConsent />
       </SmoothScroll>
