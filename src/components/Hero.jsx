@@ -218,7 +218,7 @@ const Hero = () => {
         >
           <div className="flex h-full flex-col justify-between">
             {/* ==================================================
-                HEADLINE (Adjusted Font Size for 100% Fit)
+                HEADLINE
             ================================================== */}
 
             <motion.div
@@ -394,7 +394,6 @@ const Hero = () => {
                             h-full
                             w-full
                             object-cover
-                            
                           "
                           alt="Profile"
                           fetchpriority="high"
@@ -500,7 +499,7 @@ const Hero = () => {
               </motion.div>
 
               {/* ==================================================
-                  RIGHT: PROJECT SLIDER
+                  RIGHT: PROJECT SLIDER (DESKTOP)
               ================================================== */}
 
               <motion.div
@@ -667,7 +666,7 @@ const Hero = () => {
               "
             >
               {/* ==================================================
-                  MOBILE PROJECT
+                  MOBILE PROJECT SLIDER (MATCHING DESKTOP)
               ================================================== */}
 
               <motion.div
@@ -676,49 +675,87 @@ const Hero = () => {
                 animate="show"
                 className="
                   mt-auto
-                  mb-4
+                  mb-5
                   pt-4
                 "
               >
+                {/* Mobile Slider Container (Identical structure to desktop) */}
                 <div
                   className="
-                    aspect-[1.47/1]
-                    w-[62%]
-                    max-w-[260px]
+                    relative
+                    h-[160px]
+                    w-[75%]
+                    max-w-[320px]
                     overflow-hidden
-                    rounded-[8px]
-                    border
+                    rounded-lg
+                    border-[3px]
                     border-[#0a0a0a]/20
                     bg-[#0a0a0a]
                     shadow-xl
-                    sm:w-[60%]
+                    sm:h-[180px]
                   "
                 >
-                  <img
-                    src={projects[0]}
-                    alt="Project 1"
+                  <motion.div
+                    drag="x"
+                    dragConstraints={{ left: -1000, right: 1000 }}
+                    dragElastic={0.25}
                     className="
+                      flex
                       h-full
-                      w-full
-                      object-cover
-                      opacity-90
+                      w-max
+                      items-center
                     "
-
-                    fetchpriority="high"
-                  />
+                  >
+                    <motion.div
+                      className="
+                        flex
+                        h-full
+                        items-center
+                        gap-1
+                        px-2
+                      "
+                      animate={{ x: ["-25%", "-50%"] }}
+                      transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+                    >
+                      {marqueeImages.map((src, idx) => (
+                        <div
+                          key={idx}
+                          className="
+                            h-full
+                            w-[320px]
+                            object-fit
+                            flex-shrink-0
+                            overflow-hidden
+                            rounded-[4px]
+                            pointer-events-none
+                            sm:w-[260px]
+                          "
+                        >
+                          <img
+                            src={src}
+                            alt={`Project ${idx}`}
+                            className="
+                              h-[100%]
+                              w-[100%]
+                              object-cover
+                              opacity-90
+                            "
+                          />
+                        </div>
+                      ))}
+                    </motion.div>
+                  </motion.div>
                 </div>
 
                 {/* Mobile Attribution */}
-
                 <div
                   className="
                     mt-2
                     flex
-                    w-[62%]
-                    max-w-[260px]
+                    w-[75%]
+                    max-w-[320px]
                     items-center
                     gap-3
-                    sm:w-[60%]
                   "
                 >
                   <span
@@ -752,7 +789,7 @@ const Hero = () => {
               <motion.div variants={fadeVars} initial="hidden" animate="show">
                 <p
                   className="
-                    mb-3
+                    mb-4
                     max-w-[380px]
                     text-[14px]
                     font-medium
@@ -855,7 +892,6 @@ const Hero = () => {
                             h-full
                             w-full
                             object-cover
-                            
                           "
                           alt="Profile"
                           fetchpriority="high"
