@@ -19,6 +19,7 @@ import SmoothScroll from "./components/SmoothScroll";
 import ServicesPage from "./app/services/page"; 
 import PackagePage from "./app/services/PackagePage";
 import ContactPage from "./app/contact/page";   
+import ThankYouPage from "./app/thank-you/page";
 
 // Helper to reset scroll position on route changes
 function ScrollToTop() {
@@ -91,7 +92,7 @@ export default function App() {
   element={
     <>
       <PackagePage />
-      {/* Assuming FAQ and CTA are inside PackagePage or added here */}
+
     </>
   }
 />
@@ -104,6 +105,7 @@ export default function App() {
             </>
           }
         />
+        <Route path="/thank-you" element={<ThankYouPage />} />
       </Routes>
       <CookieConsent />
       </SmoothScroll>

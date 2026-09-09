@@ -10,7 +10,7 @@ export default function ContactPage() {
 
   const services = ["Landing Page", "Website", "E-commerce", "Custom", "Others"];
 
-  // Reusable Classes to match the video's strict form layout
+  // Reusable Classes to match the strict editorial layout
   const inputRowClass = "flex flex-col md:flex-row md:items-start border-b border-[#0a0a0a]/15 py-5 transition-colors focus-within:border-[#0a0a0a]/50";
   const labelClass = "w-full md:w-[30%] font-bold text-[15px] md:text-[16px] text-[#0a0a0a] pt-1 mb-2 md:mb-0";
   const fieldClass = "w-full md:w-[70%] bg-transparent outline-none placeholder-[#0a0a0a]/30 text-[15px] md:text-[16px] text-[#0a0a0a]";
@@ -20,7 +20,7 @@ export default function ContactPage() {
       <div className="max-w-[1600px] mx-auto">
         
         {/* ========================================================
-            TOP HEADER (Grid Layout matching video)
+            TOP HEADER
         ======================================================== */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -63,7 +63,6 @@ export default function ContactPage() {
               </h2>
             </div>
 
-            {/* Content pinned immediately under the header as requested */}
             <div className="border-t border-[#0a0a0a]/15 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
               <span className="font-medium text-[15px] text-[#0a0a0a]/80">
                 100% free and non-binding
@@ -79,7 +78,7 @@ export default function ContactPage() {
                 
                 <span className="relative z-10 flex items-center gap-2.5 transition-colors duration-300 group-hover:text-[#0a0a0a]">
                   <span className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-[2px] bg-[#EAE6CD] transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110">
-                    <img src="/me.jpeg" className="h-full w-full object-cover " alt="Profile" />
+                    <img src="/me.jpeg" className="h-full w-full object-cover" alt="Profile" />
                   </span>
                   <span className="font-corp text-[12px] font-bold uppercase tracking-widest mt-0.5">
                     Book a Call
@@ -110,6 +109,7 @@ export default function ContactPage() {
               {/* FormSubmit Config */}
               <input type="hidden" name="_subject" value="New Oddlambda Agency Inquiry!" />
               <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://oddlambda.com/thank-you" />
               <input type="hidden" name="Project Type" value={selectedService === "Others" ? otherText : selectedService} />
 
               <div className={inputRowClass}>
@@ -173,13 +173,13 @@ export default function ContactPage() {
                 <textarea 
                   name="Message"
                   placeholder="Message" 
-                  rows="1"
+                  rows={1}
                   className={`${fieldClass} resize-none min-h-[40px]`} 
                   required 
                 />
               </div>
 
-              {/* Form Submit Area (Perfectly aligned to the 70% input grid) */}
+              {/* Form Submit Area */}
               <div className="flex flex-col md:flex-row mt-6">
                 <div className="hidden md:block md:w-[30%]"></div>
                 <div className="w-full md:w-[70%] flex flex-col items-end">
