@@ -319,7 +319,7 @@ const Hero = () => {
                   =============================== */}
 
                   <a
-                    href="/contact"
+                    href="https://cal.com/solidate-jlocb2/15min" 
                     className="
                       group
                       relative
@@ -399,10 +399,11 @@ const Hero = () => {
                           fetchpriority="high"
                         />
                       </span>
-
+                    <a href="https://cal.com/solidate-jlocb2/15min" >
                       <span className="font-corp text-[12px] font-bold uppercase tracking-widest sm:text-[13px]">
                         Book a Call
                       </span>
+                    </a>
 
                       <span
                         className="
@@ -813,7 +814,7 @@ const Hero = () => {
                   =============================== */}
 
                   <a
-                    href="/contact"
+                    href="https://cal.com/solidate-jlocb2/15min" 
                     className="
                       group
                       relative
@@ -897,11 +898,11 @@ const Hero = () => {
                           fetchpriority="high"
                         />
                       </span>
-
+                    <a href="https://cal.com/solidate-jlocb2/15min" >
                       <span className="flex h-5 items-center font-corp text-[11px] font-bold uppercase leading-none tracking-widest sm:h-6 sm:text-[12px]">
                         Book a Call
                       </span>
-
+                    </a>
                       <span
                         className="
                           transition-transform

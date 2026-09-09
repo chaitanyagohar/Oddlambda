@@ -396,7 +396,7 @@ export default function ProjectsPage() {
             className="mt-12 md:mt-16"
           >
             <a
-              href="/contact"
+              href="https://cal.com/solidate-jlocb2/15min" 
               className="
                 group
                 inline-flex
@@ -448,7 +448,7 @@ export default function ProjectsPage() {
                   "
                 />
               </span>
-
+<a  href="https://cal.com/solidate-jlocb2/15min" >
               <span
                 className="
                   font-corp
@@ -461,6 +461,7 @@ export default function ProjectsPage() {
               >
                 Book a Call
               </span>
+              </a>
 
               <span
                 className="

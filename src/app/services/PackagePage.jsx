@@ -172,7 +172,7 @@ export default function PackagePage() {
           {/* Bottom Button */}
           <div className="px-8 md:px-14 lg:px-24 pb-16 pt-8 flex justify-center w-full">
             <a
-              href="/contact"
+              href="https://cal.com/solidate-jlocb2/15min" 
               className="w-full md:w-auto md:min-w-[320px] group relative inline-flex h-16 items-center justify-center gap-3 overflow-hidden rounded-[4px] bg-[#EAE6CD] px-8 text-[13px] font-bold uppercase tracking-widest text-[#0a0a0a] transition-transform hover:-translate-y-1"
             >
               <img src="/me.jpeg" className="h-6 w-6 rounded-[2px] object-cover transition-transform group-hover:scale-110" alt="Profile" />
