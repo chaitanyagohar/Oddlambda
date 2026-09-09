@@ -17,6 +17,7 @@ import AboutPage from "./app/about/page";
 import ProjectsPage from "./app/projects/page"; 
 import SmoothScroll from "./components/SmoothScroll";
 import ServicesPage from "./app/services/page"; 
+import PackagePage from "./app/services/PackagePage";
 import ContactPage from "./app/contact/page";   
 
 // Helper to reset scroll position on route changes
@@ -85,7 +86,15 @@ export default function App() {
             </>
           }
         />
-
+        <Route
+  path="/services/:id"
+  element={
+    <>
+      <PackagePage />
+      {/* Assuming FAQ and CTA are inside PackagePage or added here */}
+    </>
+  }
+/>
         <Route
           path="/contact"
           element={
