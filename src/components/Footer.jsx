@@ -107,7 +107,7 @@ export default function Footer() {
               <div className="flex flex-wrap justify-center lg:justify-end items-center gap-3 sm:gap-4 font-mono text-[11px] sm:text-[12px] uppercase tracking-[0.12em] text-[#0a0a0a]/55">
 
                 <p className="m-0">
-                  © {new Date().getFullYear()} Chaitanya Gohar
+                  © {new Date().getFullYear()} OddLambda. 
                 </p>
 
                 <span className="hidden sm:block">|</span>
