@@ -69,7 +69,7 @@ export default function ContactPage() {
               </span>
               
               <a
-                href="https://cal.com/oddlambda" 
+                href="https://cal.com/solidate-jlocb2/15min" 
                 target="_blank" 
                 rel="noreferrer"
                 className="group relative inline-flex h-14 items-center gap-2.5 overflow-hidden rounded-[4px] bg-[#0a0a0a] px-4 text-[11px] font-bold uppercase tracking-widest text-[#EAE6CD] transition-transform hover:-translate-y-1 w-max"
