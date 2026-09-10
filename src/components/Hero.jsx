@@ -425,7 +425,7 @@ const Hero = () => {
                   =============================== */}
 
                   <a
-                    href="#projects"
+                    href="/projects"
                     className="
                       group
                       relative
@@ -920,7 +920,7 @@ const Hero = () => {
                   =============================== */}
 
                   <a
-                    href="#packages"
+                    href="/projects"
                     className="
                       group
                       relative

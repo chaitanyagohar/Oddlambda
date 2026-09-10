@@ -523,7 +523,7 @@ const ServicesPage = () => {
 
             <div className="mt-10">
               <a
-                href="#contact"
+                href="/contact"
                 className="group inline-flex items-center gap-4 bg-[#0a0a0a] px-5 py-4 font-corp text-[12px] font-bold uppercase tracking-widest text-[#EAE6CD] transition-transform duration-300 hover:-translate-y-1"
               >
                 Discuss a custom project
