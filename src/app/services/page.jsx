@@ -522,8 +522,8 @@ const ServicesPage = () => {
             </div>
 
             <div className="mt-10">
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="group inline-flex items-center gap-4 bg-[#0a0a0a] px-5 py-4 font-corp text-[12px] font-bold uppercase tracking-widest text-[#EAE6CD] transition-transform duration-300 hover:-translate-y-1"
               >
                 Discuss a custom project
@@ -532,7 +532,7 @@ const ServicesPage = () => {
                   strokeWidth={1.5}
                   className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -653,15 +653,15 @@ const ServicesPage = () => {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="mt-12"
         >
-          <a
-            href="/contact"
+          <Link
+            to="/contact"
             className="group inline-flex items-center gap-4 rounded-full bg-[#0a0a0a] py-2 pl-7 pr-2 font-corp text-[12px] font-bold uppercase tracking-widest text-[#EAE6CD] transition-transform duration-300 hover:scale-[1.04]"
           >
             Start a project
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#EAE6CD] text-[#0a0a0a] transition-transform duration-500 group-hover:rotate-[-45deg]">
               <ArrowUpRight size={17} strokeWidth={1.7} />
             </span>
-          </a>
+          </Link>
         </motion.div>
       </section>
     </main>

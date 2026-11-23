@@ -1,10 +1,11 @@
-"use client";
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 
-const Projects = () => {
+// headingLevel: "h2" on the homepage, "h1" on /projects (each page needs exactly one H1)
+const Projects = ({ headingLevel = "h2" }) => {
+  const Heading = headingLevel === "h1" ? motion.h1 : motion.h2;
+
   // Track mouse position for the "Live Website" hover badge
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -89,7 +90,7 @@ const Projects = () => {
             HEADER
         ======================================================== */}
         <div className="mb-12 md:mb-20">
-          <motion.h2
+          <Heading
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-10%" }}
@@ -101,7 +102,7 @@ const Projects = () => {
                 Projects
               </motion.span>
             </span>
-          </motion.h2>
+          </Heading>
         </div>
 
         {/* ========================================================
@@ -181,7 +182,9 @@ const Projects = () => {
                 >
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={`${project.title} website designed and developed by OddLambda`}
+                    loading="lazy"
+                    decoding="async"
                     className="
                       block w-[220px] lg:w-[280px] min-w-[220px] lg:min-w-[280px] aspect-[16/9] object-cover rounded-[4px]
                       -translate-x-8 group-hover:translate-x-0
@@ -220,7 +223,9 @@ const Projects = () => {
                 <div className="w-full mt-6 mb-2">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={`${project.title} website designed and developed by OddLambda`}
+                    loading="lazy"
+                    decoding="async"
                     className="block w-full aspect-[16/9] object-cover rounded-[4px]"
                   />
                 </div>

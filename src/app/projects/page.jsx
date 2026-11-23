@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { motion } from "framer-motion";
 import Projects from "@/components/Projects";
@@ -24,7 +22,7 @@ export default function ProjectsPage() {
           PROJECTS
       ========================================================= */}
 
-      <Projects />
+      <Projects headingLevel="h1" />
 
       {/* =========================================================
           SELECTED CLIENTS

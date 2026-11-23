@@ -1,85 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Primary SEO Meta Tags -->
-    <title>Oddlambda | Premium Web Development & Digital Agency</title>
-    <meta name="title" content="Oddlambda | Premium Web Development & Digital Agency" />
-    <meta name="description" content="Oddlambda is an elite digital agency specializing in high-performance web development, custom Next.js apps, conversion funnels, and digital experiences that scale businesses." />
-    <meta name="keywords" content="web development agency, freelance web developer, custom web apps, Next.js developer, digital agency India, UI UX design, high performance websites" />
-    <meta name="author" content="Oddlambda" />
-    <meta name="robots" content="index, follow" />
 
-    <!-- Open Graph / Facebook / LinkedIn -->
+    <!-- Icons & PWA -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="author" content="OddLambda" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Search Console / Bing verification: paste your codes here when you get them -->
+    <!-- <meta name="google-site-verification" content="PASTE_CODE_HERE" /> -->
+    <!-- <meta name="msvalidate.01" content="PASTE_CODE_HERE" /> -->
+
+    <!-- Fonts: preconnect + stylesheet here (was an @import inside index.css, which blocks rendering) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;500;700&display=swap"
+    />
+
+    <link rel="preload" as="image" href="/me.jpeg" />
+
+    <!--
+      Everything between SEO:START and SEO:END is rewritten per page at build time
+      by scripts/seo-prerender.mjs, and kept in sync in the browser by src/components/Seo.jsx.
+      Edit page titles/descriptions in src/seo/siteConfig.js — not here.
+    -->
+    <!--SEO:START-->
+    <title>OddLambda — Premium Website Design & Development, Delhi</title>
+    <meta name="description" content="OddLambda designs and builds fast, conversion-focused websites, landing pages, e-commerce stores and web apps for brands in India and worldwide. From ₹7,999." />
+    <link rel="canonical" href="https://oddlambda.com/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://oddlambda.com/" />
-    <meta property="og:title" content="Oddlambda | Premium Web Development & Digital Agency" />
-    <meta property="og:description" content="High-performance websites and web applications built for ambitious businesses." />
-    <meta property="og:image" content="https://oddlambda.com/og-image.jpg" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://oddlambda.com/" />
-    <meta property="twitter:title" content="Oddlambda | Premium Web Development & Digital Agency" />
-    <meta property="twitter:description" content="High-performance websites and web applications built for ambitious businesses." />
-    <meta property="twitter:image" content="https://oddlambda.com/og-image.jpg" />
-
-    <!-- Critical Asset Preloading to Fix LCP Performance Bottleneck -->
-    <link rel="preload" as="image" href="/me.jpeg" fetchpriority="high" />
-
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Oddlambda",
-  "image": "https://oddlambda.com/about/founder.webp",
-  "@id": "https://oddlambda.com",
-  "url": "https://oddlambda.com",
-  "telephone": "",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Delhi",
-    "addressCountry": "IN"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 28.6139,
-    "longitude": 77.2090
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    "opens": "09:00",
-    "closes": "19:00"
-  },
-  "sameAs": [
-    "https://twitter.com/oddlambda",
-    "https://github.com/oddlambda",
-    "https://linkedin.com/company/oddlambda"
-  ],
-  "priceRange": "$$$",
-  "areaServed": "Worldwide",
-  "serviceType": [
-    "Web Development",
-    "UI/UX Design",
-    "Digital Marketing Pipelines",
-    "Conversion Funnels"
-  ]
-}
-</script>
+    <meta property="og:title" content="OddLambda — Premium Website Design & Development, Delhi" />
+    <meta property="og:image" content="https://oddlambda.com/og/oddlambda-og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!--SEO:END-->
   </head>
   <body>
     <div id="root"></div>
+    <!--SEO:NOSCRIPT-->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

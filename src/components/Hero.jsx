@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   motion,
   useScroll,
@@ -424,8 +425,8 @@ const Hero = () => {
                       SEE PROJECTS
                   =============================== */}
 
-                  <a
-                    href="/projects"
+                  <Link
+                    to="/projects"
                     className="
                       group
                       relative
@@ -495,7 +496,7 @@ const Hero = () => {
                         →
                       </span>
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
 
@@ -919,8 +920,8 @@ const Hero = () => {
                       SEE PROJECTS
                   =============================== */}
 
-                  <a
-                    href="/projects"
+                  <Link
+                    to="/projects"
                     className="
                       group
                       relative
@@ -990,7 +991,7 @@ const Hero = () => {
                         →
                       </span>
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
             </div>

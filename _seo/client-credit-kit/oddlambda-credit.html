@@ -1,0 +1,36 @@
+<!--
+  "Website by OddLambda" footer credit — plain HTML
+  Works in WordPress (Footer widget / Custom HTML block), Shopify (footer.liquid),
+  Webflow (Embed), Wix (Embed HTML) or any static site.
+
+  1. Replace CLIENTDOMAIN with the client's domain (e.g. elitairs.com)
+  2. On a LIGHT footer, swap the four colour variables (see comment in <style>).
+-->
+<a class="ol-credit"
+   href="https://oddlambda.com/?utm_source=CLIENTDOMAIN&utm_medium=referral&utm_campaign=footer_credit"
+   target="_blank" rel="noopener nofollow"
+   title="OddLambda — website design & development">
+  <span class="ol-credit__mark" aria-hidden="true">O</span>
+  <span>Website by <strong>OddLambda</strong></span>
+</a>
+
+<style>
+  /* Dark footer (default). For a LIGHT footer swap to:
+     --ol-text: rgba(10,10,10,.6); --ol-hover: #0a0a0a; --ol-mark-bg: #0a0a0a; --ol-mark-fg: #EAE6CD; */
+  .ol-credit{
+    --ol-text: rgba(234,230,205,.65);
+    --ol-hover: #EAE6CD;
+    --ol-mark-bg: #EAE6CD;
+    --ol-mark-fg: #0a0a0a;
+    display:inline-flex;align-items:center;gap:8px;
+    font:500 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.04em;
+    color:var(--ol-text);text-decoration:none;transition:color .2s ease;
+  }
+  .ol-credit:hover{color:var(--ol-hover)}
+  .ol-credit strong{font-weight:600}
+  .ol-credit__mark{
+    width:16px;height:16px;display:inline-grid;place-items:center;
+    background:var(--ol-mark-bg);color:var(--ol-mark-fg);
+    border-radius:4px 0 4px 0;font-weight:700;font-size:10px;line-height:1;
+  }
+</style>

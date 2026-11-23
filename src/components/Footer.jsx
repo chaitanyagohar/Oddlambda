@@ -1,6 +1,13 @@
-"use client";
-
 import React from "react";
+import { Link } from "react-router-dom";
+
+const footerLinks = [
+  { name: "Home", to: "/" },
+  { name: "Services", to: "/services" },
+  { name: "Projects", to: "/projects" },
+  { name: "About", to: "/about" },
+  { name: "Contact", to: "/contact" },
+];
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -31,10 +38,10 @@ export default function Footer() {
             {/* LEFT: Brand / Quote */}
             <div className="space-y-6 md:space-y-8 text-center lg:text-left">
 
-              <h2 className="m-0 font-corp text-[9vw] sm:text-[7vw] md:text-[6vw] lg:text-[4.5vw] font-bold uppercase tracking-[-0.04em] text-[#0a0a0a] leading-[0.85]">
+              <p className="m-0 font-corp text-[9vw] sm:text-[7vw] md:text-[6vw] lg:text-[4.5vw] font-bold uppercase tracking-[-0.04em] text-[#0a0a0a] leading-[0.85]">
                 Building digital pipelines <br className="hidden sm:block" />
                 that dominate markets.
-              </h2>
+              </p>
 
               <p className="text-[15px] sm:text-[16px] md:text-[18px] font-medium text-[#0a0a0a]/75 max-w-md md:max-w-xl mx-auto lg:mx-0 leading-[1.5]">
                 "Great software is not defined by trends, but by clarity,
@@ -52,37 +59,28 @@ export default function Footer() {
               {/* Navigation */}
               <nav className="flex flex-wrap justify-center lg:justify-end gap-x-6 sm:gap-x-10 gap-y-4 font-mono text-[11px] sm:text-[12px] uppercase tracking-[0.12em] text-[#0a0a0a]/70">
                 
-                <a
-                  href="#home"
-                  className="hover:text-[#0a0a0a] transition-colors"
-                >
-                  Home
-                </a>
+                {footerLinks.map((l) => (
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    className="hover:text-[#0a0a0a] transition-colors"
+                  >
+                    {l.name}
+                  </Link>
+                ))}
 
                 <a
-                  href="#about"
-                  className="hover:text-[#0a0a0a] transition-colors"
-                >
-                  About
-                </a>
-
-                <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/oddlambda/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="OddLambda on Instagram"
                   className="hover:text-[#0a0a0a] transition-colors"
                 >
                   Instagram
                 </a>
 
-                <a
-                  href="/contact"
-                  className="hover:text-[#0a0a0a] transition-colors"
-                >
-                  Contact
-                </a>
-
                 <button
+                  type="button"
                   onClick={scrollToTop}
                   className="hover:text-[#0a0a0a] transition-colors uppercase tracking-[0.12em]"
                 >
@@ -101,6 +99,13 @@ export default function Footer() {
                   We collaborate with founders and teams to transform complex
                   ideas into scalable, resilient digital platforms.
                 </p>
+
+                <a
+                  href="mailto:hello@oddlambda.com"
+                  className="inline-block font-mono text-[12px] md:text-[13px] uppercase tracking-[0.12em] text-[#0a0a0a]/70 hover:text-[#0a0a0a] transition-colors"
+                >
+                  hello@oddlambda.com
+                </a>
               </div>
 
               {/* Legal */}
@@ -112,21 +117,21 @@ export default function Footer() {
 
                 <span className="hidden sm:block">|</span>
 
-                <a
-                  href="/privacy"
+                <Link
+                  to="/privacy"
                   className="hover:text-[#0a0a0a] transition-colors"
                 >
                   Privacy
-                </a>
+                </Link>
 
                 <span>|</span>
 
-                <a
-                  href="/terms"
+                <Link
+                  to="/terms"
                   className="hover:text-[#0a0a0a] transition-colors"
                 >
                   Terms
-                </a>
+                </Link>
 
               </div>
 

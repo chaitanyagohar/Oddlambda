@@ -108,6 +108,7 @@ export default function ContactPage() {
             >
               {/* FormSubmit Config */}
               <input type="hidden" name="_subject" value="New Oddlambda Agency Inquiry!" />
+              <input type="hidden" name="_cc" value="hello@oddlambda.com" />
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_next" value="https://oddlambda.com/thank-you" />
               <input type="hidden" name="Project Type" value={selectedService === "Others" ? otherText : selectedService} />

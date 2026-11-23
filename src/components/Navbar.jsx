@@ -11,6 +11,9 @@ const Navbar = () => {
   const [previousScroll, setPreviousScroll] = useState(0);
 
   const isAboutPage = location.pathname === "/about";
+  const activeSection = ["Services", "Projects", "About"].find((n) =>
+    location.pathname.startsWith(`/${n.toLowerCase()}`)
+  );
   const [hoveredNav, setHoveredNav] = useState(null);
 
   useEffect(() => {
@@ -34,14 +37,14 @@ const Navbar = () => {
 
 
   const navLinks = [
-    { name: "Services", path: "/services", isHash: true },
-    { name: "Projects", path: "/projects", isHash: true },
+    { name: "Services", path: "/services", isHash: false },
+    { name: "Projects", path: "/projects", isHash: false },
     { name: "About", path: "/about", isHash: false },
   ];
 
   const activePill = hoveredNav !== null 
     ? hoveredNav 
-    : (isAboutPage ? "About" : null);
+    : (activeSection || (isAboutPage ? "About" : null));
 
   return (
     <>
@@ -63,6 +66,7 @@ const Navbar = () => {
         >
           <Link
             to="/"
+            aria-label="OddLambda — home"
             onClick={() => setMobileMenuOpen(false)}
             className="group relative flex items-center justify-center w-11 h-11 md:w-12 md:h-12 bg-[#0a0a0a] text-[#EAE6CD] rounded-tl-lg rounded-br-lg overflow-hidden transition-all duration-300"
           >
@@ -160,8 +164,8 @@ const Navbar = () => {
           className="pointer-events-auto flex items-center gap-3"
         >
           {/* Desktop Contact Button */}
-          <a
-            href="/contact"
+          <Link
+            to="/contact"
             className="group relative hidden md:flex items-center gap-3 bg-[#0a0a0a] text-[#EAE6CD] border border-[#0a0a0a] shadow-[0px_8px_32px_rgba(0,0,0,0.12)] rounded-full pr-5 pl-1.5 py-1.5 overflow-hidden transition-all duration-300"
           >
             <div className="absolute inset-0 bg-[#EAE6CD] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
@@ -169,17 +173,23 @@ const Navbar = () => {
             <div className="relative z-10 w-9 h-9 rounded-full overflow-hidden shrink-0 bg-[#EAE6CD]/10 border border-[#EAE6CD]/20">
               <img 
                 src="/me.jpeg" 
-                alt="Oddlambda" 
+                alt=""
+                aria-hidden="true"
+                width="36"
+                height="36"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <span className="relative z-10 font-bold text-[13px] uppercase tracking-wider text-[#EAE6CD] group-hover:text-[#0a0a0a] transition-colors duration-300 mt-0.5">
               Contact
             </span>
-          </a>
+          </Link>
 
           {/* Mobile Hamburger Toggle (Untouched layout & logic) */}
           <button
+            type="button"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden flex flex-col items-center justify-center gap-[6px] w-14 h-14 bg-[#0a0a0a] border border-[#0a0a0a] rounded-full shadow-[0px_4px_24px_rgba(0,0,0,0.1)] overflow-hidden"
           >

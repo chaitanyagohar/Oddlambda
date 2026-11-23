@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Plus, Terminal, ShieldCheck, Cpu } from "lucide-react";
+import StatsSection from "@/components/StatsSection";
 
 export default function AboutPage() {
   const [activeProcess, setActiveProcess] = useState(0);
@@ -273,17 +275,18 @@ export default function AboutPage() {
             </span>
           </div>
 
-          <a 
-            href="/contact"
+          <Link 
+            to="/contact"
             className="inline-flex items-center gap-3 px-6 py-3 bg-[#0a0a0a] text-[#EAE6CD] rounded-full hover:scale-105 transition-transform duration-300"
           >
             <span className="font-bold text-[12px] md:text-[13px] uppercase tracking-widest mt-0.5">
               Initiate Project
             </span>
             <ArrowUpRight size={16} strokeWidth={2} />
-          </a>
+          </Link>
         </div>
       </section>
+      <StatsSection />
 
     </main>
   );

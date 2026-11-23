@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 
@@ -357,8 +358,8 @@ const FAQ = () => {
             Still have questions about your project, scope or pricing?
           </p>
 
-          <a
-            href="/contact"
+          <Link
+            to="/contact"
             className="
               group
               inline-flex
@@ -392,7 +393,7 @@ const FAQ = () => {
             >
               →
             </span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

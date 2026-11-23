@@ -1,8 +1,7 @@
-"use client";
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Cookie } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -53,9 +52,16 @@ const CookieConsent = () => {
                <p className="text-[#0a0a0a]/70 text-[11px] font-mono leading-relaxed px-1 m-0">
                  Essential for the best experience. No tracking without consent.
                </p>
+               <Link
+                 to="/privacy"
+                 className="text-[#0a0a0a]/70 hover:text-[#0a0a0a] text-[11px] font-mono underline underline-offset-4"
+               >
+                 Privacy Policy
+               </Link>
              </div>
 
              <button 
+               type="button"
                onClick={handleAccept}
                className="relative z-10 w-full py-3 bg-[#0a0a0a] text-[#EAE6CD] font-bold text-[11px] uppercase tracking-widest rounded-[4px] hover:scale-[1.02] transition-transform duration-200"
              >
