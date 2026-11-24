@@ -61,7 +61,7 @@ const inr = (n) => `₹${n.toLocaleString("en-IN")}`;
 export const routes = [
   {
     path: "/",
-    title: "OddLambda — Premium Website Design & Development, Delhi",
+    title: "OddLambda | Premium Website Design & Development, Delhi",
     description:
       "OddLambda designs and builds fast, conversion-focused websites, landing pages, e-commerce stores and web apps for brands in India and worldwide. From ₹7,999.",
     h1: "Premium Websites That Make Your Business Impossible to Ignore",
