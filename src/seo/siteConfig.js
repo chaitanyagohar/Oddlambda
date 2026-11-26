@@ -35,19 +35,19 @@ export const PACKAGES = [
     slug: "speed-launch",
     name: "Speed Launch",
     priceINR: 7999,
-    summary: "A fast, professional, conversion-focused landing page — designed, built and deployed in 2–3 weeks.",
+    summary: "A fast, conversion-focused landing page in 2–3 weeks. Domain up to ₹1,000 included, 2 revisions, 6 months support.",
   },
   {
     slug: "brand-ecosystem",
     name: "Brand Ecosystem",
     priceINR: 22999,
-    summary: "A bespoke 5–10 page corporate or SaaS website with a design system, headless CMS, CRM forms and technical SEO.",
+    summary: "A bespoke 5–10 page corporate or SaaS website with CMS, CRM forms and technical SEO. 5 revisions and 1 year of support.",
   },
   {
     slug: "commerce-scale",
     name: "Commerce Scale",
     priceINR: 32999,
-    summary: "A complete e-commerce store (Shopify or headless) with up to 200 products, Razorpay/Stripe payments and e-commerce SEO.",
+    summary: "A complete e-commerce store with up to 200 products, Razorpay/Stripe payments and SEO. 5 revisions and 1 year of support.",
   },
 ];
 
@@ -61,7 +61,7 @@ const inr = (n) => `₹${n.toLocaleString("en-IN")}`;
 export const routes = [
   {
     path: "/",
-    title: "OddLambda | Premium Website Design & Development, Delhi",
+    title: "OddLambda — Premium Website Design & Development, Delhi",
     description:
       "OddLambda designs and builds fast, conversion-focused websites, landing pages, e-commerce stores and web apps for brands in India and worldwide. From ₹7,999.",
     h1: "Premium Websites That Make Your Business Impossible to Ignore",

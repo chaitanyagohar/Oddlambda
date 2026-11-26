@@ -1,12 +1,48 @@
-"use client";
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 
 export default function ContactPage() {
   const [selectedService, setSelectedService] = useState("");
   const [otherText, setOtherText] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | sending | error
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
+
+  // Sends the enquiry to our own /api/contact function (Nodemailer via Hostinger)
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const projectType = selectedService === "Others" ? otherText.trim() : selectedService;
+    if (!projectType) {
+      setStatus("error");
+      setErrorMsg("Please choose a project type.");
+      return;
+    }
+    const f = new FormData(e.currentTarget);
+    setStatus("sending");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: f.get("name"),
+          email: f.get("email"),
+          phone: f.get("phone"),
+          projectType,
+          message: f.get("message"),
+          website: f.get("website"), // honeypot
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong. Please try again.");
+      navigate("/thank-you");
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err.message || "Something went wrong. Please email hello@oddlambda.com.");
+    }
+  }
 
   const services = ["Landing Page", "Website", "E-commerce", "Custom", "Others"];
 
@@ -100,32 +136,31 @@ export default function ContactPage() {
               </h2>
             </div>
 
-            {/* FORM SUBMIT INTEGRATION */}
-            <form 
-              action="https://formsubmit.co/chaitanyagohar@gmail.com" 
-              method="POST" 
-              className="flex flex-col w-full"
-            >
-              {/* FormSubmit Config */}
-              <input type="hidden" name="_subject" value="New Oddlambda Agency Inquiry!" />
-              <input type="hidden" name="_cc" value="hello@oddlambda.com" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_next" value="https://oddlambda.com/thank-you" />
-              <input type="hidden" name="Project Type" value={selectedService === "Others" ? otherText : selectedService} />
+            {/* Contact form → /api/contact (Nodemailer) */}
+            <form onSubmit={handleSubmit} className="flex flex-col w-full" noValidate={false}>
+              {/* Honeypot: hidden from people, bots fill it in and get silently ignored */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] w-px h-px opacity-0"
+              />
 
               <div className={inputRowClass}>
-                <label className={labelClass}>Name*</label>
-                <input type="text" name="Name" placeholder="Name" className={fieldClass} required />
+                <label htmlFor="contact-name" className={labelClass}>Name*</label>
+                <input id="contact-name" type="text" name="name" autoComplete="name" maxLength={100} placeholder="Name" className={fieldClass} required />
               </div>
 
               <div className={inputRowClass}>
-                <label className={labelClass}>Email*</label>
-                <input type="email" name="Email" placeholder="Email" className={fieldClass} required />
+                <label htmlFor="contact-email" className={labelClass}>Email*</label>
+                <input id="contact-email" type="email" name="email" autoComplete="email" maxLength={150} placeholder="Email" className={fieldClass} required />
               </div>
 
               <div className={inputRowClass}>
-                <label className={labelClass}>Phone</label>
-                <input type="tel" name="Phone" placeholder="Phone" className={fieldClass} />
+                <label htmlFor="contact-phone" className={labelClass}>Phone</label>
+                <input id="contact-phone" type="tel" name="phone" autoComplete="tel" maxLength={30} placeholder="Phone" className={fieldClass} />
               </div>
 
               {/* Interactive Pill Selection */}
@@ -170,9 +205,11 @@ export default function ContactPage() {
               </div>
 
               <div className={inputRowClass}>
-                <label className={labelClass}>Message*</label>
+                <label htmlFor="contact-message" className={labelClass}>Message*</label>
                 <textarea 
-                  name="Message"
+                  id="contact-message"
+                  name="message"
+                  maxLength={5000}
                   placeholder="Message" 
                   rows={1}
                   className={`${fieldClass} resize-none min-h-[40px]`} 
@@ -186,10 +223,16 @@ export default function ContactPage() {
                 <div className="w-full md:w-[70%] flex flex-col items-end">
                   <button 
                     type="submit"
-                    className="w-full bg-[#0a0a0a]/25 hover:bg-[#0a0a0a] text-[#EAE6CD] font-corp font-bold text-lg md:text-xl py-4 transition-colors duration-300 uppercase tracking-widest rounded-sm"
+                    disabled={status === "sending"}
+                    className="w-full bg-[#0a0a0a]/25 hover:bg-[#0a0a0a] disabled:bg-[#0a0a0a]/60 disabled:cursor-wait text-[#EAE6CD] font-corp font-bold text-lg md:text-xl py-4 transition-colors duration-300 uppercase tracking-widest rounded-sm"
                   >
-                    Send
+                    {status === "sending" ? "Sending…" : "Send"}
                   </button>
+                  {status === "error" && (
+                    <p role="alert" className="w-full text-[14px] font-medium text-[#b3261e] mt-3 text-right">
+                      {errorMsg}
+                    </p>
+                  )}
                   <span className="text-[13px] font-medium text-[#0a0a0a]/60 mt-3">
                     100% free and non-binding
                   </span>
@@ -203,4 +246,4 @@ export default function ContactPage() {
       </div>
     </div>
   );
-}
+}

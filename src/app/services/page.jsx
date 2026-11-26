@@ -41,8 +41,7 @@ const ServicesPage = () => {
         "Domain up to ₹1,000 + deployment setup",
         "Basic on-page SEO",
         "2 revision rounds",
-        "1 month technical support",
-        "1 year management support",
+        "6 months support",
       ],
     },
 
@@ -69,9 +68,8 @@ const ServicesPage = () => {
         "Technical SEO",
         "Performance optimization",
         "Schema",
-        "5 revisions",
-        "1 month technical support",
-        "1 year management support",
+        "5 revision rounds",
+        "1 year support",
       ],
     },
 
@@ -97,9 +95,8 @@ const ServicesPage = () => {
         "Email, WhatsApp & social integration",
         "E-commerce SEO",
         "Product schema & category optimization",
-        "5 revisions",
-        "1 month technical support",
-        "1 year management support",
+        "5 revision rounds",
+        "1 year support",
       ],
     },
   ];
@@ -147,7 +144,7 @@ const ServicesPage = () => {
     {
       question: "Do you provide ongoing support?",
       answer:
-        "Yes. Every package includes one month of technical support and one year of management support as specified in the package scope.",
+        "Yes. Speed Launch includes 6 months of support after launch, and Brand Ecosystem and Commerce Scale include 1 full year. Support covers fixes, small content updates and help managing your site. After that, you can continue with an optional maintenance plan.",
     },
     {
       question: "What are the payment terms?",
@@ -668,4 +665,4 @@ const ServicesPage = () => {
   );
 };
 
-export default ServicesPage;
+export default ServicesPage;

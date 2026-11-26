@@ -94,9 +94,8 @@ const sections = [
         </p>
         <ul>
           <li><strong>Vercel</strong> — website hosting, analytics and performance monitoring;</li>
-          <li><strong>FormSubmit</strong> — delivers contact-form submissions to our inbox;</li>
           <li><strong>Cal.com</strong> — call scheduling;</li>
-          <li><strong>Our email provider</strong> — sending and receiving email;</li>
+          <li><strong>Hostinger</strong> — our email provider, which delivers contact-form submissions and handles our email;</li>
           <li><strong>Google Fonts</strong> — serves the typefaces on this site, which means your browser connects to Google's servers.</li>
         </ul>
         <p>

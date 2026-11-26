@@ -53,9 +53,10 @@ const sections = [
         </p>
         <p>
           Package prices shown on this website are starting prices for the scope described. Taxes are charged
-          additionally where applicable. Third-party costs — such as domains beyond any included allowance,
-          hosting, premium plugins or themes, paid APIs, stock media and fonts — are billed separately unless the
-          proposal says they are included.
+          additionally where applicable. Domain and hosting are billed separately unless your package or
+          proposal says they are included (for example, Speed Launch includes a domain of up to ₹1,000). Other
+          third-party costs — such as paid plugins, apps or themes, Shopify plans, payment-gateway fees, paid APIs,
+          stock media and fonts — are also billed separately unless the proposal says they are included.
         </p>
         <p>
           Work outside the agreed scope (new pages, features or integrations) is quoted separately before we start
@@ -147,7 +148,8 @@ const sections = [
     title: "Launch, hosting & support",
     content: (
       <p>
-        Post-launch support is included as described in your package or proposal. Ongoing maintenance, content
+        Post-launch support is included for 6 months with Speed Launch and for
+        1 year with Brand Ecosystem and Commerce Scale, or as set out in your proposal. Ongoing maintenance, content
         updates, hosting management and new features after that period are available as a separate engagement.
         Hosting, domain and third-party services are provided by their respective companies under their own terms,
         and we are not responsible for their outages or policy changes.

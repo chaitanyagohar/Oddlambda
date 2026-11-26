@@ -51,7 +51,7 @@ const FAQ = () => {
     {
       question: "How many revisions are included?",
       answer:
-        "Speed Launch includes 2 revision rounds. Brand Ecosystem and Commerce Scale include 5 revision rounds. Larger custom projects are handled according to the scope and revision terms agreed during the proposal stage.",
+        "Speed Launch includes 2 revision rounds. Brand Ecosystem and Commerce Scale include 5 revision rounds. Further rounds, or changes to work you have already approved, are quoted separately. Larger custom projects follow the revision terms agreed in the proposal.",
     },
     {
       question: "What are the payment terms?",
@@ -61,7 +61,7 @@ const FAQ = () => {
     {
       question: "Are domain, hosting and maintenance included?",
       answer:
-        "Speed Launch includes a domain allowance of up to ₹1,000 along with deployment setup. Package-specific support and management are included according to the stated package terms. Hosting, third-party subscriptions and other external services may have separate costs depending on the project.",
+        "Domain and hosting are charged separately unless your package or proposal says they are included. Speed Launch includes a domain of up to ₹1,000 plus deployment setup. We set up and deploy everything for you either way. Support is included for 6 months with Speed Launch and for 1 year with Brand Ecosystem and Commerce Scale.",
     },
     {
       question: "How long does a project take?",
@@ -71,7 +71,7 @@ const FAQ = () => {
     {
       question: "What happens after the website is launched?",
       answer:
-        "We don't consider launch the end of the relationship. Our packages include technical and management support according to their respective terms. We can also continue working with your business on improvements, new features, optimization and future digital requirements.",
+        "Launch isn't the end of the relationship. Your package includes support after launch: 6 months for Speed Launch and 1 year for Brand Ecosystem and Commerce Scale. That covers fixes, small updates and help managing your site. After that, we can continue with maintenance, improvements and new features.",
     },
   ];
 
@@ -400,4 +400,4 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+export default FAQ;

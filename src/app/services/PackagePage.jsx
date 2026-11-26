@@ -31,6 +31,10 @@ const packageData = {
       "Email & WhatsApp Integration"
     ],
     timeline: "2-3 weeks",
+    revisions: "2 revision rounds",
+    support: "6 months after launch",
+    included: "Domain up to ₹1,000 + deployment setup",
+    extras: "Hosting, paid third-party tools, extra pages beyond scope",
   },
   "brand-ecosystem": {
     title: "Brand Ecosystem",
@@ -45,6 +49,10 @@ const packageData = {
       "Performance Optimization"
     ],
     timeline: "4-6 weeks",
+    revisions: "5 revision rounds",
+    support: "1 year after launch",
+    included: "Deployment setup (domain & hosting quoted separately)",
+    extras: "Domain, hosting, paid CRM / CMS plans, extra pages or features beyond scope",
   },
   "commerce-scale": {
     title: "Commerce Scale",
@@ -59,6 +67,10 @@ const packageData = {
       "E-commerce SEO"
     ],
     timeline: "6-8 weeks",
+    revisions: "5 revision rounds",
+    support: "1 year after launch",
+    included: "Store setup & deployment (domain & hosting quoted separately)",
+    extras: "Domain, hosting / Shopify plan, payment-gateway fees, paid apps, products beyond 200",
   }
 };
 
@@ -159,15 +171,27 @@ export default function PackagePage() {
             </div>
           </div>
 
-          {/* Timeline Grid */}
-          <div className="border-t border-[#EAE6CD]/15 mx-8 md:mx-14 lg:mx-24 py-8 md:py-12 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-            <div className="md:col-span-4">
-              <h3 className="font-corp text-3xl font-bold uppercase tracking-wide">Timeline</h3>
+          {/* Details Grid: timeline, revisions, support, what's included / extra */}
+          {[
+            ["Timeline", pkg.timeline],
+            ["Revisions", pkg.revisions],
+            ["Support", pkg.support],
+            ["Included", pkg.included],
+            ["Payment", "50% upfront · 50% on completion"],
+            ["Costs extra", pkg.extras],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="border-t border-[#EAE6CD]/15 mx-8 md:mx-14 lg:mx-24 py-8 md:py-10 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8"
+            >
+              <div className="md:col-span-4">
+                <h3 className="font-corp text-3xl font-bold uppercase tracking-wide">{label}</h3>
+              </div>
+              <div className="md:col-span-8 font-medium text-[16px] text-[#EAE6CD]/70 md:text-right">
+                {value}
+              </div>
             </div>
-            <div className="md:col-span-8 font-medium text-[16px] text-[#EAE6CD]/70 md:text-right">
-              {pkg.timeline}
-            </div>
-          </div>
+          ))}
 
           {/* Bottom Button */}
           <div className="px-8 md:px-14 lg:px-24 pb-16 pt-8 flex justify-center w-full">
@@ -309,4 +333,4 @@ export default function PackagePage() {
       <Footer />
     </div>
   );
-}
+}
